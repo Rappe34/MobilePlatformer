@@ -6,7 +6,7 @@ namespace PlayerController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
-        [SerializeField] private ScriptableStats _stats;
+        [SerializeField] private ScriptablePlayerStats _stats;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;

@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class WaitState : State
 {
-    [SerializeField] private EnemyStateManager sm;
-    [SerializeField] private RoamState roamState;
     [SerializeField] private float averageWaitTime = 2.2f;
     [SerializeField] private float waitTimeFluctuation = 1.2f;
 
-    public bool waitFlag = false;
+    private EnemyStateManager sm;
+    private RoamState roamState;
 
+    private bool waitFlag = false;
     private bool isWaiting = false;
+
+    private void Awake()
+    {
+        sm = GetComponent<EnemyStateManager>();
+        roamState = GetComponent<RoamState>();
+    }
 
     public override State RunCurrentState()
     {
@@ -33,5 +39,10 @@ public class WaitState : State
 
         isWaiting = false;
         sm.Flip();
+    }
+
+    public void SetWaitFlag(bool value)
+    {
+        waitFlag = value;
     }
 }

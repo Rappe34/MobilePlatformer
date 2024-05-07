@@ -1,5 +1,7 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PlayerController
 {
@@ -12,6 +14,11 @@ namespace PlayerController
         private FrameInput _frameInput;
         private Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
+
+        private PlayerCombat _playerCombat;
+
+        [SerializeField] private InputActionAsset _inputActions;
+        private InputActionMap _playerControls;
 
         #region Interface
 
@@ -29,21 +36,27 @@ namespace PlayerController
             _col = GetComponent<CapsuleCollider2D>();
 
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
+
+            _playerCombat = GetComponent<PlayerCombat>();
+
+            _playerControls = _inputActions.FindActionMap("Game");
+            _playerControls.Enable();
         }
 
         private void Update()
         {
             _time += Time.deltaTime;
-            GatherInput();
+            GetInput();
         }
 
-        private void GatherInput()
+        private void GetInput()
         {
             _frameInput = new FrameInput
             {
-                JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
-                JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-                Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+                Move = _playerControls["Move"].ReadValue<Vector2>(),
+                JumpDown = _playerControls["Jump"].triggered,
+                JumpHeld = _playerControls["Jump"].phase == InputActionPhase.Started || _playerControls["Jump"].phase == InputActionPhase.Performed,
+                AttackDown = _playerControls["Attack"].triggered
             };
 
             if (_stats.SnapInput)
@@ -68,6 +81,8 @@ namespace PlayerController
             HandleGravity();
 
             ApplyMovement();
+
+            HandleCombat();
         }
 
         #region Collisions
@@ -180,6 +195,16 @@ namespace PlayerController
 
         private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
+        #region Combat
+
+        private void HandleCombat()
+        {
+            if (_frameInput.AttackDown)
+                _playerCombat.TryAttack();
+        }
+
+        #endregion
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -190,9 +215,10 @@ namespace PlayerController
 
     public struct FrameInput
     {
+        public Vector2 Move;
         public bool JumpDown;
         public bool JumpHeld;
-        public Vector2 Move;
+        public bool AttackDown;
     }
 
     public interface IPlayerController

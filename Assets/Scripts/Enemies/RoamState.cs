@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 public class RoamState : State
 {
-    [SerializeField] private EnemyStateManager sm;
-    [SerializeField] private WaitState waitState;
+    private EnemyStateManager sm;
+    private WaitState waitState;
+
+    private void Awake()
+    {
+        sm = GetComponent<EnemyStateManager>();
+        waitState = GetComponent<WaitState>();
+    }
 
     public override State RunCurrentState()
     {
         if (sm.ObstacleCheck())
         {
-            waitState.waitFlag = true;
+            waitState.SetWaitFlag(true);
             return waitState;
         }
 

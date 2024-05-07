@@ -1,33 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+namespace Health
 {
-    [SerializeField] private int maxHealth = 5;
-
-    private int health;
-
-    void Start()
+    public class PlayerHealth : Health
     {
-        
-    }
+        private void Die()
+        {
+            Destroy(gameObject);
 
-    void Update()
-    {
-        
-    }
-
-    public void TakeDamage(int amount)
-    {
-        if (health <= 0) print("Death"); // IMPLEMENT PLAYER DEATH
-
-        health -= amount;
-    }
-
-    public void AddHealth(int amount)
-    {
-        health = Mathf.Clamp(health + amount, 0, maxHealth);
+        }
     }
 }

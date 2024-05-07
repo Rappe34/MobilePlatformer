@@ -8,13 +8,10 @@ public class BackgroundScroll : MonoBehaviour
     [SerializeField] private float scrollSpeed = 1.25f;
 
     private Camera cam;
-    private float camLeftEdgeX;
 
     private void Awake()
     {
         cam = Camera.main;
-
-        camLeftEdgeX = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
     }
 
     void Update()
@@ -23,7 +20,9 @@ public class BackgroundScroll : MonoBehaviour
         {
             image.Translate(Vector2.left * scrollSpeed * Time.deltaTime);
 
-            if (image.position.x + image.GetComponent<RectTransform>().rect.width / 2 < camLeftEdgeX)
+            float camLeftEdgeX = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
+
+            if (image.position.x + image.GetComponent<RectTransform>().rect.width < camLeftEdgeX)
             {
                 image.position += new Vector3(GetPosShift(), 0);
             }

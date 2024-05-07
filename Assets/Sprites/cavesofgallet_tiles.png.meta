@@ -2049,6 +2049,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: cavesofgallet_tiles_93
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25580e9054a6ad647b156c482c6b9a81
+      internalID: 1501253190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cavesofgallet_tiles_94
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38c0217fb6b52374e99c90f204040991
+      internalID: -1445638630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -2153,6 +2195,8 @@ TextureImporter:
       cavesofgallet_tiles_90: 1140372167
       cavesofgallet_tiles_91: 485791558
       cavesofgallet_tiles_92: 915803890
+      cavesofgallet_tiles_93: 1501253190
+      cavesofgallet_tiles_94: -1445638630
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

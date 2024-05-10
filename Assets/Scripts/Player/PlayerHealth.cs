@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Health
+public class PlayerHealth : Health
 {
-    public class PlayerHealth : Health
+    protected override void Die()
     {
-        private void Die()
-        {
-            Destroy(gameObject);
-
-        }
+        base.Die();
     }
 }

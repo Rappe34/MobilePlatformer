@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyStateManager : StateManager
 {
-    [SerializeField] private float speed = 3f;
+    [SerializeField] private DeathState deathState;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -24,8 +24,8 @@ public class EnemyStateManager : StateManager
 
     public bool ObstacleCheck()
     {
-        bool wallCheck = Physics2D.Raycast(transform.position, facingRight ? Vector3.right : Vector3.left, 1.2f, LayerMask.GetMask("Ground"));
-        bool fallCheck = !Physics2D.Raycast(transform.position + (facingRight ? Vector3.right * 1.2f : Vector3.left * 1.2f), Vector2.down, 1.2f, LayerMask.GetMask("Ground"));
+        bool wallCheck = Physics2D.Raycast(transform.position - new Vector3(0, -.5f), facingRight ? Vector3.right : Vector3.left, 1.2f, LayerMask.GetMask("Ground"));
+        bool fallCheck = !Physics2D.Raycast(transform.position + (facingRight ? Vector3.right : Vector3.left) * 1.2f, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
 
         return wallCheck || fallCheck;
     }
@@ -36,8 +36,18 @@ public class EnemyStateManager : StateManager
         spriteRenderer.flipX = !facingRight;
     }
 
-    public void Move()
+    protected override void SwitchToState(State state) { base.SwitchToState(state); }
+
+    private void Die()
     {
-        rb.velocity = new Vector2(facingRight ? speed : -speed, rb.velocity.y);
+        deathState.DeathFlag();
+        SwitchToState(deathState);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position + new Vector3(0, -.5f), (facingRight ? Vector3.right : Vector3.left) * 1.2f);
+        Gizmos.DrawRay(transform.position + (facingRight ? Vector3.right : Vector3.left) * 1.2f, Vector2.down * 1.5f);
     }
 }

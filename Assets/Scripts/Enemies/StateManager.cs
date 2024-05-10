@@ -27,7 +27,7 @@ public abstract class StateManager : MonoBehaviour
         }
     }
 
-    private void SwitchToState(State state)
+    protected virtual void SwitchToState(State state)
     {
         currentState = state;
     }

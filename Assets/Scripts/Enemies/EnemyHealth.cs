@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Health
+public class EnemyHealth : Health
 {
-    public class EnemyHealth : Health
+    protected override void Die()
     {
-
+        base.Die();
     }
 }

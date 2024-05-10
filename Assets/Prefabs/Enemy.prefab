@@ -10,14 +10,17 @@ GameObject:
   m_Component:
   - component: {fileID: 7662599619199204961}
   - component: {fileID: 1808011277131804747}
+  - component: {fileID: 3970496041989035361}
   - component: {fileID: 3565734819453985493}
   - component: {fileID: 4555958173100931413}
+  - component: {fileID: 3625599354846193947}
   - component: {fileID: 3953525223365750650}
+  - component: {fileID: 4611444652492627290}
   - component: {fileID: 1911934759843213789}
   - component: {fileID: 1862884857647894358}
   m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +53,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startState: {fileID: 3565734819453985493}
-  speed: 3
+  deathState: {fileID: 0}
+--- !u!114 &3970496041989035361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755554664477141317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7692baa90af009747848b2ff1ddc548f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 5dfc4fcb23c478545bea698646bd1bf3, type: 2}
+  invincibilityTime: 0.25
 --- !u!114 &3565734819453985493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65100735fa5184a4f9ba573985ee664f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 3
 --- !u!114 &4555958173100931413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +95,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   averageWaitTime: 2.2
   waitTimeFluctuation: 1.2
+--- !u!114 &3625599354846193947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755554664477141317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be923c60d85185b40b3e856da02ea387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
 --- !u!212 &3953525223365750650
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -129,6 +160,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4611444652492627290
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755554664477141317}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 15dc36fdb3e980843bb4a779aa855196, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &1911934759843213789
 Rigidbody2D:
   serializedVersion: 4

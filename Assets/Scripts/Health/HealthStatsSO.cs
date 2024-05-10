@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthStatsSO : MonoBehaviour
+[CreateAssetMenu(menuName = "ScriptableObject/ScriptableHealthStats")]
+public class HealthStatsSO : ScriptableObject
 {
     public int maxHealth = 8;
 }

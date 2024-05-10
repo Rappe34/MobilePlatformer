@@ -200,7 +200,7 @@ namespace PlayerController
         private void HandleCombat()
         {
             if (_frameInput.AttackDown)
-                _playerCombat.TryAttack();
+                _playerCombat.Attack();
         }
 
         #endregion

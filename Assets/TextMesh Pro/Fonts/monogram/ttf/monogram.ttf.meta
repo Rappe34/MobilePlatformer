@@ -10,7 +10,9 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - monogram
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 0aa9cc64895d8f44f877119f76efd44f, type: 3}
+  - {fileID: 12800000, guid: b41e6d19168a7b947acb4f6c90a84765, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

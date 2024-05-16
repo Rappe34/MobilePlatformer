@@ -8,20 +8,25 @@ public class LevelTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
 
-    public static LevelTimer Instance;
+    public static LevelTimer Instance { get; private set; }
 
+    public TimeSpan elapsedTimeInSeconds { get; private set; } = TimeSpan.Zero;
+
+    private float elapsedTime;
     private float startTime;
     private bool running = false;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-    }
-
-    private void Start()
-    {
-        startTime = Time.time;
-        running = true;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -49,14 +54,19 @@ public class LevelTimer : MonoBehaviour
         return string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
     }
 
+    public void StartTimer()
+    {
+        startTime = Time.time;
+        running = true;
+    }
+
     public void StopTimer()
     {
         running = false;
     }
 
-    public void ResumeTimer()
+    public void ResetTimer()
     {
-        startTime = Time.time - (float.Parse(timerText.text.Split(':')[0]) * 3600f) - (float.Parse(timerText.text.Split(':')[1]) * 60f) - float.Parse(timerText.text.Split(':')[2]);
-        running = true;
+        elapsedTime = 0f;
     }
 }

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverUI : MonoBehaviour
+public class GameOverMenu : MonoBehaviour
 {
+    public static GameOverMenu Instance { get; private set; }
+
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
-
-    public static GameOverUI Instance;
 
     private void Awake()
     {

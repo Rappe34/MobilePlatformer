@@ -9,6 +9,7 @@ public class WaitState : State
 
     private EnemyStateManager sm;
     private RoamState roamState;
+    private AttackState attackState;
     private Animator anim;
 
     private bool waitFlag = false;
@@ -18,18 +19,28 @@ public class WaitState : State
     {
         sm = GetComponent<EnemyStateManager>();
         roamState = GetComponent<RoamState>();
+        attackState = GetComponent<AttackState>();
         anim = GetComponent<Animator>();
     }
 
     public override State RunCurrentState()
     {
+        if (sm.PlayerCheck())
+        {
+            attackState.AttackFlag();
+            return attackState;
+        }
+
         if (waitFlag)
+        {
+            waitFlag = false;
             StartCoroutine(Wait());
+        }
 
         if (!isWaiting)
             return roamState;
 
-        //anim.Play("Idle");
+        anim.SetBool("Waiting", false);
 
         return this;
     }
@@ -41,7 +52,6 @@ public class WaitState : State
 
     private IEnumerator Wait()
     {
-        waitFlag = false;
         isWaiting = true;
 
         float randomWaitTime = Random.Range(averageWaitTime - waitTimeFluctuation, averageWaitTime + waitTimeFluctuation);

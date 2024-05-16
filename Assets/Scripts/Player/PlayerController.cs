@@ -20,6 +20,8 @@ namespace PlayerController
         [SerializeField] private InputActionAsset _inputActions;
         private InputActionMap _playerControls;
 
+        [SerializeField] private GameObject _dustEffect;
+
         #region Interface
 
         public Vector2 FrameInput => _frameInput.Move;
@@ -29,6 +31,7 @@ namespace PlayerController
         #endregion
 
         private float _time;
+        private bool _facingRight = true;
 
         private void Awake()
         {
@@ -47,6 +50,9 @@ namespace PlayerController
         {
             _time += Time.deltaTime;
             GetInput();
+
+            if ((_frameInput.Move.x < 0 && _facingRight) || (_frameInput.Move.x > 0 && !_facingRight))
+                Flip();
         }
 
         private void GetInput()
@@ -56,7 +62,7 @@ namespace PlayerController
                 Move = _playerControls["Move"].ReadValue<Vector2>(),
                 JumpDown = _playerControls["Jump"].triggered,
                 JumpHeld = _playerControls["Jump"].phase == InputActionPhase.Started || _playerControls["Jump"].phase == InputActionPhase.Performed,
-                AttackDown = _playerControls["Attack"].triggered
+                AttackDown = _playerControls["Attack"].IsPressed()
             };
 
             if (_stats.SnapInput)
@@ -109,6 +115,8 @@ namespace PlayerController
                 _bufferedJumpUsable = true;
                 _endedJumpEarly = false;
                 GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
+
+                Instantiate(_dustEffect, transform.position, Quaternion.identity);
             }
             // Left the Ground
             else if (_grounded && !groundHit)
@@ -199,11 +207,22 @@ namespace PlayerController
 
         private void HandleCombat()
         {
-            if (_frameInput.AttackDown)
-                _playerCombat.Attack();
+            if (_frameInput.AttackDown && _grounded)
+                _playerCombat.TryAttack();
         }
 
         #endregion
+
+        private void Flip()
+        {
+            Vector3 scale = transform.localScale;
+            scale.x *= -1f;
+            transform.localScale = scale;
+            _facingRight = !_facingRight;
+
+            if (_grounded)
+                Instantiate(_dustEffect, transform.position, Quaternion.identity);
+        }
 
 #if UNITY_EDITOR
         private void OnValidate()

@@ -6,6 +6,7 @@ public abstract class StateManager : MonoBehaviour
 {
     [SerializeField] private State startState;
     public State currentState { get; private set; }
+    public State previousState { get; private set; }
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public abstract class StateManager : MonoBehaviour
     {
         State nextState = currentState?.RunCurrentState();
 
-        if (nextState != null)
+        if (nextState != null && nextState != currentState)
         {
             SwitchToState(nextState);
         }
@@ -29,6 +30,7 @@ public abstract class StateManager : MonoBehaviour
 
     protected virtual void SwitchToState(State state)
     {
+        previousState = currentState;
         currentState = state;
     }
 }

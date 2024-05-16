@@ -1168,7 +1168,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_51
+      name: adventurer_tiles_s_52
       rect:
         serializedVersion: 2
         x: 0
@@ -1189,7 +1189,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_52
+      name: adventurer_tiles_s_53
       rect:
         serializedVersion: 2
         x: 28
@@ -1210,7 +1210,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_53
+      name: adventurer_tiles_s_54
       rect:
         serializedVersion: 2
         x: 56
@@ -1231,7 +1231,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_54
+      name: adventurer_tiles_s_55
       rect:
         serializedVersion: 2
         x: 84
@@ -1251,6 +1251,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_51
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 28
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3390245a7ecdaea4d9b7e33bcb528668
+      internalID: -653995275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1262,6 +1283,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      adventurer_tiles_51: -653995275
       adventurer_tiles_s_0: -3213018
       adventurer_tiles_s_1: 476486563
       adventurer_tiles_s_10: 415793578
@@ -1309,10 +1331,10 @@ TextureImporter:
       adventurer_tiles_s_49: -1943555766
       adventurer_tiles_s_5: 181745499
       adventurer_tiles_s_50: -557552986
-      adventurer_tiles_s_51: -573768278
-      adventurer_tiles_s_52: 1084680657
-      adventurer_tiles_s_53: 1881629807
-      adventurer_tiles_s_54: 1449488997
+      adventurer_tiles_s_52: -573768278
+      adventurer_tiles_s_53: 1084680657
+      adventurer_tiles_s_54: 1881629807
+      adventurer_tiles_s_55: 1449488997
       adventurer_tiles_s_6: 585887717
       adventurer_tiles_s_7: 2048192847
       adventurer_tiles_s_8: 2067142475

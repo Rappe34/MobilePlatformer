@@ -6,9 +6,11 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private Transform attackPoint;
     [SerializeField] [Range(.25f, .75f)] private float attackPointRadius;
-    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int baseAttackDamage = 1;
     [SerializeField] private float attackRate = 1.6f;
+    [SerializeField] private float comboChargetime = 1.5f;
+
+    public bool inCombat { get; private set; } = false;
 
     private Animator anim;
     private float timeSinceAttack = 0f;
@@ -22,17 +24,34 @@ public class PlayerCombat : MonoBehaviour
     {
         timeSinceAttack += Time.deltaTime;
         anim.SetFloat("TimeSinceAttack", timeSinceAttack);
+
+        if (timeSinceAttack > comboChargetime)
+            anim.SetBool("ComboPossible", true);
+        else
+            anim.SetBool("ComboPossible", false);
+
+        if (timeSinceAttack < 7f)
+            inCombat = true;
+        else
+            inCombat = false;
     }
 
-    public void Attack()
+    private void Attack()
     {
+        print("Attack");
         anim.SetTrigger("Attack");
         timeSinceAttack = 0f;
     }
 
+    public void TryAttack()
+    {
+        if (timeSinceAttack >= 1f / attackRate)
+            Attack();
+    }
+
     public void AttackHitCheck()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, .2f, enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, .2f, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemy in hitEnemies)
         {

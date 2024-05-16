@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class RoamState : State
@@ -8,6 +7,7 @@ public class RoamState : State
     [SerializeField] private float movementSpeed = 3f;
     private EnemyStateManager sm;
     private WaitState waitState;
+    private AttackState attackState;
     private Rigidbody2D rb;
     private Animator anim;
 
@@ -15,12 +15,19 @@ public class RoamState : State
     {
         sm = GetComponent<EnemyStateManager>();
         waitState = GetComponent<WaitState>();
+        attackState = GetComponent<AttackState>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
     public override State RunCurrentState()
     {
+        if (sm.PlayerCheck())
+        {
+            attackState.AttackFlag();
+            return attackState;
+        }
+
         if (sm.ObstacleCheck())
         {
             waitState.WaitFlag();
@@ -29,7 +36,7 @@ public class RoamState : State
 
         rb.velocity = new Vector2(sm.facingRight ? movementSpeed : -movementSpeed, rb.velocity.y);
 
-        //anim.Play("Run");
+        anim.SetBool("Waiting", false);
 
         return this;
     }

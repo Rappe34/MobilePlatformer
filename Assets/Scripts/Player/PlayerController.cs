@@ -61,8 +61,8 @@ namespace PlayerController
             {
                 Move = _playerControls["Move"].ReadValue<Vector2>(),
                 JumpDown = _playerControls["Jump"].triggered,
-                JumpHeld = _playerControls["Jump"].phase == InputActionPhase.Started || _playerControls["Jump"].phase == InputActionPhase.Performed,
-                AttackDown = _playerControls["Attack"].IsPressed()
+                JumpHeld = _playerControls["Jump"].phase == InputActionPhase.Started  || _playerControls["Jump"].phase == InputActionPhase.Performed,
+                AttackDown = _playerControls["Attack"].triggered
             };
 
             if (_stats.SnapInput)
@@ -149,7 +149,7 @@ namespace PlayerController
 
             if (!_jumpToConsume && !HasBufferedJump) return;
 
-            if (_grounded || CanUseCoyote) ExecuteJump();
+            if (_playerCombat.attacking && (_grounded || CanUseCoyote)) ExecuteJump();
 
             _jumpToConsume = false;
         }

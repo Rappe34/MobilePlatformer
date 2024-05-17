@@ -97,7 +97,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: adventurer_tiles_s_0
+      name: adventurer_tiles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 336
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9bfa282109eff3429728c2f5b56c564
+      internalID: 1235730417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 336
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6061f33dbd3ba95479981747f96d84ff
+      internalID: -1713397935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_2
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 336
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8434f1f0a69d3748ac1db3ed0182329
+      internalID: 1750344883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_3
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 336
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5661b8e1fb4b6d940a21e582c21fa802
+      internalID: 1278822850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_4
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 874e7b1dafcd4544f9923a6a709a3c70
-      internalID: -3213018
+      spriteID: 24a9fd2ec590f7649bc1c7ec6ceffe01
+      internalID: -486461491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_1
+      name: adventurer_tiles_5
       rect:
         serializedVersion: 2
         x: 28
@@ -132,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45079a62b10b4dc49a732c3b11e42920
-      internalID: 476486563
+      spriteID: 6fd9c86f650fc014fa123e75e8b0ce13
+      internalID: -716750731
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_2
+      name: adventurer_tiles_6
       rect:
         serializedVersion: 2
         x: 56
@@ -153,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6878aec151d0add4fb70519d5447fb9d
-      internalID: -855993627
+      spriteID: 294f01c3cb1b7b0408820c8be9f3d48f
+      internalID: 2006108248
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_3
+      name: adventurer_tiles_7
       rect:
         serializedVersion: 2
         x: 84
@@ -174,102 +258,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99dc8598fc1206840ac9aa72249e8660
-      internalID: 1034239352
+      spriteID: 7075ca5a7adca7148bb073e1ac913a0c
+      internalID: 213805230
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 280
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b394d45c0392bf84ca358cf1a68c8089
-      internalID: -741462903
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_5
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 280
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8721559bbc43e5b4bb4a4d08747c3ccb
-      internalID: 181745499
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_6
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 280
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5083a5b51c0ab4047afc38ece11ed2b4
-      internalID: 585887717
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_7
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 280
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc24f486951859c48be1b4267ee279fa
-      internalID: 2048192847
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_8
+      name: adventurer_tiles_8
       rect:
         serializedVersion: 2
         x: 112
-        y: 280
+        y: 308
         width: 28
         height: 28
       alignment: 7
@@ -279,17 +279,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12ca1b047a6a65442b482ea3bb4c1d18
-      internalID: 2067142475
+      spriteID: 841b0886af60e8346b7f011d067ac1b0
+      internalID: -1315428212
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_9
+      name: adventurer_tiles_9
       rect:
         serializedVersion: 2
         x: 140
+        y: 308
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89891bb46ef3d574cae6d35fff8d3762
+      internalID: 37667741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_10
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 280
         width: 28
         height: 28
@@ -300,14 +321,56 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 078bd64b803e0054c99c9ca5baf665d5
-      internalID: -2133907873
+      spriteID: 2262587c79a394a4c822ed4c176ef345
+      internalID: 1480874096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_10
+      name: adventurer_tiles_11
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 280
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c70297cadcd58a478051470e8378d3b
+      internalID: -812927694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_12
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 280
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0c3fd9b381665f4f9c437fed3322515
+      internalID: -824343782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_13
       rect:
         serializedVersion: 2
         x: 0
@@ -321,14 +384,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2703d2df56ce73b438a755e5ac930fd3
-      internalID: 415793578
+      spriteID: 9097f65ee04e8784cb609f5b3aaaf380
+      internalID: 682837636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_11
+      name: adventurer_tiles_14
       rect:
         serializedVersion: 2
         x: 28
@@ -342,35 +405,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 430a753a6fd5b824788251961f01638f
-      internalID: -859636552
+      spriteID: c2ef7625ebfd9004b980855a93a440aa
+      internalID: 1645232564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_12
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 252
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eaea674b7f9ede544ae4a18e0d13e803
-      internalID: -1413864795
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_13
+      name: adventurer_tiles_15
       rect:
         serializedVersion: 2
         x: 0
@@ -384,14 +426,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a497b69e3dc72b245aaf5d4444175b70
-      internalID: -678091044
+      spriteID: 24800463171278c4892040390b56039d
+      internalID: -1822951941
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_14
+      name: adventurer_tiles_16
       rect:
         serializedVersion: 2
         x: 28
@@ -405,14 +447,56 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c255f42be1b35047a95ede827bfcf5e
-      internalID: 666298546
+      spriteID: 357fb7d418f720649941dba2e07e37d8
+      internalID: 101704821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_15
+      name: adventurer_tiles_17
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 224
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6876303539e5b9444bf670537e2267f5
+      internalID: 256932686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_18
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 224
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0df0610631a3e9f4dbfb452d81a1c4c7
+      internalID: -1850367542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_19
       rect:
         serializedVersion: 2
         x: 0
@@ -426,14 +510,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e42503d5a263437499d59b26ff2614a9
-      internalID: -442978738
+      spriteID: 9eb71b9a15e372048b1dbaae5afd13fb
+      internalID: -1837230663
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_16
+      name: adventurer_tiles_20
       rect:
         serializedVersion: 2
         x: 28
@@ -447,14 +531,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1bd8aa63376b67448b8aa8ea3df9b261
-      internalID: -774493083
+      spriteID: 084adc1bfbae96641b6287f68d2c19e2
+      internalID: -1026487102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_17
+      name: adventurer_tiles_21
       rect:
         serializedVersion: 2
         x: 56
@@ -468,14 +552,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee0ddd03ffe18db41a0de8459969f73a
-      internalID: 436707581
+      spriteID: 423bed8112df3c9478810e61d6134e9f
+      internalID: 1266321811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_18
+      name: adventurer_tiles_22
       rect:
         serializedVersion: 2
         x: 84
@@ -489,101 +573,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b2d023ce7b2e294cb0b570a2b43d884
-      internalID: 322734189
+      spriteID: 866808494d453434f9ff840b385bdae2
+      internalID: 210813140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_19
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 168
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a3e78d8ea6d53f42bfe2e19a16903f6
-      internalID: 1707658355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_20
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 168
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 50a27ac31630ffe40a8b81ce9f6f2d47
-      internalID: -894699911
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_21
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 168
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ad694a47bc664444a15454aa1783956
-      internalID: 893440286
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_22
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 168
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 016dd7a9153309c4e9d21ef70d7aeca7
-      internalID: -324513753
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_23
+      name: adventurer_tiles_23
       rect:
         serializedVersion: 2
         x: 112
+        y: 196
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 642ead57f61403142b928ea3e0384829
+      internalID: 217807453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_24
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 168
         width: 28
         height: 28
@@ -594,14 +615,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c01706353e18d154e89a639cef127c00
-      internalID: 1326946599
+      spriteID: 1614c7757fbbf6c4ca7787eefc8e2b1b
+      internalID: 332941481
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_24
+      name: adventurer_tiles_25
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 168
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1884f19d6909cd545ace332eecc47a7f
+      internalID: 381043580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_26
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 168
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd966d39fd7c8da4384dde67c6eb776a
+      internalID: 1880583464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_27
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 168
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02ee10594c01fad408176bf0d2569cce
+      internalID: -568289879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_28
       rect:
         serializedVersion: 2
         x: 0
@@ -615,14 +699,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3519388337d1e214d89fa714c0ac976d
-      internalID: -511142999
+      spriteID: 78249f686b1713343ae7f32beeefa8e1
+      internalID: 1518389964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_25
+      name: adventurer_tiles_29
       rect:
         serializedVersion: 2
         x: 28
@@ -636,14 +720,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c89b9aa442680254cbf76eae39547133
-      internalID: 1904246151
+      spriteID: f8ead96cb56c52a498d97e474c65d7ff
+      internalID: 1890307641
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_26
+      name: adventurer_tiles_30
       rect:
         serializedVersion: 2
         x: 56
@@ -657,14 +741,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd2d3bdf835359347a8a41d4a8cd3b7a
-      internalID: -1893010394
+      spriteID: d57920caf99623c49bd65e1001a47663
+      internalID: 944116091
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_27
+      name: adventurer_tiles_31
       rect:
         serializedVersion: 2
         x: 84
@@ -678,102 +762,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec48907240e98af4d920759aa73cbfe6
-      internalID: -1892333935
+      spriteID: 3689154eb3934ab4899cf3101c4506e5
+      internalID: 459214277
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_28
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 112
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8a93fc2158f8f194aad416f92f32b8db
-      internalID: -1282691627
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_29
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 112
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ede6c89ce10e66498aab858ff610e3b
-      internalID: 1071855956
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_30
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 112
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c54474ad6fbb3f04285a8c631821fba1
-      internalID: 1529117521
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_31
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 112
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 400eb9f9fc850ab47b9bf00d4f9f338f
-      internalID: -1701100260
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_32
+      name: adventurer_tiles_32
       rect:
         serializedVersion: 2
         x: 112
-        y: 112
+        y: 140
         width: 28
         height: 28
       alignment: 7
@@ -783,17 +783,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d0ef0586fbc5d44a96b06036b58f5e7
-      internalID: -894689902
+      spriteID: c971d3361ed25a749a088adb4e3353bd
+      internalID: -861925276
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_33
+      name: adventurer_tiles_33
       rect:
         serializedVersion: 2
         x: 140
+        y: 140
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4edcaa9c28c3fc4dbca5aa9e3e1c6cc
+      internalID: -2071345827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_34
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 112
         width: 28
         height: 28
@@ -804,14 +825,98 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b90212f1722ee634182bf66e8b4df3f7
-      internalID: -442597379
+      spriteID: 4c67517c97ea5394094039e8d975fb6f
+      internalID: 354963192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_34
+      name: adventurer_tiles_35
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 112
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b63cbc70f4a1d754fa96b0cabe4c1429
+      internalID: 701699112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_36
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 112
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1198320cc095c334db0a148ed5a28890
+      internalID: 1339775741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_37
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 112
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eef0e44e85dc314d80bc8574a82b7de
+      internalID: -616169107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_38
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c318ffade2467b4fb3ce427a5d51fd7
+      internalID: -1284384194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_39
       rect:
         serializedVersion: 2
         x: 0
@@ -825,14 +930,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cab4f769773b0a84aaeacc73faa2ed4a
-      internalID: 38964238
+      spriteID: 699b46e5b769fb449ae715503e6b41f4
+      internalID: 802301963
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_35
+      name: adventurer_tiles_40
       rect:
         serializedVersion: 2
         x: 28
@@ -846,14 +951,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7dffff388e64204482978a01196b4ed
-      internalID: 813997691
+      spriteID: e7a6abf585b48964b9c7771043d13008
+      internalID: 2116696621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_36
+      name: adventurer_tiles_41
       rect:
         serializedVersion: 2
         x: 56
@@ -867,14 +972,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12f888084b5668b47b81b7c8cf3e563f
-      internalID: -1122131786
+      spriteID: 41ac37099237a5c498ff63eb95eda52a
+      internalID: 516959513
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_37
+      name: adventurer_tiles_42
       rect:
         serializedVersion: 2
         x: 84
@@ -888,14 +993,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5da10dc7416e81745a14572eb2ed5a84
-      internalID: -758320001
+      spriteID: 1fa01b0df7856c74ba9f28ea2171253a
+      internalID: -1943881169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_38
+      name: adventurer_tiles_43
       rect:
         serializedVersion: 2
         x: 112
@@ -909,123 +1014,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bce8a00c3084e8f4fa9570c5600c91b8
-      internalID: -883220015
+      spriteID: 68ccece45ebaed84782e010d7d09c605
+      internalID: 2103987935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_39
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 56
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a72d029109b723499becc6df8d0ba10
-      internalID: -829222741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_40
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 56
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04223322f9f715e4ab55ae9c01e9860b
-      internalID: 2001301189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_41
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 56
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 34de69e3b8ea5224f8226c79b168661f
-      internalID: -213811764
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_42
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 56
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 929943b2bbdb6ed40a63843a4ea9c4eb
-      internalID: 441701786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_43
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 56
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: adc81c3a83a69254b9014cf7f70dbfc9
-      internalID: 1783525274
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_44
+      name: adventurer_tiles_44
       rect:
         serializedVersion: 2
         x: 140
-        y: 56
+        y: 84
         width: 28
         height: 28
       alignment: 7
@@ -1035,17 +1035,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 198a473a800d5bf40b3f243364476513
-      internalID: -500134485
+      spriteID: 7694a3d52c6f79a4e81ce1451bc5afb4
+      internalID: 1250441758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_45
+      name: adventurer_tiles_45
       rect:
         serializedVersion: 2
         x: 168
+        y: 84
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68fb43ece38eed94e8cc843fb66bfc81
+      internalID: 500256461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_46
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 56
         width: 28
         height: 28
@@ -1056,39 +1077,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2d4099bd89e891419cac454164b97c8
-      internalID: -561628259
+      spriteID: 35c0799e78ab277468a9c71f51125af8
+      internalID: 1665537643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_46
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 28
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d89cc96b51a6cb7419ddcda0f15575e3
-      internalID: 704259302
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_47
+      name: adventurer_tiles_47
       rect:
         serializedVersion: 2
         x: 28
-        y: 28
+        y: 56
         width: 28
         height: 28
       alignment: 7
@@ -1098,18 +1098,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc5d362eb0243e24e878214e21522f38
-      internalID: 1139237152
+      spriteID: 00d434ddd11ab774fa162d69002017c2
+      internalID: 2099426398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_48
+      name: adventurer_tiles_48
       rect:
         serializedVersion: 2
         x: 56
-        y: 28
+        y: 56
         width: 28
         height: 28
       alignment: 7
@@ -1119,18 +1119,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a0f65046e2c31a4f97876563cd59f73
-      internalID: 200433901
+      spriteID: 0817f8618a33bc6419df5e300c4fb0d5
+      internalID: -677949307
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_49
+      name: adventurer_tiles_49
       rect:
         serializedVersion: 2
         x: 84
-        y: 28
+        y: 56
         width: 28
         height: 28
       alignment: 7
@@ -1140,18 +1140,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3e8b084aef326e43a140b8a36034b87
-      internalID: -1943555766
+      spriteID: 31496f75c94cd91419651f9f02af0aec
+      internalID: 1784632006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tiles_s_50
+      name: adventurer_tiles_50
       rect:
         serializedVersion: 2
         x: 112
-        y: 28
+        y: 56
         width: 28
         height: 28
       alignment: 7
@@ -1161,92 +1161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bfc27289868e6841a700dd529fb3f4f
-      internalID: -557552986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_52
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ecfc32fea085af6428721630cdd8c8b0
-      internalID: -573768278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_53
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 0
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69db40711fec14c408a88055614b4e2f
-      internalID: 1084680657
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_54
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 0
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 069268f65ae82ba4f9d74792960be455
-      internalID: 1881629807
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: adventurer_tiles_s_55
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 0
-        width: 28
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3af5b3b9114ed9046af1313bd792132b
-      internalID: 1449488997
+      spriteID: fb494c4ad83abc240b200696bed159c9
+      internalID: 1923222773
       vertices: []
       indices: 
       edges: []
@@ -1256,6 +1172,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 140
+        y: 56
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f697071d338d7d4fbdf028c907b740d
+      internalID: 347642194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_52
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 28
         width: 28
         height: 28
@@ -1266,8 +1203,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3390245a7ecdaea4d9b7e33bcb528668
-      internalID: -653995275
+      spriteID: a500cafceee84944abae94c55803f6b6
+      internalID: 113466619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_53
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 28
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b68ad96414e7354696c2fda59f712b6
+      internalID: 639286843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_54
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 28
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2cff53302473954d99518fc7076621f
+      internalID: -1469478719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_55
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 28
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50e4031a92e973240b7e78c59349b25c
+      internalID: -1864680671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adventurer_tiles_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 28
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a92977a96b6379c48942495892ccc6da
+      internalID: -1929796043
       vertices: []
       indices: 
       edges: []
@@ -1283,62 +1304,63 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      adventurer_tiles_51: -653995275
-      adventurer_tiles_s_0: -3213018
-      adventurer_tiles_s_1: 476486563
-      adventurer_tiles_s_10: 415793578
-      adventurer_tiles_s_11: -859636552
-      adventurer_tiles_s_12: -1413864795
-      adventurer_tiles_s_13: -678091044
-      adventurer_tiles_s_14: 666298546
-      adventurer_tiles_s_15: -442978738
-      adventurer_tiles_s_16: -774493083
-      adventurer_tiles_s_17: 436707581
-      adventurer_tiles_s_18: 322734189
-      adventurer_tiles_s_19: 1707658355
-      adventurer_tiles_s_2: -855993627
-      adventurer_tiles_s_20: -894699911
-      adventurer_tiles_s_21: 893440286
-      adventurer_tiles_s_22: -324513753
-      adventurer_tiles_s_23: 1326946599
-      adventurer_tiles_s_24: -511142999
-      adventurer_tiles_s_25: 1904246151
-      adventurer_tiles_s_26: -1893010394
-      adventurer_tiles_s_27: -1892333935
-      adventurer_tiles_s_28: -1282691627
-      adventurer_tiles_s_29: 1071855956
-      adventurer_tiles_s_3: 1034239352
-      adventurer_tiles_s_30: 1529117521
-      adventurer_tiles_s_31: -1701100260
-      adventurer_tiles_s_32: -894689902
-      adventurer_tiles_s_33: -442597379
-      adventurer_tiles_s_34: 38964238
-      adventurer_tiles_s_35: 813997691
-      adventurer_tiles_s_36: -1122131786
-      adventurer_tiles_s_37: -758320001
-      adventurer_tiles_s_38: -883220015
-      adventurer_tiles_s_39: -829222741
-      adventurer_tiles_s_4: -741462903
-      adventurer_tiles_s_40: 2001301189
-      adventurer_tiles_s_41: -213811764
-      adventurer_tiles_s_42: 441701786
-      adventurer_tiles_s_43: 1783525274
-      adventurer_tiles_s_44: -500134485
-      adventurer_tiles_s_45: -561628259
-      adventurer_tiles_s_46: 704259302
-      adventurer_tiles_s_47: 1139237152
-      adventurer_tiles_s_48: 200433901
-      adventurer_tiles_s_49: -1943555766
-      adventurer_tiles_s_5: 181745499
-      adventurer_tiles_s_50: -557552986
-      adventurer_tiles_s_52: -573768278
-      adventurer_tiles_s_53: 1084680657
-      adventurer_tiles_s_54: 1881629807
-      adventurer_tiles_s_55: 1449488997
-      adventurer_tiles_s_6: 585887717
-      adventurer_tiles_s_7: 2048192847
-      adventurer_tiles_s_8: 2067142475
-      adventurer_tiles_s_9: -2133907873
+      adventurer_tiles_0: 1235730417
+      adventurer_tiles_1: -1713397935
+      adventurer_tiles_10: 1480874096
+      adventurer_tiles_11: -812927694
+      adventurer_tiles_12: -824343782
+      adventurer_tiles_13: 682837636
+      adventurer_tiles_14: 1645232564
+      adventurer_tiles_15: -1822951941
+      adventurer_tiles_16: 101704821
+      adventurer_tiles_17: 256932686
+      adventurer_tiles_18: -1850367542
+      adventurer_tiles_19: -1837230663
+      adventurer_tiles_2: 1750344883
+      adventurer_tiles_20: -1026487102
+      adventurer_tiles_21: 1266321811
+      adventurer_tiles_22: 210813140
+      adventurer_tiles_23: 217807453
+      adventurer_tiles_24: 332941481
+      adventurer_tiles_25: 381043580
+      adventurer_tiles_26: 1880583464
+      adventurer_tiles_27: -568289879
+      adventurer_tiles_28: 1518389964
+      adventurer_tiles_29: 1890307641
+      adventurer_tiles_3: 1278822850
+      adventurer_tiles_30: 944116091
+      adventurer_tiles_31: 459214277
+      adventurer_tiles_32: -861925276
+      adventurer_tiles_33: -2071345827
+      adventurer_tiles_34: 354963192
+      adventurer_tiles_35: 701699112
+      adventurer_tiles_36: 1339775741
+      adventurer_tiles_37: -616169107
+      adventurer_tiles_38: -1284384194
+      adventurer_tiles_39: 802301963
+      adventurer_tiles_4: -486461491
+      adventurer_tiles_40: 2116696621
+      adventurer_tiles_41: 516959513
+      adventurer_tiles_42: -1943881169
+      adventurer_tiles_43: 2103987935
+      adventurer_tiles_44: 1250441758
+      adventurer_tiles_45: 500256461
+      adventurer_tiles_46: 1665537643
+      adventurer_tiles_47: 2099426398
+      adventurer_tiles_48: -677949307
+      adventurer_tiles_49: 1784632006
+      adventurer_tiles_5: -716750731
+      adventurer_tiles_50: 1923222773
+      adventurer_tiles_51: 347642194
+      adventurer_tiles_52: 113466619
+      adventurer_tiles_53: 639286843
+      adventurer_tiles_54: -1469478719
+      adventurer_tiles_55: -1864680671
+      adventurer_tiles_56: -1929796043
+      adventurer_tiles_6: 2006108248
+      adventurer_tiles_7: 213805230
+      adventurer_tiles_8: -1315428212
+      adventurer_tiles_9: 37667741
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

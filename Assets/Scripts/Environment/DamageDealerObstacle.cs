@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class DamageDealerObstacle : MonoBehaviour
 {
-    [SerializeField] private int damage = 1;
     [SerializeField] private DamageType damageType;
+    [SerializeField] private int damage = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +22,7 @@ public class DamageDealerObstacle : MonoBehaviour
 
     public enum DamageType
     {
+        TakeDamage,
         InstantDeath
     }
-
 }

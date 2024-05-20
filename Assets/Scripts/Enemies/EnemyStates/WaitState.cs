@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class WaitState : State
@@ -12,8 +14,8 @@ public class WaitState : State
     private AttackState attackState;
     private Animator anim;
 
-    private bool waitFlag = false;
-    private bool isWaiting = false;
+    private bool waiting = false;
+    private float waitTimer = 0f;
 
     private void Awake()
     {
@@ -25,39 +27,38 @@ public class WaitState : State
 
     public override State RunCurrentState()
     {
-        if (sm.PlayerCheck())
+        if (sm.PlayerCheck()) return StateEnd(attackState);
+
+        if (waiting)
         {
-            attackState.AttackFlag();
-            return attackState;
+            if (waitTimer <= 0)
+            {
+                waiting = false;
+                sm.Flip();
+            }
+            else
+            {
+                waitTimer -= Time.deltaTime;
+            }
         }
-
-        if (waitFlag)
-        {
-            waitFlag = false;
-            StartCoroutine(Wait());
-        }
-
-        if (!isWaiting)
-            return roamState;
-
-        anim.SetBool("Waiting", false);
+        else return StateEnd(roamState);
 
         return this;
     }
 
-    public void WaitFlag()
+    public override void StateStartFlag()
     {
-        waitFlag = true;
+        waiting = true;
+        waitTimer = Random.Range(averageWaitTime - waitTimeFluctuation, averageWaitTime + waitTimeFluctuation);
+        anim.SetBool("Waiting", true);
     }
 
-    private IEnumerator Wait()
+    protected override State StateEnd(State state)
     {
-        isWaiting = true;
+        waiting = false;
+        anim.SetBool("Waiting", false);
 
-        float randomWaitTime = Random.Range(averageWaitTime - waitTimeFluctuation, averageWaitTime + waitTimeFluctuation);
-        yield return new WaitForSeconds(randomWaitTime);
-
-        isWaiting = false;
-        sm.Flip();
+        state.StateStartFlag();
+        return state;
     }
 }

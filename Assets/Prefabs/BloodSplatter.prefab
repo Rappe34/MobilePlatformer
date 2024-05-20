@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6431801073697205297}
   - component: {fileID: 5291041732922302099}
   - component: {fileID: 997533160432866736}
-  - component: {fileID: 1714527867277469826}
   m_Layer: 0
   m_Name: BloodSplatter
   m_TagString: Untagged
@@ -981,7 +980,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 25
+        scalar: 15
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -4889,15 +4888,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1714527867277469826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5011214815296500448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4abf18711f7c5f94cad022dfc467e851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

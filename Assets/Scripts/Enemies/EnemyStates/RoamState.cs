@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 
 public class RoamState : State
 {
@@ -24,20 +25,29 @@ public class RoamState : State
     {
         if (sm.PlayerCheck())
         {
-            attackState.AttackFlag();
-            return attackState;
+            return StateEnd(attackState);
         }
 
         if (sm.ObstacleCheck())
         {
-            waitState.WaitFlag();
-            return waitState;
+            return StateEnd(waitState);
         }
 
         rb.velocity = new Vector2(sm.facingRight ? movementSpeed : -movementSpeed, rb.velocity.y);
 
-        anim.SetBool("Waiting", false);
-
         return this;
+    }
+
+    public override void StateStartFlag()
+    {
+        anim.SetBool("Walking", true);
+    }
+
+    protected override State StateEnd(State state)
+    {
+        anim.SetBool("Walking", false);
+
+        state.StateStartFlag();
+        return state;
     }
 }

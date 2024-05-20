@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5565759851309223880}
   - component: {fileID: 9063506845356030663}
+  - component: {fileID: 155711155405460318}
+  - component: {fileID: 5995861456922410963}
   - component: {fileID: 8934285154521899997}
   - component: {fileID: 734064870552032655}
-  - component: {fileID: 8251170291688728590}
+  - component: {fileID: 9026561230903522847}
   - component: {fileID: 3709129220970098857}
   - component: {fileID: 5225782787534829461}
   - component: {fileID: 8941340434933126675}
@@ -54,8 +56,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 34b754794cb712442be87fdb87cd9a10, type: 2}
-  _inputActions: {fileID: -944628639613478452, guid: 4714e617cc3e2df4b8f41331b5a95f7a, type: 3}
+  playerInputHandler: {fileID: 9026561230903522847}
   _dustEffect: {fileID: 3595209259126037804, guid: 1427b17d39e2dbb46b3fddc564d80e26, type: 3}
+--- !u!114 &155711155405460318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577647971722247428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48dd86409e2227649a2d5433eb56e873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 017ef57b4b945eb43b75843029309f7b, type: 2}
+  invincibilityTime: 0.5
+  bloodSplatterEffect: {fileID: 5011214815296500448, guid: 28dbe39bff1e79f49ae7e5a937b6af9b, type: 3}
+--- !u!114 &5995861456922410963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577647971722247428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e1872774dc1c024da49a5cc5673a3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 3
 --- !u!114 &8934285154521899997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 522861013101521734}
-  attackPointRadius: 0.53
+  attackPointRadius: 0.55
   baseAttackDamage: 1
   attackRate: 3
   comboChargetime: 1.5
@@ -89,7 +119,7 @@ MonoBehaviour:
   inventoryData: {fileID: 0}
   parametersToModify: []
   itemCurrentState: []
---- !u!114 &8251170291688728590
+--- !u!114 &9026561230903522847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,12 +128,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 577647971722247428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e992c291a6225c4799f576be39466f0, type: 3}
+  m_Script: {fileID: 11500000, guid: f60f95dea9b3e6042a24a0b1565304fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 017ef57b4b945eb43b75843029309f7b, type: 2}
-  invincibilityTime: 0.25
-  bloodSplatterEffect: {fileID: 5011214815296500448, guid: 28dbe39bff1e79f49ae7e5a937b6af9b, type: 3}
+  _inputAsset: {fileID: -944628639613478452, guid: 4714e617cc3e2df4b8f41331b5a95f7a, type: 3}
 --- !u!212 &3709129220970098857
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3213018, guid: 0ff0f164e9b233247bd04979115fae68, type: 3}
+  m_Sprite: {fileID: 1235730417, guid: 0ff0f164e9b233247bd04979115fae68, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -286,9 +314,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.6
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.65
+  m_Intensity: 0.7
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -310,7 +338,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 1.5
-  m_PointLightOuterRadius: 8
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

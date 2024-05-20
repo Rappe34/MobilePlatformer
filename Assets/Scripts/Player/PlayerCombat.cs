@@ -16,6 +16,7 @@ public class PlayerCombat : MonoBehaviour
     private Animator anim;
     private float timeSinceAttack = 0f;
     private float timeSinceComboAttack = 0f;
+    private bool attackPossible = true;
     private bool comboPossible = true;
 
     private void Awake()
@@ -28,43 +29,37 @@ public class PlayerCombat : MonoBehaviour
         timeSinceAttack += Time.deltaTime;
         timeSinceComboAttack += Time.deltaTime;
 
-        if (timeSinceAttack < 5f)
-            inCombat = true;
-        else
-            inCombat = false;
+        if (timeSinceAttack > 5f) inCombat = false;
+        anim.SetBool("InCombat", inCombat);
 
-        if (timeSinceComboAttack > comboChargetime)
-            comboPossible = true;
-        else
-            comboPossible = false;
-
-        anim.SetFloat("TimeSinceAttack", timeSinceAttack);
-        anim.SetBool("ComboPossible", timeSinceComboAttack > comboChargetime);
+        attackPossible = timeSinceAttack > 1f / attackRate;
+        comboPossible = timeSinceComboAttack > comboChargetime;
     }
 
-    private void Attack()
+    private void Attack(bool combo)
     {
-        int r3 = Random.Range(1, 3);
-        if (r3 == 1) anim.SetTrigger("Attack1");
+        if (combo) anim.SetTrigger("ComboAttack");
+        else if (comboPossible) anim.SetTrigger("Attack1");
         else anim.SetTrigger("Attack2");
 
+        inCombat = true;
         attacking = true;
         timeSinceAttack = 0f;
     }
 
     public void TryAttack()
     {
-        if (timeSinceAttack >= 1f / attackRate)
-            Attack();
+        if (attacking && comboPossible) Attack(true);
+        else if (timeSinceAttack >= 1f / attackRate) Attack(false);
     }
 
     public void AttackHitCheck()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, .2f, LayerMask.GetMask("Enemy"));
+        Collider2D[] hitCol = Physics2D.OverlapCircleAll(attackPoint.position, .2f, LayerMask.GetMask("Enemy"));
 
-        foreach (Collider2D enemy in hitEnemies)
+        foreach (Collider2D col in hitCol)
         {
-            enemy.GetComponent<EnemyHealth>().TakeDamage(baseAttackDamage);
+            col.GetComponent<Health>().TakeDamage(baseAttackDamage, col.transform.position - transform.position);
         }
     }
 

@@ -9,22 +9,21 @@ namespace PlayerController
     public class PlayerController : MonoBehaviour, IPlayerController
     {
         [SerializeField] private ScriptablePlayerStats _stats;
+        [SerializeField] private PlayerInputHandler playerInputHandler;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
-        private FrameInput _frameInput;
+        private Animator _anim;
+        private FrameInput _input;
         private Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
 
         private PlayerCombat _playerCombat;
 
-        [SerializeField] private InputActionAsset _inputActions;
-        private InputActionMap _playerControls;
-
         [SerializeField] private GameObject _dustEffect;
 
         #region Interface
 
-        public Vector2 FrameInput => _frameInput.Move;
+        public Vector2 FrameInput => _input.Move;
         public event Action<bool, float> GroundedChanged;
         public event Action Jumped;
 
@@ -37,13 +36,11 @@ namespace PlayerController
         {
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
+            _anim = GetComponent<Animator>();
 
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
 
             _playerCombat = GetComponent<PlayerCombat>();
-
-            _playerControls = _inputActions.FindActionMap("Game");
-            _playerControls.Enable();
         }
 
         private void Update()
@@ -51,27 +48,21 @@ namespace PlayerController
             _time += Time.deltaTime;
             GetInput();
 
-            if ((_frameInput.Move.x < 0 && _facingRight) || (_frameInput.Move.x > 0 && !_facingRight))
+            if ((_input.Move.x < 0 && _facingRight) || (_input.Move.x > 0 && !_facingRight))
                 Flip();
         }
 
         private void GetInput()
         {
-            _frameInput = new FrameInput
-            {
-                Move = _playerControls["Move"].ReadValue<Vector2>(),
-                JumpDown = _playerControls["Jump"].triggered,
-                JumpHeld = _playerControls["Jump"].phase == InputActionPhase.Started  || _playerControls["Jump"].phase == InputActionPhase.Performed,
-                AttackDown = _playerControls["Attack"].triggered
-            };
+            _input = playerInputHandler.GetInput();
 
             if (_stats.SnapInput)
             {
-                _frameInput.Move.x = Mathf.Abs(_frameInput.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.x);
-                _frameInput.Move.y = Mathf.Abs(_frameInput.Move.y) < _stats.VerticalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.y);
+                _input.Move.x = Mathf.Abs(_input.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_input.Move.x);
+                _input.Move.y = Mathf.Abs(_input.Move.y) < _stats.VerticalDeadZoneThreshold ? 0 : Mathf.Sign(_input.Move.y);
             }
 
-            if (_frameInput.JumpDown)
+            if (_input.JumpDown)
             {
                 _jumpToConsume = true;
                 _timeJumpWasPressed = _time;
@@ -89,6 +80,8 @@ namespace PlayerController
             ApplyMovement();
 
             HandleCombat();
+
+            UpdateAnimatorVars();
         }
 
         #region Collisions
@@ -101,8 +94,8 @@ namespace PlayerController
             Physics2D.queriesStartInColliders = false;
 
             // Ground and Ceiling
-            bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
-            bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, ~_stats.PlayerLayer);
+            bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, LayerMask.GetMask("Ground", "Platform"));
+            bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, LayerMask.GetMask("Ground", "Platform"));
 
             // Hit a Ceiling
             if (ceilingHit) _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);
@@ -145,11 +138,13 @@ namespace PlayerController
 
         private void HandleJump()
         {
-            if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.velocity.y > 0) _endedJumpEarly = true;
+            if (!_endedJumpEarly && !_grounded && !_input.JumpHeld && _rb.velocity.y > 0) _endedJumpEarly = true;
 
             if (!_jumpToConsume && !HasBufferedJump) return;
 
-            if (_playerCombat.attacking && (_grounded || CanUseCoyote)) ExecuteJump();
+            if (_playerCombat.attacking) return;
+
+            if (_grounded || CanUseCoyote) ExecuteJump();
 
             _jumpToConsume = false;
         }
@@ -170,14 +165,14 @@ namespace PlayerController
 
         private void HandleDirection()
         {
-            if (_frameInput.Move.x == 0)
+            if (_input.Move.x == 0)
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
             }
             else
             {
-                _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+                _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _input.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
             }
         }
 
@@ -207,8 +202,9 @@ namespace PlayerController
 
         private void HandleCombat()
         {
-            if (_frameInput.AttackDown && _grounded)
-                _playerCombat.TryAttack();
+            if (_grounded) return;
+
+            if (_input.AttackDown) _playerCombat.TryAttack();
         }
 
         #endregion
@@ -220,8 +216,14 @@ namespace PlayerController
             transform.localScale = scale;
             _facingRight = !_facingRight;
 
-            if (_grounded)
-                Instantiate(_dustEffect, transform.position, Quaternion.identity);
+            if (_grounded) Instantiate(_dustEffect, transform.position, Quaternion.identity);
+        }
+
+        private void UpdateAnimatorVars()
+        {
+            _anim.SetBool("Grounded", _grounded);
+            _anim.SetFloat("AbsVelocityX", Mathf.Abs(_rb.velocity.x));
+            _anim.SetFloat("VelocityY", _rb.velocity.y);
         }
 
 #if UNITY_EDITOR
@@ -230,14 +232,6 @@ namespace PlayerController
             if (_stats == null) Debug.LogWarning("Please assign a ScriptableStats asset to the Player Controller's Stats slot", this);
         }
 #endif
-    }
-
-    public struct FrameInput
-    {
-        public Vector2 Move;
-        public bool JumpDown;
-        public bool JumpHeld;
-        public bool AttackDown;
     }
 
     public interface IPlayerController

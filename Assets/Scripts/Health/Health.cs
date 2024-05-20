@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Health : MonoBehaviour
+public class Health : MonoBehaviour
 {
     [SerializeField] private HealthStatsSO stats;
-    [SerializeField] private float invincibilityTime = .25f;
+    [SerializeField] private float invincibilityTime = .5f;
+    [SerializeField] private GameObject bloodSplatterEffect;
 
+    private KnockbackFeedback knockbackFeedback;
     private Animator anim;
 
     public bool isAlive { get; private set; } = true;
@@ -17,6 +19,7 @@ public abstract class Health : MonoBehaviour
 
     private void Awake()
     {
+        knockbackFeedback = GetComponent<KnockbackFeedback>();
         anim = GetComponent<Animator>();
     }
 
@@ -42,10 +45,25 @@ public abstract class Health : MonoBehaviour
         }
 
         anim.SetTrigger("TakeDamage");
-
         currentHealth -= amount;
-
         timeSinceHit = 0f;
+    }
+
+    public void TakeDamage(int amount, Vector2 knockbackDirection)
+    {
+        if (isInvincible) return;
+
+        if (currentHealth - amount <= 0)
+        {
+            Die();
+            return;
+        }
+
+        anim.SetTrigger("TakeDamage");
+        currentHealth -= amount;
+        timeSinceHit = 0f;
+
+        knockbackFeedback.PlayFeedback(knockbackDirection);
     }
 
     public void AddHealth(int amount)
@@ -53,8 +71,9 @@ public abstract class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, stats.maxHealth);
     }
 
-    protected virtual void Die()
+    private void Die()
     {
-        Debug.Log($"{gameObject.name} died!");
+        Instantiate(bloodSplatterEffect, transform.position + Vector3.up, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

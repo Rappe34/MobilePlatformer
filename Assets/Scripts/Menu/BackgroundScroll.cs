@@ -5,26 +5,40 @@ using UnityEngine;
 public class BackgroundScroll : MonoBehaviour
 {
     [SerializeField] private List<Transform> images;
-    [SerializeField] private float scrollSpeed = 1.25f;
+    [SerializeField] private float scrollSpeed = .75f;
 
     private Camera cam;
+    private float camLeftEdgeX;
 
     private void Awake()
     {
         cam = Camera.main;
     }
 
-    void Update()
+    private void Start()
+    {
+        camLeftEdgeX = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
+        float currentX = camLeftEdgeX;
+
+        foreach (Transform image in images)
+        {
+            float imageWidth = image.GetComponent<Renderer>().bounds.size.x;
+            image.position = new Vector3(currentX + imageWidth / 2, image.position.y, image.position.z);
+            currentX += imageWidth;
+        }
+    }
+
+    private void Update()
     {
         foreach (Transform image in images)
         {
             image.Translate(Vector2.left * scrollSpeed * Time.deltaTime);
 
-            float camLeftEdgeX = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
+            float imageWidth = image.GetComponent<Renderer>().bounds.size.x;
 
-            if (image.position.x + image.GetComponent<RectTransform>().rect.width < camLeftEdgeX)
+            if (image.position.x + imageWidth / 2 < camLeftEdgeX)
             {
-                image.position += new Vector3(GetPosShift(), 0);
+                image.position += new Vector3(GetPosShift(), 0, 0);
             }
         }
     }
@@ -34,7 +48,7 @@ public class BackgroundScroll : MonoBehaviour
         float dx = 0;
         foreach (Transform image in images)
         {
-            dx += image.GetComponent<RectTransform>().rect.width;
+            dx += image.GetComponent<Renderer>().bounds.size.x;
         }
         return dx;
     }

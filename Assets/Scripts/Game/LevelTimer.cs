@@ -8,8 +8,6 @@ public class LevelTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
 
-    public static LevelTimer Instance { get; private set; }
-
     public TimeSpan elapsedTimeInSeconds { get; private set; } = TimeSpan.Zero;
 
     private float elapsedTime;
@@ -18,21 +16,12 @@ public class LevelTimer : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
-        if (running)
-            UpdateTimer();
+        if (running) UpdateTimer();
     }
 
     private void UpdateTimer()

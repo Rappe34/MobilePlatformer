@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static PauseMenu Instance { get; private set; }
-
     [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private GameObject settingsMenuPanel;
     [SerializeField] private GameObject blurVolume;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
+        pauseMenuPanel.SetActive(false);
+        settingsMenuPanel.SetActive(false);
         blurVolume.SetActive(false);
     }
 
-    public void SetMenuActive(bool paused)
+    public void ToggleMenu()
     {
-        pauseMenuPanel.SetActive(paused);
-        blurVolume.SetActive(paused);
+        pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
+        settingsMenuPanel.SetActive(false);
+        blurVolume.SetActive(!blurVolume.activeInHierarchy);
+    }
+
+    public void ToggleSettingsMenu()
+    {
+        pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
+        settingsMenuPanel.SetActive(!settingsMenuPanel.activeInHierarchy);
     }
 }

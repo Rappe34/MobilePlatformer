@@ -6,6 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField] private GameOverMenu gameOverMenu;
+    [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private LevelTimer levelTimer;
+
     public bool gameOver { get; private set; } = false;
     public GameOverType gameOverType { get; private set; }
 
@@ -40,27 +44,32 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        LevelTimer.Instance.StopTimer();
-        GameOverMenu.Instance.ShowScreen(gameOverType);
+        levelTimer.StopTimer();
+        gameOverMenu.ShowScreen(gameOverType);
     }
 
     public void PauseGame()
     {
-        LevelTimer.Instance.StopTimer();
-        PauseMenu.Instance.SetMenuActive(true);
+        levelTimer.StopTimer();
+        pauseMenu.ToggleMenu();
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        PauseMenu.Instance.SetMenuActive(false);
-        LevelTimer.Instance.StartTimer();
+        pauseMenu.ToggleMenu();
+        levelTimer.StartTimer();
         Time.timeScale = 1f;
     }
-}
 
-public enum GameOverType
-{
-    Lose = 0,
-    Win = 1
+    public void TogglePauseSettingsMenu()
+    {
+        pauseMenu.ToggleSettingsMenu();
+    }
+
+    public enum GameOverType
+    {
+        Lose = 0,
+        Win = 1
+    }
 }

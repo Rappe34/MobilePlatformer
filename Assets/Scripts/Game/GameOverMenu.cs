@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public static GameOverMenu Instance { get; private set; }
-
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -20,15 +18,15 @@ public class GameOverMenu : MonoBehaviour
         winPanel.SetActive(false);
     }
 
-    public void ShowScreen(GameOverType gameOverType)
+    public void ShowScreen(GameManager.GameOverType gameOverType)
     {
         switch (gameOverType)
         {
-            case GameOverType.Lose:
+            case GameManager.GameOverType.Lose:
                 losePanel.SetActive(true);
                 break;
 
-            case GameOverType.Win:
+            case GameManager.GameOverType.Win:
                 winPanel.SetActive(true);
                 break;
         }

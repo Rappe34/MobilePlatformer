@@ -124,7 +124,6 @@ namespace PlayerController
 
         #endregion
 
-
         #region Jumping
 
         private bool _jumpToConsume;
@@ -165,6 +164,8 @@ namespace PlayerController
 
         private void HandleDirection()
         {
+            if (_playerCombat.attacking) { _frameVelocity.x = 0f; return; }
+
             if (_input.Move.x == 0)
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -202,9 +203,7 @@ namespace PlayerController
 
         private void HandleCombat()
         {
-            if (_grounded) return;
-
-            if (_input.AttackDown) _playerCombat.TryAttack();
+            if (_input.AttackDown && _grounded) _playerCombat.TryAttack();
         }
 
         #endregion

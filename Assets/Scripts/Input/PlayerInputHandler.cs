@@ -32,7 +32,6 @@ public class PlayerInputHandler : MonoBehaviour
         _inputMap["Jump"].performed += OnJumpPerformed;
         _inputMap["Jump"].canceled += OnJumpCanceled;
         _inputMap["Attack"].performed += OnAttack;
-        print(_inputMap["Attack"]);
     }
 
     private void OnDisable()

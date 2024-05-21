@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1872774dc1c024da49a5cc5673a3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 3
+  force: 100
 --- !u!114 &8934285154521899997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,10 +218,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 9.81
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 780dbd628d2e5db4cba7f416045acf52, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -38,7 +38,8 @@ public class PlayerCombat : MonoBehaviour
 
     private void Attack(bool combo)
     {
-        if (combo) anim.SetTrigger("ComboAttack");
+        print("attack");
+        if (combo) anim.SetBool("ComboAttack", true);
         else if (comboPossible) anim.SetTrigger("Attack1");
         else anim.SetTrigger("Attack2");
 
@@ -50,7 +51,7 @@ public class PlayerCombat : MonoBehaviour
     public void TryAttack()
     {
         if (attacking && comboPossible) Attack(true);
-        else if (timeSinceAttack >= 1f / attackRate) Attack(false);
+        else if (attackPossible) Attack(false);
     }
 
     public void AttackHitCheck()
@@ -66,6 +67,11 @@ public class PlayerCombat : MonoBehaviour
     public void AttackEnd()
     {
         attacking = false;
+    }
+
+    public void ComboAtackEnd()
+    {
+        anim.SetBool("ComboAttack", false);
     }
 
     private void OnDrawGizmosSelected()

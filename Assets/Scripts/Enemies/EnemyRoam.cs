@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyRoam : StateMachineBehaviour
 {
+    [SerializeField] private float speed = 2.5f;
+
     private Transform player;
     private Rigidbody2D rb;
     private Enemy enemy;
@@ -17,11 +19,17 @@ public class EnemyRoam : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (enemy.seesPlayer) animator.SetTrigger("Lurk");
-    }
+        float moveDirection = enemy.facingRight ? 1f : -1f;
 
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.ResetTrigger("Lurk");
+        enemy.MovementX(moveDirection * speed);
+
+        if (enemy.obstacleOnPath == ObstacleType.HighWall || (enemy.obstacleOnPath == ObstacleType.Drop))
+            animator.SetTrigger("Wait");
+
+        if (enemy.seesPlayer)
+            animator.SetTrigger("Lurk");
+
+        if (enemy.obstacleOnPath == ObstacleType.LowWall)
+            animator.SetTrigger("Jump");
     }
 }

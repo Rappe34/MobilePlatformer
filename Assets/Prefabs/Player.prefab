@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 522861013101521734}
-  attackPointRadius: 0.55
+  attackPointRadius: 0.582
   baseAttackDamage: 1
   attackRate: 3
   comboChargetime: 1.5

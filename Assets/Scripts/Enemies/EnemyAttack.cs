@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 public class EnemyAttack : StateMachineBehaviour
 {
-    [SerializeField] private float speed = 2.5f;
-    [SerializeField] private float attackRange = 3f;
+    [SerializeField] private float speed = 3.6f;
+    [SerializeField] private float attackRange;
 
     private Transform player;
     private Rigidbody2D rb;
@@ -23,17 +22,23 @@ public class EnemyAttack : StateMachineBehaviour
     {
         enemy.LookAtPlayer();
 
-        Vector2 target = player.position;
-        rb.MovePosition(new Vector2(Mathf.MoveTowards(rb.position.x, target.x, speed * Time.deltaTime), rb.position.y));
+        float direction = player.position.x - rb.position.x;
+        if (Vector2.Distance(rb.position, player.position) > 1f)
+        {
+            float moveDirection = Mathf.Sign(direction);
+            enemy.MovementX(moveDirection * speed);
+        }
 
-        if (!enemy.seesPlayer) animator.SetTrigger("Roam");
+        if (enemy.seesPlayer && (enemy.obstacleOnPath == ObstacleType.Drop || enemy.obstacleOnPath == ObstacleType.HighWall))
+            animator.SetTrigger("Wait");
 
-        if (enemy.playerInAttackRange) animator.SetTrigger("Attack");
-    }
+        if (enemy.seesPlayer && Vector2.Distance(rb.position, player.position) <= attackRange)
+            animator.SetTrigger("Attack");
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.ResetTrigger("Roam");
-        animator.ResetTrigger("Attack");
+        if (!enemy.seesPlayer)
+            animator.SetTrigger("Roam");
+
+        if (enemy.obstacleOnPath == ObstacleType.LowWall)
+            animator.SetTrigger("Jump");
     }
 }

@@ -4,24 +4,31 @@ using UnityEngine;
 
 public class EnemyStay : StateMachineBehaviour
 {
-    private Transform player;
-    private Rigidbody2D rb;
+    [SerializeField] private float waitTime = 1.2f;
+
     private Enemy enemy;
+
+    private float timeElapsed;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = animator.GetComponent<Rigidbody2D>();
         enemy = animator.GetComponent<Enemy>();
+        timeElapsed = 0f;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (enemy.seesPlayer) animator.SetTrigger("Lurk");
-    }
+        timeElapsed += Time.deltaTime;
 
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.ResetTrigger("Lurk");
+        enemy.MovementX(0f);
+
+        if (enemy.seesPlayer && enemy.obstacleOnPath == ObstacleType.None)
+            animator.SetTrigger("Lurk");
+
+        if (!enemy.seesPlayer && timeElapsed >= waitTime)
+        {
+            animator.SetTrigger("Roam");
+            enemy.Flip();
+        }
     }
 }

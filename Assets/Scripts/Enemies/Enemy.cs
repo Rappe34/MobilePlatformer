@@ -1,56 +1,80 @@
-using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Windows;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private ScriptableEnemyStats stats;
     [SerializeField] private Transform player;
-    [SerializeField] private float wallCheckRayLength, fallCheckRayLength;
-    [SerializeField] private float sightHeight = 1.4f;
-    [SerializeField] private float forceDetectionRange = 3.5f; // Range at which enemy detects player no matter what
-    [SerializeField] private float sightRange = 8f; // Range at which enemy can detect player in front of it
-    [SerializeField] private float attackRange = 2f;
 
-    public bool facingRight { get; private set; } = false;
+    [Header("GROUND AND OBSTACLE CHECKS")]
+    [SerializeField] private LayerMask groundLayers;
+    [SerializeField] private BoxCollider2D groundCheckCollider;
+    [SerializeField] private BoxCollider2D fallCheckCollider;
+    [SerializeField] private float wallCheckRayLength;
+    [Header("PLAYER CHECK")]
+    [SerializeField] private LayerMask sightLayers;
+    [SerializeField] private Transform sightTransform;
+    [SerializeField] private float sightRange;
+    [SerializeField] private float forceDetectionRange;
+
+    public bool grounded { get; private set; } = true;
+    public bool facingRight { get; private set; } = true;
     public bool seesPlayer { get; private set; } = false;
-    public bool playerInAttackRange { get; private set; } = false;
+    public ObstacleType obstacleOnPath { get; private set; } = ObstacleType.None;
 
-    private SpriteRenderer sr;
-    private float playerEnemyDistance;
+    private Rigidbody2D rb;
+    private Vector2 frameVelocity;
 
     private void Awake()
     {
-        sr = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        // Distance between enemy and player
-        playerEnemyDistance = Vector2.Distance(transform.position, player.position);
-
-        // Determine if the enemy sees the player
+        grounded = GroundCheck();
         seesPlayer = PlayerInSightCheck();
+        obstacleOnPath = ObstacleCheck();
+
+        print(obstacleOnPath);
+
+        HandleGravity();
+        ApplyMovement();
+    }
+
+    private bool GroundCheck()
+    {
+        return Physics2D.OverlapBox(transform.position, groundCheckCollider.bounds.size, 0f, groundLayers);
     }
 
     private bool PlayerInSightCheck()
     {
-        if (Physics2D.Raycast(transform.position + new Vector3(0f, sightHeight), player.position - transform.position, forceDetectionRange)) return true;
+        float playerEnemyDistance = Vector2.Distance(transform.position, player.position);
 
-        if (playerEnemyDistance <= sightRange && (transform.position.x < player.position.x && facingRight) || (transform.position.x > player.position.x && !facingRight))
-        {
-            if (Physics2D.Raycast(transform.position + new Vector3(0f, sightHeight), player.position - transform.position, sightRange)) return true;
-        }
+        if (playerEnemyDistance <= 1f) return true;
+
+        if (playerEnemyDistance > sightRange) return false;
+
+        bool facingPlayer = (player.position.x >= transform.position.x && facingRight) || (player.position.x < transform.position.x && !facingRight);
+        if (playerEnemyDistance > forceDetectionRange && !facingPlayer) return false;
+
+        RaycastHit2D hit = Physics2D.Raycast(sightTransform.position, player.position - transform.position, Mathf.Infinity, sightLayers);
+
+        if (hit.collider.CompareTag("Player"))
+            return true;
 
         return false;
     }
 
-    public bool ObstacleOnPathCheck()
+    private ObstacleType ObstacleCheck()
     {
-        bool wallAhead = Physics2D.Raycast(transform.position + new Vector3(0f, 1f), facingRight ? transform.forward : -transform.forward, wallCheckRayLength, LayerMask.GetMask("Ground", "Platform"));
-        bool fallAhead = Physics2D.Raycast(transform.position + new Vector3(facingRight ? 1f : -1f, 1f), -Vector2.up, fallCheckRayLength, LayerMask.GetMask("Ground", "Platform"));
-
-        return wallAhead || fallAhead;
+        if (Physics2D.Raycast(sightTransform.position, Vector3.right, wallCheckRayLength, groundLayers)) return ObstacleType.HighWall;
+        if (!Physics2D.OverlapBox(fallCheckCollider.bounds.center, fallCheckCollider.bounds.size, 0f, groundLayers)) return ObstacleType.Drop;
+        if (Physics2D.Raycast(transform.position + new Vector3(0f, .5f), Vector3.right, wallCheckRayLength, groundLayers)) return ObstacleType.LowWall;
+        else return ObstacleType.None;
     }
 
     public void LookAtPlayer()
@@ -60,24 +84,72 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.x > player.position.x && facingRight)
             Flip();
+
         else if (transform.position.x < player.position.x && !facingRight)
             Flip();
     }
 
+    public void MovementX(float targetX)
+    {
+        if (targetX == 0)
+        {
+            var deceleration = grounded ? stats.GroundDeceleration : stats.AirDeceleration;
+            frameVelocity.x = Mathf.MoveTowards(rb.velocity.x, 0, deceleration * Time.fixedDeltaTime);
+        }
+        else
+        {
+            frameVelocity.x = Mathf.MoveTowards(rb.velocity.x, targetX, stats.Acceleration * Time.fixedDeltaTime);
+        }
+    }
+
+    public void Jump()
+    {
+        if (grounded) frameVelocity.y = stats.JumpPower;
+    }
+
+    private void HandleGravity()
+    {
+        if (grounded && frameVelocity.y <= 0f)
+        {
+            frameVelocity.y = stats.GroundingForce;
+        }
+        else
+        {
+            float inAirGravity = stats.FallAcceleration;
+            frameVelocity.y = Mathf.MoveTowards(frameVelocity.y, -stats.MaxFallSpeed, inAirGravity * Time.fixedDeltaTime);
+        }
+    }
+
+    private void ApplyMovement() => rb.velocity = frameVelocity;
+
     public void Flip()
     {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1f;
+        transform.localScale = scale;
         facingRight = !facingRight;
-        sr.flipX = !facingRight;
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + new Vector3(0f, sightHeight), player.position - transform.position);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(sightTransform.position, (facingRight ? Vector2.right : Vector2.left) * wallCheckRayLength);
+        Gizmos.DrawRay(transform.position + new Vector3(0f, .5f), (facingRight ? Vector2.right: Vector2.left) * wallCheckRayLength);
 
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(0f, sightHeight), sightRange);
-        Gizmos.DrawRay(transform.position + new Vector3(0f, 1f), (facingRight ? -transform.forward : transform.forward) * wallCheckRayLength);
-        Gizmos.DrawRay(transform.position + new Vector3(facingRight ? -1f : 1f, 1f), -Vector2.up * fallCheckRayLength);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(sightTransform.position, forceDetectionRange);
+        if (Vector2.Distance(sightTransform.position, player.position) <= forceDetectionRange)
+            Gizmos.DrawRay(sightTransform.position, player.position - transform.position);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(sightTransform.position, sightRange);
     }
+}
+
+public enum ObstacleType
+{
+    None,
+    LowWall,
+    HighWall,
+    Drop
 }

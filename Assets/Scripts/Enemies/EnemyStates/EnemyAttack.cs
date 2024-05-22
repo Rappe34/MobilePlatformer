@@ -6,10 +6,13 @@ public class EnemyAttack : StateMachineBehaviour
 {
     [SerializeField] private float speed = 3.6f;
     [SerializeField] private float attackRange;
+    [SerializeField] private float timeBetweenAttacks;
 
     private Transform player;
     private Rigidbody2D rb;
     private Enemy enemy;
+
+    private float timeSinceAttack;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -21,6 +24,7 @@ public class EnemyAttack : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy.LookAtPlayer();
+        timeSinceAttack += Time.deltaTime;
 
         float direction = player.position.x - rb.position.x;
         if (Vector2.Distance(rb.position, player.position) > 1f)
@@ -32,8 +36,11 @@ public class EnemyAttack : StateMachineBehaviour
         if (enemy.seesPlayer && (enemy.obstacleOnPath == ObstacleType.Drop || enemy.obstacleOnPath == ObstacleType.HighWall))
             animator.SetTrigger("Wait");
 
-        if (enemy.seesPlayer && Vector2.Distance(rb.position, player.position) <= attackRange)
+        if (enemy.seesPlayer && Vector2.Distance(rb.position, player.position) <= attackRange && timeSinceAttack >= timeBetweenAttacks)
+        {
+            timeSinceAttack = 0f;
             animator.SetTrigger("Attack");
+        }
 
         if (!enemy.seesPlayer)
             animator.SetTrigger("Roam");

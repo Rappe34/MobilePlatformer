@@ -7,7 +7,6 @@ using UnityEngine.Windows;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private ScriptableEnemyStats stats;
-    [SerializeField] private Transform player;
 
     [Header("GROUND AND OBSTACLE CHECKS")]
     [SerializeField] private LayerMask groundLayers;
@@ -25,11 +24,13 @@ public class Enemy : MonoBehaviour
     public bool seesPlayer { get; private set; } = false;
     public ObstacleType obstacleOnPath { get; private set; } = ObstacleType.None;
 
+    private Transform player;
     private Rigidbody2D rb;
     private Vector2 frameVelocity;
 
     private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -138,7 +139,7 @@ public class Enemy : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(sightTransform.position, forceDetectionRange);
-        if (Vector2.Distance(sightTransform.position, player.position) <= forceDetectionRange)
+        if (player != null && Vector2.Distance(sightTransform.position, player.position) <= forceDetectionRange)
             Gizmos.DrawRay(sightTransform.position, player.position - transform.position);
 
         Gizmos.color = Color.yellow;

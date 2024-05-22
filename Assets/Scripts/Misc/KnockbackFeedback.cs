@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class KnockbackFeedback : MonoBehaviour
@@ -19,6 +18,5 @@ public class KnockbackFeedback : MonoBehaviour
     {
         StopAllCoroutines();
         rb.AddForce(direction * force, ForceMode2D.Impulse);
-        print("Knockback");
     }
 }

@@ -10,7 +10,7 @@ public class EnemyCombat : MonoBehaviour
 
     public void AttackHitCheck()
     {
-        Collider2D[] hitCol = Physics2D.OverlapCircleAll(attackPoint.position, .2f, LayerMask.GetMask("Enemy"));
+        Collider2D[] hitCol = Physics2D.OverlapCircleAll(attackPoint.position, .2f, LayerMask.GetMask("Player"));
 
         foreach (Collider2D col in hitCol)
         {

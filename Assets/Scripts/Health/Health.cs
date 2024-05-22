@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private HealthStatsSO stats;
     [SerializeField] private float invincibilityTime = .5f;
     [SerializeField] private GameObject bloodSplatterEffect;
+
+    public UnityEvent OnDeath;
 
     private KnockbackFeedback knockbackFeedback;
     private Animator anim;

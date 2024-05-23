@@ -1,9 +1,7 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace PlayerController
+namespace Player
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
@@ -196,6 +194,11 @@ namespace PlayerController
         }
 
         #endregion
+
+        public void AddKnockBack(Vector2 force)
+        {
+            _frameVelocity += force;
+        }
 
         private void ApplyMovement() => _rb.velocity = _frameVelocity;
 

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using HealthSystem;
 
 public class EnemyCombat : MonoBehaviour
 {

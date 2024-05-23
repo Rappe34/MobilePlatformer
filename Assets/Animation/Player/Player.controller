@@ -783,6 +783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62217a421654df44e96b8489cbff7f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultShader: {fileID: 0}
+  flashShader: {fileID: 0}
 --- !u!1101 &-745349913816005764
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

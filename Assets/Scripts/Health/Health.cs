@@ -1,87 +1,86 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour
+namespace HealthSystem
 {
-    [SerializeField] private HealthStatsSO stats;
-    [SerializeField] private float invincibilityTime = .5f;
-    [SerializeField] private GameObject bloodSplatterEffect;
-
-    public UnityEvent OnDeath;
-
-    private KnockbackFeedback knockbackFeedback;
-    private Animator anim;
-
-    public bool isAlive { get; private set; } = true;
-    public int currentHealth { get; private set; }
-
-    private bool isInvincible = false;
-    private float timeSinceHit = 0f;
-
-    private void Awake()
+    public class Health : MonoBehaviour
     {
-        knockbackFeedback = GetComponent<KnockbackFeedback>();
-        anim = GetComponent<Animator>();
-    }
+        [SerializeField] private HealthStatsSO stats;
+        [SerializeField] private float invincibilityTime = .5f;
+        [SerializeField] private GameObject bloodSplatterEffect;
 
-    private void Start()
-    {
-        currentHealth = stats.maxHealth;
-    }
+        public UnityEvent OnTakeDamage, OnDeath;
 
-    private void Update()
-    {
-        timeSinceHit += Time.deltaTime;
-        isInvincible = timeSinceHit <= invincibilityTime;
-    }
+        private Animator anim;
 
-    public void SetInvincible(bool invincible)
-    {
-        isInvincible = invincible;
-    }
+        public bool isAlive { get; private set; } = true;
+        public int currentHealth { get; private set; }
 
-    public void TakeDamage(int amount)
-    {
-        if (isInvincible) return;
+        private bool isInvincible = false;
+        private float timeSinceHit = 0f;
 
-        if (currentHealth - amount <= 0)
+        private void Awake()
         {
-            Die();
-            return;
+            anim = GetComponent<Animator>();
         }
 
-        anim.SetTrigger("TakeDamage");
-        currentHealth -= amount;
-        timeSinceHit = 0f;
-    }
-
-    public void TakeDamage(int amount, Vector2 knockbackDirection)
-    {
-        if (isInvincible) return;
-
-        if (currentHealth - amount <= 0)
+        private void Start()
         {
-            Die();
-            return;
+            currentHealth = stats.maxHealth;
         }
 
-        anim.SetTrigger("TakeDamage");
-        currentHealth -= amount;
-        timeSinceHit = 0f;
+        private void Update()
+        {
+            timeSinceHit += Time.deltaTime;
+            isInvincible = timeSinceHit <= invincibilityTime;
+        }
 
-        knockbackFeedback.PlayFeedback(knockbackDirection);
-    }
+        public void SetInvincible(bool invincible)
+        {
+            isInvincible = invincible;
+        }
 
-    public void AddHealth(int amount)
-    {
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, stats.maxHealth);
-    }
+        public void TakeDamage(int amount)
+        {
+            if (isInvincible) return;
 
-    private void Die()
-    {
-        Instantiate(bloodSplatterEffect, transform.position + Vector3.up, Quaternion.identity);
-        OnDeath?.Invoke();
+            if (currentHealth - amount <= 0)
+            {
+                Die();
+                return;
+            }
+
+            anim.SetTrigger("TakeDamage");
+            currentHealth -= amount;
+            timeSinceHit = 0f;
+        }
+
+        public void TakeDamage(int amount, Vector2 knockbackDirection)
+        {
+            if (isInvincible) return;
+
+            if (currentHealth - amount <= 0)
+            {
+                Die();
+                return;
+            }
+
+            anim.SetTrigger("TakeDamage");
+            currentHealth -= amount;
+            timeSinceHit = 0f;
+
+            OnTakeDamage?.Invoke();
+        }
+
+        public void AddHealth(int amount)
+        {
+            currentHealth = Mathf.Clamp(currentHealth + amount, 0, stats.maxHealth);
+        }
+
+        private void Die()
+        {
+            Instantiate(bloodSplatterEffect, transform.position + Vector3.up, Quaternion.identity);
+            OnDeath?.Invoke();
+        }
     }
 }

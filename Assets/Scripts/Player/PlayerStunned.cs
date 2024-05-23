@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using HealthSystem;
 
-public class PlayerStunned : StateMachineBehaviour
+namespace Player
 {
-    [SerializeField] private Shader defaultShader;
-    [SerializeField] private Shader flashShader;
-
-    private PlayerInputHandler input;
-    private Health health;
-
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class PlayerStunned : StateMachineBehaviour
     {
-        input = animator.GetComponent<PlayerInputHandler>();
-        health = animator.GetComponent<Health>();
+        [SerializeField] private Shader defaultShader;
+        [SerializeField] private Shader flashShader;
 
-        input.SetInputEnabled(false);
-        health.SetInvincible(true);
-    }
+        private PlayerInputHandler input;
+        private Health health;
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        input.SetInputEnabled(true);
-        health.SetInvincible(false);
+        override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            input = animator.GetComponent<PlayerInputHandler>();
+            health = animator.GetComponent<Health>();
+
+            input.SetInputEnabled(false);
+            health.SetInvincible(true);
+        }
+
+        override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            input.SetInputEnabled(true);
+            health.SetInvincible(false);
+        }
     }
 }

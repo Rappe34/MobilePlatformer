@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttack : StateMachineBehaviour
@@ -33,7 +31,7 @@ public class EnemyAttack : StateMachineBehaviour
             enemy.MovementX(moveDirection * speed);
         }
 
-        if (enemy.seesPlayer && (enemy.obstacleOnPath == ObstacleType.Drop || enemy.obstacleOnPath == ObstacleType.HighWall))
+        if (enemy.seesPlayer && (enemy.obstacle == ObstacleType.Drop || enemy.obstacle == ObstacleType.HighWall))
             animator.SetTrigger("Wait");
 
         if (enemy.seesPlayer && Vector2.Distance(rb.position, player.position) <= attackRange && timeSinceAttack >= timeBetweenAttacks)
@@ -45,7 +43,7 @@ public class EnemyAttack : StateMachineBehaviour
         if (!enemy.seesPlayer)
             animator.SetTrigger("Roam");
 
-        if (enemy.obstacleOnPath == ObstacleType.LowWall)
+        if (enemy.obstacle == ObstacleType.LowWall)
             animator.SetTrigger("Jump");
     }
 }

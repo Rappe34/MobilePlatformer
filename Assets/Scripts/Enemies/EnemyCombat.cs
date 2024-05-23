@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyCombat : MonoBehaviour
 {
     [SerializeField] private Transform attackPoint;
-    [SerializeField][Range(.25f, .75f)] private float attackPointRadius;
+    [SerializeField][Range(0.5f, 1.5f)] private float attackPointRadius;
     [SerializeField] private int baseAttackDamage = 1;
 
     public void AttackHitCheck()

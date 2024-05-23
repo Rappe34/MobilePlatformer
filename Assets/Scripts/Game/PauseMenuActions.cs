@@ -1,21 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameManagement;
 
-public class PauseMenuActions : MonoBehaviour
+namespace GameManagement
 {
-    public void PressResume()
+    public class PauseMenuActions : MonoBehaviour
     {
-        GameManager.Instance.ResumeGame();
-    }
+        public void PressResume()
+        {
+            GameManager.Instance.ResumeGame();
+        }
 
-    public void PressSettings()
-    {
-        GameManager.Instance.TogglePauseSettingsMenu();
-    }
+        public void PressSettings()
+        {
+            GameManager.Instance.TogglePauseSettingsMenu();
+        }
 
-    public void PressExit()
-    {
+        public void PressMainMenu()
+        {
+            GameManager.Instance.SwitchScene("Menu");
+        }
 
+        public void PressExit()
+        {
+
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        }
     }
 }

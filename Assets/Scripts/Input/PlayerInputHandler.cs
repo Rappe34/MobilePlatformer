@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public bool inputEnabled {  get; private set; } = true;
-    public void SetInputEnabled(bool value) => inputEnabled = value;
+    public bool inputEnabled { get; private set; } = true;
 
     private FrameInput _frameInput;
     private Vector2 _moveInput;
@@ -27,6 +27,31 @@ public class PlayerInputHandler : MonoBehaviour
             JumpHeld = _jumpHeld,
             AttackDown = _attackTriggered
         };
+
+        _jumpTriggered = false;
+        _attackTriggered = false;
+    }
+
+    public void SetInputEnabled(bool value)
+    {
+        inputEnabled = value;
+        if (!value) ResetFrameInput();
+    }
+
+    private void ResetFrameInput()
+    {
+        _frameInput = new FrameInput
+        {
+            Move = Vector2.zero,
+            JumpDown = false,
+            JumpHeld = false,
+            AttackDown = false
+        };
+    }
+
+    public FrameInput GetInput()
+    {
+        return _frameInput;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -43,11 +68,6 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnAttack(InputAction.CallbackContext context)
     {
         _attackTriggered = context.action.triggered;
-    }
-
-    public FrameInput GetInput()
-    {
-        return _frameInput;
     }
 }
 

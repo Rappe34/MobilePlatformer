@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 522861013101521734}
-  attackPointRadius: 0.582
+  attackPointRadius: 1.137
   baseAttackDamage: 1
   attackRate: 3
   comboChargetime: 1.5
@@ -467,7 +467,7 @@ Transform:
   m_GameObject: {fileID: 7296911151916081687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.25, y: 1, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

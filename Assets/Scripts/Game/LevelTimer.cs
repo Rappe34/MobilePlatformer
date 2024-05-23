@@ -1,61 +1,62 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LevelTimer : MonoBehaviour
+namespace GameManagement
 {
-    [SerializeField] private TextMeshProUGUI timerText;
-
-    public TimeSpan elapsedTimeInSeconds { get; private set; } = TimeSpan.Zero;
-
-    private float elapsedTime;
-    private float startTime;
-    private bool running = false;
-
-    private void Awake()
+    public class LevelTimer : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-    }
+        [SerializeField] private TextMeshProUGUI timerText;
 
-    private void Update()
-    {
-        if (running) UpdateTimer();
-    }
+        public TimeSpan elapsedTimeInSeconds { get; private set; } = TimeSpan.Zero;
 
-    private void UpdateTimer()
-    {
-        // Calculate elapsed time
-        float elapsedTime = Time.time - startTime;
+        private float elapsedTime;
+        private float startTime;
+        private bool running = false;
 
-        // Update the UI Text component with the current game timer value
-        if (timerText != null)
+        private void Awake()
         {
-            timerText.text = FormatTime(elapsedTime);
+            DontDestroyOnLoad(gameObject);
         }
-    }
 
-    private string FormatTime(float timeInSeconds)
-    {
-        // Convert time in seconds to minutes and seconds
-        TimeSpan timeSpan = TimeSpan.FromSeconds(timeInSeconds);
-        return string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
-    }
+        private void Update()
+        {
+            if (running) UpdateTimer();
+        }
 
-    public void StartTimer()
-    {
-        startTime = Time.time;
-        running = true;
-    }
+        private void UpdateTimer()
+        {
+            // Calculate elapsed time
+            float elapsedTime = Time.time - startTime;
 
-    public void StopTimer()
-    {
-        running = false;
-    }
+            // Update the UI Text component with the current game timer value
+            if (timerText != null)
+            {
+                timerText.text = FormatTime(elapsedTime);
+            }
+        }
 
-    public void ResetTimer()
-    {
-        elapsedTime = 0f;
+        private string FormatTime(float timeInSeconds)
+        {
+            // Convert time in seconds to minutes and seconds
+            TimeSpan timeSpan = TimeSpan.FromSeconds(timeInSeconds);
+            return string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+        }
+
+        public void StartTimer()
+        {
+            startTime = Time.time;
+            running = true;
+        }
+
+        public void StopTimer()
+        {
+            running = false;
+        }
+
+        public void ResetTimer()
+        {
+            elapsedTime = 0f;
+        }
     }
 }

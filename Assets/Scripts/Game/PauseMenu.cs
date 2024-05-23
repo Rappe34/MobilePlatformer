@@ -2,34 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+namespace GameManagement
 {
-    [SerializeField] private GameObject pauseMenuPanel;
-    [SerializeField] private GameObject settingsMenuPanel;
-    [SerializeField] private GameObject blurVolume;
-
-    private void Awake()
+    public class PauseMenu : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-    }
+        [SerializeField] private GameObject pauseMenuPanel;
+        [SerializeField] private GameObject settingsMenuPanel;
+        [SerializeField] private GameObject blurVolume;
 
-    private void Start()
-    {
-        pauseMenuPanel.SetActive(false);
-        settingsMenuPanel.SetActive(false);
-        blurVolume.SetActive(false);
-    }
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
 
-    public void ToggleMenu()
-    {
-        pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
-        settingsMenuPanel.SetActive(false);
-        blurVolume.SetActive(!blurVolume.activeInHierarchy);
-    }
+        private void Start()
+        {
+            pauseMenuPanel.SetActive(false);
+            settingsMenuPanel.SetActive(false);
+            blurVolume.SetActive(false);
+        }
 
-    public void ToggleSettingsMenu()
-    {
-        pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
-        settingsMenuPanel.SetActive(!settingsMenuPanel.activeInHierarchy);
+        public void ToggleMenu()
+        {
+            pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
+            settingsMenuPanel.SetActive(false);
+            blurVolume.SetActive(!blurVolume.activeInHierarchy);
+        }
+
+        public void ToggleSettingsMenu()
+        {
+            pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
+            settingsMenuPanel.SetActive(!settingsMenuPanel.activeInHierarchy);
+        }
     }
 }

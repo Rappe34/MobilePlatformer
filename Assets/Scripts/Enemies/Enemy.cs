@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.Windows;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,7 +20,7 @@ public class Enemy : MonoBehaviour
     public bool grounded { get; private set; } = true;
     public bool facingRight { get; private set; } = true;
     public bool seesPlayer { get; private set; } = false;
-    public ObstacleType obstacleOnPath { get; private set; } = ObstacleType.None;
+    public ObstacleType obstacle { get; private set; } = ObstacleType.None;
 
     private Transform player;
     private Rigidbody2D rb;
@@ -38,9 +36,7 @@ public class Enemy : MonoBehaviour
     {
         grounded = GroundCheck();
         seesPlayer = PlayerInSightCheck();
-        obstacleOnPath = ObstacleCheck();
-
-        print(obstacleOnPath);
+        obstacle = ObstacleCheck();
 
         HandleGravity();
         ApplyMovement();
@@ -64,7 +60,7 @@ public class Enemy : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(sightTransform.position, player.position - transform.position, Mathf.Infinity, sightLayers);
 
-        if (hit.collider.CompareTag("Player"))
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
             return true;
 
         return false;
@@ -72,9 +68,9 @@ public class Enemy : MonoBehaviour
 
     private ObstacleType ObstacleCheck()
     {
-        if (Physics2D.Raycast(sightTransform.position, Vector3.right, wallCheckRayLength, groundLayers)) return ObstacleType.HighWall;
-        if (!Physics2D.OverlapBox(fallCheckCollider.bounds.center, fallCheckCollider.bounds.size, 0f, groundLayers)) return ObstacleType.Drop;
-        if (Physics2D.Raycast(transform.position + new Vector3(0f, .5f), Vector3.right, wallCheckRayLength, groundLayers)) return ObstacleType.LowWall;
+        if (Physics2D.Raycast(sightTransform.position, Vector3.right, wallCheckRayLength, groundLayers) && grounded) return ObstacleType.HighWall;
+        if (!Physics2D.OverlapBox(fallCheckCollider.bounds.center, fallCheckCollider.bounds.size, 0f, groundLayers) && grounded) return ObstacleType.Drop;
+        if (Physics2D.Raycast(transform.position + new Vector3(0f, .5f), Vector3.right, wallCheckRayLength, groundLayers) && grounded) return ObstacleType.LowWall;
         else return ObstacleType.None;
     }
 

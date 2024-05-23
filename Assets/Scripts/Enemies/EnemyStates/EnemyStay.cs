@@ -22,7 +22,7 @@ public class EnemyStay : StateMachineBehaviour
 
         enemy.MovementX(0f);
 
-        if (enemy.seesPlayer && enemy.obstacleOnPath == ObstacleType.None)
+        if (enemy.seesPlayer && enemy.obstacle == ObstacleType.None)
             animator.SetTrigger("Lurk");
 
         if (!enemy.seesPlayer && timeElapsed >= waitTime)

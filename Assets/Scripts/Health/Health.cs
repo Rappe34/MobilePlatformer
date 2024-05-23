@@ -37,6 +37,11 @@ public class Health : MonoBehaviour
         isInvincible = timeSinceHit <= invincibilityTime;
     }
 
+    public void SetInvincible(bool invincible)
+    {
+        isInvincible = invincible;
+    }
+
     public void TakeDamage(int amount)
     {
         if (isInvincible) return;
@@ -77,6 +82,6 @@ public class Health : MonoBehaviour
     private void Die()
     {
         Instantiate(bloodSplatterEffect, transform.position + Vector3.up, Quaternion.identity);
-        Destroy(gameObject);
+        OnDeath?.Invoke();
     }
 }

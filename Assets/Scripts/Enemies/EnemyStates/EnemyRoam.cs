@@ -23,13 +23,13 @@ public class EnemyRoam : StateMachineBehaviour
 
         enemy.MovementX(moveDirection * speed);
 
-        if (enemy.obstacleOnPath == ObstacleType.HighWall || (enemy.obstacleOnPath == ObstacleType.Drop))
+        if (enemy.obstacle == ObstacleType.HighWall || enemy.obstacle == ObstacleType.Drop)
             animator.SetTrigger("Wait");
 
         if (enemy.seesPlayer)
             animator.SetTrigger("Lurk");
 
-        if (enemy.obstacleOnPath == ObstacleType.LowWall)
+        if (enemy.obstacle == ObstacleType.LowWall)
             animator.SetTrigger("Jump");
     }
 }

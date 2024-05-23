@@ -18,5 +18,7 @@ public class KnockbackFeedback : MonoBehaviour
     {
         StopAllCoroutines();
         rb.AddForce(direction * force, ForceMode2D.Impulse);
+
+        print("Added knockback");
     }
 }

@@ -3,27 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GameManagement
+public class SceneLoader : MonoBehaviour
 {
-    public class SceneLoader : MonoBehaviour
+    public SceneLoader(string sceneName)
     {
-        public AsyncOperation loadingOperation { get; private set; }
-        public float progress { get; private set; } = 0f;
+        LoadScene(sceneName);
+    }
 
-        private IEnumerator LoadScene(string sceneName)
+    public AsyncOperation loadingOperation { get; private set; }
+    public float progress { get; private set; } = 0f;
+
+    private IEnumerator LoadScene(string sceneName)
+    {
+        loadingOperation = SceneManager.LoadSceneAsync(sceneName);
+        loadingOperation.allowSceneActivation = false;
+
+        while (!loadingOperation.isDone)
         {
-            loadingOperation = SceneManager.LoadSceneAsync(sceneName);
-            loadingOperation.allowSceneActivation = false;
-
-            while (!loadingOperation.isDone)
-            {
-                yield return null;
-            }
+            yield return null;
         }
+    }
 
-        public void ActivateScene()
-        {
-
-        }
+    public void ActivateScene()
+    {
+        loadingOperation.allowSceneActivation = true;
     }
 }

@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 
-namespace Player
-{
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
@@ -48,6 +46,8 @@ namespace Player
 
             if ((_input.Move.x < 0 && _facingRight) || (_input.Move.x > 0 && !_facingRight))
                 Flip();
+        
+            print(_frameVelocity);
         }
 
         private void GetInput()
@@ -85,7 +85,7 @@ namespace Player
         #region Collisions
 
         private float _frameLeftGrounded = float.MinValue;
-        private bool _grounded;
+        public bool _grounded { get; private set; }
 
         private void CheckCollisions()
         {
@@ -236,11 +236,10 @@ namespace Player
 #endif
     }
 
-    public interface IPlayerController
-    {
-        public event Action<bool, float> GroundedChanged;
+public interface IPlayerController
+{
+    public event Action<bool, float> GroundedChanged;
 
-        public event Action Jumped;
-        public Vector2 FrameInput { get; }
-    }
+    public event Action Jumped;
+    public Vector2 FrameInput { get; }
 }

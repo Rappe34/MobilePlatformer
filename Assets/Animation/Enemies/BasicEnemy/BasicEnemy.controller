@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3.6
   attackRange: 1.8
-  timeBetweenAttacks: 0
+  timeBetweenAttacks: 1
 --- !u!114 &-6150078890740185629
 MonoBehaviour:
   m_ObjectHideFlags: 1

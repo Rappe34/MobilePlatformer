@@ -27,10 +27,15 @@ public class PlayerInputHandler : MonoBehaviour
         _attackTriggered = false;
     }
 
-    public void SetInputEnabled(bool value)
+    public void EnableInput()
     {
-        inputEnabled = value;
-        if (!value) ResetFrameInput();
+        inputEnabled = true;
+    }
+
+    public void DisableInput()
+    {
+        inputEnabled = false;
+        ResetFrameInput();
     }
 
     private void ResetFrameInput()

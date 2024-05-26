@@ -1,38 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-namespace GameManagement
+public class PauseMenu : MonoBehaviour
 {
-    public class PauseMenu : MonoBehaviour
+    [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private GameObject settingsMenuPanel;
+    [SerializeField] private GameObject confirmToMenuPanel;
+    [SerializeField] private GameObject confirmExitPanel;
+    [SerializeField] private GameObject blurVolume;
+
+    private void Awake()
     {
-        [SerializeField] private GameObject pauseMenuPanel;
-        [SerializeField] private GameObject settingsMenuPanel;
-        [SerializeField] private GameObject blurVolume;
+        DontDestroyOnLoad(gameObject);
+    }
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+    private void Start()
+    {
+        pauseMenuPanel.SetActive(false);
+        settingsMenuPanel.SetActive(false);
+        confirmToMenuPanel.SetActive(false);
+        confirmExitPanel.SetActive(false);
+        blurVolume.SetActive(false);
+    }
 
-        private void Start()
-        {
-            pauseMenuPanel.SetActive(false);
-            settingsMenuPanel.SetActive(false);
-            blurVolume.SetActive(false);
-        }
+    public void ShowMenu()
+    {
+        pauseMenuPanel.SetActive(true);
+        blurVolume.SetActive(true);
+    }
 
-        public void ToggleMenu()
-        {
-            pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
-            settingsMenuPanel.SetActive(false);
-            blurVolume.SetActive(!blurVolume.activeInHierarchy);
-        }
-
-        public void ToggleSettingsMenu()
-        {
-            pauseMenuPanel.SetActive(!pauseMenuPanel.activeInHierarchy);
-            settingsMenuPanel.SetActive(!settingsMenuPanel.activeInHierarchy);
-        }
+    public void HideMenu()
+    {
+        pauseMenuPanel.SetActive(false);
+        settingsMenuPanel.SetActive(false);
+        confirmToMenuPanel.SetActive(false);
+        confirmExitPanel.SetActive(false);
+        blurVolume.SetActive(false);
     }
 }

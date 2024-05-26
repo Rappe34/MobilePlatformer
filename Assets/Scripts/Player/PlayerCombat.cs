@@ -1,94 +1,82 @@
 using UnityEngine;
-using HealthSystem;
+using UnityEngine.Events;
 
-namespace Player
+public class PlayerCombat : MonoBehaviour
 {
-    public class PlayerCombat : MonoBehaviour
+    [SerializeField] private AttackHitCheck hitCheck;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private int baseAttackDamage = 1;
+    [SerializeField] private float attackRate = 1.6f;
+    [SerializeField] private float comboChargetime = 5f;
+    [SerializeField] private float comboClickTimeSpan = 0.8f;
+
+    public bool inCombat { get; private set; } = false;
+    public bool attacking { get; private set; } = false;
+
+    public UnityEvent OnFinishingAttackLanded;
+
+    private Animator anim;
+    private bool attackIsCombo = false;
+    private bool attackPossible = true;
+    private bool comboPossible = true;
+    private float timeSinceAttack = 0f;
+    private float timeSinceComboAttack = 0f;
+
+    private void Awake()
     {
-        [SerializeField] private Transform attackPoint;
-        [SerializeField][Range(0.5f, 1.5f)] private float attackPointRadius;
-        [SerializeField] private int baseAttackDamage = 1;
-        [SerializeField] private float attackRate = 1.6f;
-        [SerializeField] private float comboChargetime = 3f;
+        anim = GetComponent<Animator>();
+    }
 
-        public bool inCombat { get; private set; } = false;
-        public bool attacking { get; private set; } = false;
+    private void Update()
+    {
+        timeSinceAttack += Time.deltaTime;
+        timeSinceComboAttack += Time.deltaTime;
 
-        private bool attackIsCombo = false;
+        if (timeSinceAttack > 5f) inCombat = false;
+        anim.SetBool("InCombat", inCombat);
 
-        private Animator anim;
-        private float timeSinceAttack = 0f;
-        private float timeSinceComboAttack = 0f;
-        private bool attackPossible = true;
-        private bool comboPossible = true;
+        attackPossible = timeSinceAttack > 1f / attackRate;
+        comboPossible = timeSinceComboAttack > comboChargetime;
+    }
 
-        private void Awake()
-        {
-            anim = GetComponent<Animator>();
-        }
+    private void Attack()
+    {
+        if (comboPossible) anim.SetTrigger("Attack1");
+        else if (Random.Range(0, 2) == 0) anim.SetTrigger("Attack2");
 
-        private void Update()
-        {
-            timeSinceAttack += Time.deltaTime;
-            timeSinceComboAttack += Time.deltaTime;
+        inCombat = true;
+        attacking = true;
+        attackIsCombo = false;
+        timeSinceAttack = 0f;
+    }
 
-            if (timeSinceAttack > 5f) inCombat = false;
-            anim.SetBool("InCombat", inCombat);
+    private void ComboAttack()
+    {
+        anim.SetBool("ComboAttack", true);
+        anim.SetTrigger("Attack1");
+        inCombat = true;
+        attacking = true;
+        attackIsCombo = true;
+        timeSinceAttack = 0f;
+        timeSinceComboAttack = 0f;
+        print((timeSinceAttack, timeSinceComboAttack));
+    }
 
-            attackPossible = timeSinceAttack > 1f / attackRate;
-            comboPossible = timeSinceComboAttack > comboChargetime;
-        }
+    public void TryAttack()
+    {
+        if (attacking && comboPossible && timeSinceAttack < comboClickTimeSpan) ComboAttack();
+        else if (attackPossible) Attack();
+    }
 
-        private void Attack()
-        {
-            if (comboPossible) anim.SetTrigger("Attack1");
-            else anim.SetTrigger("Attack2");
+    public void AttackEnd()
+    {
+        if (!attackIsCombo) attacking = false;
+    }
 
-            inCombat = true;
-            attacking = true;
-            attackIsCombo = false;
-            timeSinceAttack = 0f;
-        }
-
-        private void ComboAttack()
-        {
-            anim.SetBool("ComboAttack", true);
-            attackIsCombo = true;
-            timeSinceComboAttack = 0f;
-        }
-
-        public void TryAttack()
-        {
-            if (attacking && comboPossible) ComboAttack();
-            else if (attackPossible) Attack();
-        }
-
-        public void AttackHitCheck()
-        {
-            Collider2D[] hitCol = Physics2D.OverlapCircleAll(attackPoint.position, .2f, LayerMask.GetMask("Enemy"));
-
-            foreach (Collider2D col in hitCol)
-            {
-                col.GetComponent<Health>().TakeDamage(baseAttackDamage, col.transform.position - transform.position);
-            }
-        }
-
-        public void AttackEnd()
-        {
-            if (!attackIsCombo) attacking = false;
-        }
-
-        public void ComboAttackEnd()
-        {
-            attacking = false;
-            attackIsCombo = false;
-            anim.SetBool("ComboAttack", false);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(attackPoint.position, attackPointRadius);
-        }
+    public void ComboAttackEnd()
+    {
+        attacking = false;
+        attackIsCombo = false;
+        anim.SetBool("ComboAttack", false);
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using HealthSystem;
 
 [CreateAssetMenu(menuName = "ScriptableObject/Inventory/CharacterStatHealthModifier")]
 public class CharacterStatHealthModifierSO : CharacterStatModifierSO

@@ -7,10 +7,10 @@ public class ScriptableEnemyStats : ScriptableObject
     [Tooltip("The top horizontal movement speed")]
     public float MaxSpeed = 14;
 
-    [Tooltip("The player's capacity to gain horizontal speed")]
+    [Tooltip("The enemy's capacity to gain horizontal speed")]
     public float Acceleration = 120;
 
-    [Tooltip("The pace at which the player comes to a stop")]
+    [Tooltip("The pace at which the enemy comes to a stop")]
     public float GroundDeceleration = 60;
 
     [Tooltip("Deceleration in air only after stopping input mid-air")]
@@ -26,6 +26,10 @@ public class ScriptableEnemyStats : ScriptableObject
     [Tooltip("The maximum vertical movement speed")]
     public float MaxFallSpeed = 40;
 
-    [Tooltip("The player's capacity to gain fall speed. a.k.a. In Air Gravity")]
+    [Tooltip("The enemy's capacity to gain fall speed. a.k.a. In Air Gravity")]
     public float FallAcceleration = 110;
+
+    [Header("COMBAT")]
+    [Tooltip("How long the enemy stays stunned for when hit")]
+    public float HitStunTime = 1f;
 }

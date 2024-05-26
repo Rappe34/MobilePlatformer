@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -24,12 +25,16 @@ public class Enemy : MonoBehaviour
 
     private Transform player;
     private Rigidbody2D rb;
+    private Animator anim;
     private Vector2 frameVelocity;
+
+    private bool freezed;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -39,7 +44,7 @@ public class Enemy : MonoBehaviour
         obstacle = ObstacleCheck();
 
         HandleGravity();
-        ApplyMovement();
+        if (!freezed) ApplyMovement();
     }
 
     private bool GroundCheck()
@@ -115,6 +120,27 @@ public class Enemy : MonoBehaviour
             float inAirGravity = stats.FallAcceleration;
             frameVelocity.y = Mathf.MoveTowards(frameVelocity.y, -stats.MaxFallSpeed, inAirGravity * Time.fixedDeltaTime);
         }
+    }
+
+    public void HitStun()
+    {
+        StartCoroutine(FreezeWait());
+    }
+
+    private IEnumerator FreezeWait()
+    {
+        freezed = true;
+        anim.speed = 0f;
+
+        yield return new WaitForSeconds(stats.HitStunTime);
+
+        freezed = false;
+        anim.speed = 1f;
+    }
+
+    public void TakeKnockback(Vector2 force)
+    {
+        frameVelocity = force;
     }
 
     private void ApplyMovement() => rb.velocity = frameVelocity;

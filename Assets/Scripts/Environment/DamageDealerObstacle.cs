@@ -1,5 +1,4 @@
 using UnityEngine;
-using HealthSystem;
 
 public class DamageDealerObstacle : MonoBehaviour
 {

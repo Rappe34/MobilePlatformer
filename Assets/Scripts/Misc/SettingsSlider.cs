@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(Slider))]
 public class SettingsSlider : MonoBehaviour
@@ -15,12 +15,7 @@ public class SettingsSlider : MonoBehaviour
         slider = GetComponent<Slider>();
 
         slider.onValueChanged.AddListener((v) => {
-            sliderText.text = v.ToString();
+            sliderText.text = Mathf.RoundToInt(v * 100f).ToString();
         });
-    }
-
-    public void UpdateSlider()
-    {
-        sliderText.text = Mathf.RoundToInt(slider.value * 100f).ToString();
     }
 }

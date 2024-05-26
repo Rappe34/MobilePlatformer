@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 5565759851309223880}
   - component: {fileID: 9063506845356030663}
   - component: {fileID: 155711155405460318}
-  - component: {fileID: 5995861456922410963}
   - component: {fileID: 8934285154521899997}
+  - component: {fileID: 8219662281801668452}
   - component: {fileID: 734064870552032655}
   - component: {fileID: 9026561230903522847}
-  - component: {fileID: 2660590035644948544}
+  - component: {fileID: 1318576463514804718}
   - component: {fileID: 3709129220970098857}
   - component: {fileID: 5225782787534829461}
   - component: {fileID: 8941340434933126675}
@@ -74,6 +74,9 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 017ef57b4b945eb43b75843029309f7b, type: 2}
   invincibilityTime: 0.5
   bloodSplatterEffect: {fileID: 5011214815296500448, guid: 28dbe39bff1e79f49ae7e5a937b6af9b, type: 3}
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -89,19 +92,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5995861456922410963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577647971722247428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e1872774dc1c024da49a5cc5673a3be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 100
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManagement.GameManager, GameManagement
+        m_MethodName: LoseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8934285154521899997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,11 +116,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ffbe60065997d459a729d962af60f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 522861013101521734}
-  attackPointRadius: 1.137
+  hitCheck: {fileID: 444373932356209308}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
   baseAttackDamage: 1
   attackRate: 3
   comboChargetime: 1.5
+  comboClickTimeSpan: 0.8
+  OnFinishingAttackLanded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8219662281801668452}
+        m_TargetAssemblyTypeName: Cinemachine.CinemachineImpulseSource, Cinemachine
+        m_MethodName: GenerateImpulse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8219662281801668452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577647971722247428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!114 &734064870552032655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60f95dea9b3e6042a24a0b1565304fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2660590035644948544
+--- !u!114 &1318576463514804718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,7 +248,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9026561230903522847}
-        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerInputHandler, Input
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -191,7 +264,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9026561230903522847}
-        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerInputHandler, Input
         m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
@@ -207,7 +280,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9026561230903522847}
-        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerInputHandler, Input
         m_MethodName: OnAttack
         m_Mode: 0
         m_Arguments:
@@ -219,7 +292,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 52d33164-7ee9-495e-b075-22a01c3bb735
-    m_ActionName: Game/Attack[/Mouse/leftButton,/Keyboard/c]
+    m_ActionName: Game/Attack[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -451,13 +524,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 522861013101521734}
+  - component: {fileID: 31369608173597905}
+  - component: {fileID: 444373932356209308}
   m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &522861013101521734
 Transform:
   m_ObjectHideFlags: 0
@@ -467,9 +542,56 @@ Transform:
   m_GameObject: {fileID: 7296911151916081687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5565759851309223880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &31369608173597905
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296911151916081687}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.65
+--- !u!114 &444373932356209308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296911151916081687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff99647f875636a479ec05421c643480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,86 +1,89 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace HealthSystem
+public class Health : MonoBehaviour
 {
-    public class Health : MonoBehaviour
+    [SerializeField] private HealthStatsSO stats;
+    [SerializeField] private float invincibilityTime = .5f;
+    [SerializeField] private GameObject bloodSplatterEffect;
+
+    public UnityEvent<Vector2> OnTakeDamage;
+    public UnityEvent OnDeath;
+
+    private Animator anim;
+
+    public bool isAlive { get; private set; } = true;
+    public int currentHealth { get; private set; }
+
+    private bool isInvincible = false;
+    private float timeSinceHit = 0f;
+
+    private void Awake()
     {
-        [SerializeField] private HealthStatsSO stats;
-        [SerializeField] private float invincibilityTime = .5f;
-        [SerializeField] private GameObject bloodSplatterEffect;
+        anim = GetComponent<Animator>();
+    }
 
-        public UnityEvent OnTakeDamage, OnDeath;
+    private void Start()
+    {
+        currentHealth = stats.maxHealth;
+    }
 
-        private Animator anim;
+    private void Update()
+    {
+        timeSinceHit += Time.deltaTime;
+        isInvincible = timeSinceHit <= invincibilityTime;
+    }
 
-        public bool isAlive { get; private set; } = true;
-        public int currentHealth { get; private set; }
+    public void SetInvincible(bool invincible)
+    {
+        isInvincible = invincible;
+    }
 
-        private bool isInvincible = false;
-        private float timeSinceHit = 0f;
+    public void TakeDamage(int amount)
+    {
+        if (isInvincible) return;
 
-        private void Awake()
+        if (currentHealth - amount <= 0)
         {
-            anim = GetComponent<Animator>();
+            Die();
+            return;
         }
 
-        private void Start()
+        anim.SetTrigger("TakeDamage");
+        currentHealth -= amount;
+        timeSinceHit = 0f;
+    }
+
+    public void TakeDamage(int amount, Vector2 knockbackDirection)
+    {
+        if (isInvincible) return;
+
+        SplatterEffect();
+
+        if (currentHealth - amount <= 0)
         {
-            currentHealth = stats.maxHealth;
+            Die();
+            return;
         }
 
-        private void Update()
-        {
-            timeSinceHit += Time.deltaTime;
-            isInvincible = timeSinceHit <= invincibilityTime;
-        }
+        currentHealth -= amount;
+        timeSinceHit = 0f;
 
-        public void SetInvincible(bool invincible)
-        {
-            isInvincible = invincible;
-        }
+        OnTakeDamage?.Invoke(knockbackDirection);
+    }
 
-        public void TakeDamage(int amount)
-        {
-            if (isInvincible) return;
+    public void AddHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, stats.maxHealth);
+    }
 
-            if (currentHealth - amount <= 0)
-            {
-                Die();
-                return;
-            }
+    private void Die()
+    {
+        OnDeath?.Invoke();
+    }
 
-            anim.SetTrigger("TakeDamage");
-            currentHealth -= amount;
-            timeSinceHit = 0f;
-        }
-
-        public void TakeDamage(int amount, Vector2 knockbackDirection)
-        {
-            if (isInvincible) return;
-
-            if (currentHealth - amount <= 0)
-            {
-                Die();
-                return;
-            }
-
-            anim.SetTrigger("TakeDamage");
-            currentHealth -= amount;
-            timeSinceHit = 0f;
-
-            OnTakeDamage?.Invoke();
-        }
-
-        public void AddHealth(int amount)
-        {
-            currentHealth = Mathf.Clamp(currentHealth + amount, 0, stats.maxHealth);
-        }
-
-        private void Die()
-        {
-            Instantiate(bloodSplatterEffect, transform.position + Vector3.up, Quaternion.identity);
-            OnDeath?.Invoke();
-        }
+    private void SplatterEffect()
+    {
+        Instantiate(bloodSplatterEffect, transform.position + Vector3.up, Quaternion.identity);
     }
 }

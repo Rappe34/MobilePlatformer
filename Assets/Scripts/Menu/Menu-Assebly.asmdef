@@ -1,0 +1,16 @@
+{
+    "name": "Menu-Assebly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c7a320f7b8d1b6c45857a5923a6ce42b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

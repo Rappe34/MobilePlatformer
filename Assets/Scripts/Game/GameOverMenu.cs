@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject winPanel;
-    [SerializeField] private GameObject losePanel;
+    [SerializeField] private WinPanel winPanel;
+    [SerializeField] private LosePanel losePanel;
 
     private void Awake()
     {
@@ -14,17 +15,17 @@ public class GameOverMenu : MonoBehaviour
 
     private void Start()
     {
-        losePanel.SetActive(false);
-        winPanel.SetActive(false);
+        losePanel.gameObject.SetActive(false);
+        winPanel.gameObject.SetActive(false);
     }
 
     public void ShowWinScreen()
     {
-        winPanel.SetActive(true);
+        winPanel.ShowPanel();
     }
 
     public void ShowLoseScreen()
     {
-        losePanel.SetActive(true);
+        losePanel.ShowPanel();
     }
 }

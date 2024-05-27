@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class LevelTimer : MonoBehaviour
 {
+    public static LevelTimer Instance { get; private set; }
+
     [SerializeField] private TextMeshProUGUI timerText;
 
-    public TimeSpan elapsedTimeInSeconds { get; private set; } = TimeSpan.Zero;
+    public TimeSpan elapsedTime { get; private set; } = TimeSpan.Zero;
 
-    private float elapsedTime;
-    private float startTime;
+    private float _elapsedTime = 0f;
     private bool running = false;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -24,26 +33,18 @@ public class LevelTimer : MonoBehaviour
 
     private void UpdateTimer()
     {
-        // Calculate elapsed time
-        float elapsedTime = Time.time - startTime;
-
-        // Update the UI Text component with the current game timer value
-        if (timerText != null)
-        {
-            timerText.text = FormatTime(elapsedTime);
-        }
+        _elapsedTime += Time.deltaTime;
+        elapsedTime = TimeSpan.FromSeconds(_elapsedTime);
+        timerText.text = GetTimeString();
     }
 
-    private string FormatTime(float timeInSeconds)
+    public string GetTimeString()
     {
-        // Convert time in seconds to minutes and seconds
-        TimeSpan timeSpan = TimeSpan.FromSeconds(timeInSeconds);
-        return string.Format("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+        return string.Format("{0:D2}:{1:D2}:{2:D2}", elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
     }
 
     public void StartTimer()
     {
-        startTime = Time.time;
         running = true;
     }
 
@@ -54,6 +55,6 @@ public class LevelTimer : MonoBehaviour
 
     public void ResetTimer()
     {
-        elapsedTime = 0f;
+        _elapsedTime = 0f;
     }
 }

@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
-    public SceneLoader(string sceneName)
-    {
-        LoadScene(sceneName);
-    }
+    public static SceneLoader Instance {  get; private set; }
+
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private Slider loadSlider;
 
     public AsyncOperation loadingOperation { get; private set; }
     public float progress { get; private set; } = 0f;
+    public bool canActivate { get; private set; } = false;
 
-    private IEnumerator LoadScene(string sceneName)
+    public IEnumerator LoadScene(string sceneName)
     {
         loadingOperation = SceneManager.LoadSceneAsync(sceneName);
         loadingOperation.allowSceneActivation = false;

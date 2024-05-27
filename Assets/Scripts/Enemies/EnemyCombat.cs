@@ -2,23 +2,24 @@ using UnityEngine;
 
 public class EnemyCombat : MonoBehaviour
 {
-    [SerializeField] private Transform attackPoint;
-    [SerializeField][Range(0.5f, 1.5f)] private float attackRadius;
+    [SerializeField] private Transform hitCheck;
+    [SerializeField] [Range(0.5f, 1.5f)] private float hitCheckRadius;
+    [SerializeField] private LayerMask playerLayer;
     [SerializeField] private int baseAttackDamage = 1;
 
     public void AttackHitCheck()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(attackPoint.position, attackRadius, Vector2.right, 1f, LayerMask.GetMask("Player"));
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(hitCheck.position, hitCheckRadius, playerLayer);
 
-        foreach (RaycastHit2D hit in hits)
+        foreach (Collider2D col in hitColliders)
         {
-            hit.collider.GetComponent<Health>().TakeDamage(baseAttackDamage, hit.transform.position - transform.position);
+            col.GetComponent<Health>().TakeDamage(baseAttackDamage);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.DrawWireSphere(hitCheck.position, hitCheckRadius);
     }
 }

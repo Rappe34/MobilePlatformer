@@ -15,14 +15,16 @@ public class EnemyAttack : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = animator.GetComponent<Rigidbody2D>();
         enemy = animator.GetComponent<Enemy>();
+        rb = animator.GetComponent<Rigidbody2D>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy.LookAtPlayer();
         timeSinceAttack += Time.deltaTime;
+
+        if (player == null) animator.SetTrigger("Roam");
 
         float direction = player.position.x - rb.position.x;
         if (Vector2.Distance(rb.position, player.position) > 1f)

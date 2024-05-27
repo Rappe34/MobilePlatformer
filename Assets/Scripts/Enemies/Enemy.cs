@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -40,11 +39,14 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         grounded = GroundCheck();
-        seesPlayer = PlayerInSightCheck();
         obstacle = ObstacleCheck();
+        if (player != null) seesPlayer = PlayerInSightCheck();
 
-        HandleGravity();
-        if (!freezed) ApplyMovement();
+        if (!freezed)
+        {
+            HandleGravity();
+            ApplyMovement();
+        }
     }
 
     private bool GroundCheck()
@@ -106,6 +108,7 @@ public class Enemy : MonoBehaviour
 
     public void Jump()
     {
+        print("jump");
         if (grounded) frameVelocity.y = stats.JumpPower;
     }
 
@@ -117,8 +120,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            float inAirGravity = stats.FallAcceleration;
-            frameVelocity.y = Mathf.MoveTowards(frameVelocity.y, -stats.MaxFallSpeed, inAirGravity * Time.fixedDeltaTime);
+            frameVelocity.y = Mathf.MoveTowards(frameVelocity.y, -stats.MaxFallSpeed, stats.FallAcceleration * Time.fixedDeltaTime);
         }
     }
 

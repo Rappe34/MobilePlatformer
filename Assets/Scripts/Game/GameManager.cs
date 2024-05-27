@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameOverMenu gameOverMenu;
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private GameLoadingPanel gameLoadingPanel;
     [SerializeField] private LevelTimer levelTimer;
+    [SerializeField] private MusicPlayer musicPlayer;
 
     public bool gameOver { get; private set; } = false;
     public GameOverType gameOverType { get; private set; }
@@ -26,9 +29,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SwitchScene(string sceneName)
+    public void LoadLevel(LevelDataSO levelData)
     {
+        StartCoroutine(LoadLevel_(levelData));
+    }
 
+    private IEnumerator LoadLevel_(LevelDataSO levelData)
+    {
+        yield return StartCoroutine(SceneLoader.Instance.LoadScene(levelData.levelSceneName));
+
+        // Activate the scene once loading is complete
+        SceneLoader.Instance.ActivateScene();
+        levelTimer.StartTimer();
+        musicPlayer.PlayTrack(levelData.levelSong);
     }
 
     public void WinGame()
@@ -68,6 +81,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Paused Game - {Time.time}");
         pauseMenu.ShowMenu();
         levelTimer.StopTimer();
+        musicPlayer.VolumeFade(1f, 0.25f);
         Time.timeScale = 0f;
     }
 
@@ -76,6 +90,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Resumed Game - {Time.time}");
         pauseMenu.HideMenu();
         levelTimer.StartTimer();
+        musicPlayer.VolumeFade(1f, 1f);
         Time.timeScale = 1f;
     }
 
@@ -84,6 +99,11 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+
+        // Save data before exiting
+        // DataManager.SaveProgressData(!!!);
+
+        Application.Quit();
     }
 }
 

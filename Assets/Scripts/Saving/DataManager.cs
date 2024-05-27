@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public static class DataManager
 {
     private static readonly string SaveFilePath = Path.Combine(Application.persistentDataPath, "playerProgress.json");
 

@@ -22,10 +22,12 @@ public class EnemyStay : StateMachineBehaviour
 
         enemy.MovementX(0f);
 
-        if (enemy.seesPlayer && enemy.obstacle == ObstacleType.None)
+        if (enemy.seesPlayer)
+        {
             animator.SetTrigger("Lurk");
+        }
 
-        if (!enemy.seesPlayer && timeElapsed >= waitTime)
+        if (timeElapsed >= waitTime)
         {
             animator.SetTrigger("Roam");
             enemy.Flip();

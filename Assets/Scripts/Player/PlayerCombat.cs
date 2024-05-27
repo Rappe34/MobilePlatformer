@@ -3,7 +3,8 @@ using UnityEngine.Events;
 
 public class PlayerCombat : MonoBehaviour
 {
-    [SerializeField] private AttackHitCheck hitCheck;
+    [SerializeField] private Transform hitCheck;
+    [SerializeField] [Range(0.5f, 2f)] private float hitCheckRadius;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int baseAttackDamage = 1;
     [SerializeField] private float attackRate = 1.6f;
@@ -42,7 +43,7 @@ public class PlayerCombat : MonoBehaviour
     private void Attack()
     {
         if (comboPossible) anim.SetTrigger("Attack1");
-        else if (Random.Range(0, 2) == 0) anim.SetTrigger("Attack2");
+        else anim.SetTrigger("Attack2");
 
         inCombat = true;
         attacking = true;
@@ -53,19 +54,28 @@ public class PlayerCombat : MonoBehaviour
     private void ComboAttack()
     {
         anim.SetBool("ComboAttack", true);
-        anim.SetTrigger("Attack1");
         inCombat = true;
         attacking = true;
         attackIsCombo = true;
         timeSinceAttack = 0f;
         timeSinceComboAttack = 0f;
-        print((timeSinceAttack, timeSinceComboAttack));
     }
 
     public void TryAttack()
     {
-        if (attacking && comboPossible && timeSinceAttack < comboClickTimeSpan) ComboAttack();
+        print(timeSinceAttack);
+        if (comboPossible && timeSinceAttack < comboClickTimeSpan) ComboAttack();
         else if (attackPossible) Attack();
+    }
+
+    public void HitCheck()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(hitCheck.position, hitCheckRadius, enemyLayer);
+
+        foreach (Collider2D col in hitColliders)
+        {
+            col.GetComponent<Health>().TakeDamage(baseAttackDamage);
+        }
     }
 
     public void AttackEnd()
@@ -78,5 +88,11 @@ public class PlayerCombat : MonoBehaviour
         attacking = false;
         attackIsCombo = false;
         anim.SetBool("ComboAttack", false);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(hitCheck.position, hitCheckRadius);
     }
 }

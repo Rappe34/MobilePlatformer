@@ -10,18 +10,11 @@ public class Health : MonoBehaviour
     public UnityEvent<Vector2> OnTakeDamage;
     public UnityEvent OnDeath;
 
-    private Animator anim;
-
     public bool isAlive { get; private set; } = true;
     public int currentHealth { get; private set; }
 
     private bool isInvincible = false;
     private float timeSinceHit = 0f;
-
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
 
     private void Start()
     {
@@ -43,13 +36,14 @@ public class Health : MonoBehaviour
     {
         if (isInvincible) return;
 
+        SplatterEffect();
+
         if (currentHealth - amount <= 0)
         {
             Die();
             return;
         }
 
-        anim.SetTrigger("TakeDamage");
         currentHealth -= amount;
         timeSinceHit = 0f;
     }

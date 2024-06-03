@@ -1,9 +1,10 @@
+using UnityEditor;
 using UnityEngine;
 
 public class DamageDealerObstacle : MonoBehaviour
 {
     [SerializeField] private DamageType damageType;
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int damage;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

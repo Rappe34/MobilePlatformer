@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     private bool _jumpTriggered;
     private bool _jumpHeld;
     private bool _attackTriggered;
+    private bool _secondaryAttackTriggered;
 
     private void Update()
     {
@@ -20,11 +21,13 @@ public class PlayerInputHandler : MonoBehaviour
             Move = _moveInput,
             JumpDown = _jumpTriggered,
             JumpHeld = _jumpHeld,
-            AttackDown = _attackTriggered
+            AttackDown = _attackTriggered,
+            SecondaryAttackDown = _secondaryAttackTriggered
         };
 
         _jumpTriggered = false;
         _attackTriggered = false;
+        _secondaryAttackTriggered = false;
     }
 
     public void EnableInput()
@@ -45,7 +48,8 @@ public class PlayerInputHandler : MonoBehaviour
             Move = Vector2.zero,
             JumpDown = false,
             JumpHeld = false,
-            AttackDown = false
+            AttackDown = false,
+            SecondaryAttackDown = false
         };
     }
 
@@ -69,6 +73,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _attackTriggered = context.action.triggered;
     }
+
+    public void OnSecondaryAttack(InputAction.CallbackContext context)
+    {
+        _secondaryAttackTriggered = context.action.triggered;
+    }
 }
 
 public struct FrameInput
@@ -77,4 +86,5 @@ public struct FrameInput
     public bool JumpDown;
     public bool JumpHeld;
     public bool AttackDown;
+    public bool SecondaryAttackDown;
 }

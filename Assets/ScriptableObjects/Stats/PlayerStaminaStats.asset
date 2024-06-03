@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee44ba8df67e2c74ca749551614b3d96, type: 3}
+  m_Name: PlayerStaminaStats
+  m_EditorClassIdentifier: 
+  MaxStamina: 6
+  JumpStaminaCost: 1
+  AttackStaminaCost: 1
+  ComboAttackStaminaCost: 3
+  StaminaRegenRate: 1.5
+  StaminaRegenDelay: 1.5
+  StaminaRegenDelayZero: 2.5

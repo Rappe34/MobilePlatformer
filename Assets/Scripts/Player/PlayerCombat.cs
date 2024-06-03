@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [SerializeField] private StaminaStatsSO staminaStats;
     [SerializeField] private Transform hitCheck;
     [SerializeField] [Range(0.5f, 2f)] private float hitCheckRadius;
     [SerializeField] private LayerMask enemyLayer;
@@ -14,8 +15,7 @@ public class PlayerCombat : MonoBehaviour
     public bool inCombat { get; private set; } = false;
     public bool attacking { get; private set; } = false;
 
-    public UnityEvent OnFinishingAttackLanded;
-
+    private PlayerStamina stamina;
     private Animator anim;
     private bool attackIsCombo = false;
     private bool attackPossible = true;
@@ -25,6 +25,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Awake()
     {
+        stamina = GetComponent<PlayerStamina>();
         anim = GetComponent<Animator>();
     }
 
@@ -49,6 +50,7 @@ public class PlayerCombat : MonoBehaviour
         attacking = true;
         attackIsCombo = false;
         timeSinceAttack = 0f;
+        stamina.UseStamina(1);
     }
 
     private void ComboAttack()
@@ -59,13 +61,17 @@ public class PlayerCombat : MonoBehaviour
         attackIsCombo = true;
         timeSinceAttack = 0f;
         timeSinceComboAttack = 0f;
+        stamina.UseStamina(3);
     }
 
     public void TryAttack()
     {
-        print(timeSinceAttack);
-        if (comboPossible && timeSinceAttack < comboClickTimeSpan) ComboAttack();
-        else if (attackPossible) Attack();
+        if (timeSinceAttack < comboClickTimeSpan)
+        {
+            if (comboPossible && stamina.currentStamina < staminaStats.ComboAttackStaminaCost) ComboAttack();
+        }
+
+        if (attackPossible && stamina.currentStamina >= staminaStats.AttackStaminaCost) Attack();
     }
 
     public void HitCheck()
@@ -74,7 +80,7 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider2D col in hitColliders)
         {
-            col.GetComponent<Health>().TakeDamage(baseAttackDamage);
+            col.GetComponent<EnemyHealth>().TakeDamage(baseAttackDamage, col.transform.position - transform.position);
         }
     }
 

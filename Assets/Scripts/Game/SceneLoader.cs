@@ -8,26 +8,48 @@ public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance {  get; private set; }
 
-    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private GameLoadingScreen loadingScreen;
     [SerializeField] private Slider loadSlider;
 
     public AsyncOperation loadingOperation { get; private set; }
     public float progress { get; private set; } = 0f;
     public bool canActivate { get; private set; } = false;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public IEnumerator LoadScene(string sceneName)
     {
+        loadingScreen.SetPanelActive(true);
+
         loadingOperation = SceneManager.LoadSceneAsync(sceneName);
         loadingOperation.allowSceneActivation = false;
 
         while (!loadingOperation.isDone)
         {
+            if (loadingOperation.progress >= 0.9f)
+            {
+                loadingScreen.SetSliderValue(1f);
+                loadingOperation.allowSceneActivation = true;
+            }
+            else
+            {
+                loadingScreen.SetSliderValue(loadingOperation.progress);
+            }
+
             yield return null;
         }
-    }
 
-    public void ActivateScene()
-    {
-        loadingOperation.allowSceneActivation = true;
+        loadingScreen.SetPanelActive(false);
     }
 }

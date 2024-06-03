@@ -222,10 +222,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitCheck: {fileID: 7327616931492208754}
-  hitCheckRadius: 1.039
-  playerLayer:
+  hitCheckRadius: 1.28
+  hitLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   baseAttackDamage: 1
 --- !u!212 &8312427827054163052
 SpriteRenderer:

@@ -10,7 +10,18 @@ public class MainMenu : MonoBehaviour
     {
         SaveData progressData = DataManager.LoadProgressData();
 
-        SceneManager.LoadScene(progressData.lastPlayedLevel.Item2);
+        string sceneName;
+
+        if (progressData.lastPlayedLevel != null)
+        {
+            sceneName = progressData.lastPlayedLevel.levelSceneName;
+        }
+        else
+        {
+            sceneName = "Level_1";
+        }
+
+        SceneManager.LoadScene(sceneName);
     }
 
     public void ExitGame()

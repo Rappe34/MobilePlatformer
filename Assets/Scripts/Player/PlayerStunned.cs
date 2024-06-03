@@ -6,12 +6,12 @@ public class PlayerStunned : StateMachineBehaviour
     [SerializeField] private Shader flashShader;
 
     private PlayerInputHandler input;
-    private Health health;
+    private EnemyHealth health;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         input = animator.GetComponent<PlayerInputHandler>();
-        health = animator.GetComponent<Health>();
+        health = animator.GetComponent<EnemyHealth>();
 
         input.DisableInput();
         health.SetInvincible(true);

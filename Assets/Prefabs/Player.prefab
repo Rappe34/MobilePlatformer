@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5565759851309223880}
   - component: {fileID: 9063506845356030663}
+  - component: {fileID: 6953550436646181852}
   - component: {fileID: 155711155405460318}
   - component: {fileID: 8934285154521899997}
   - component: {fileID: 8219662281801668452}
@@ -57,8 +58,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 34b754794cb712442be87fdb87cd9a10, type: 2}
+  _healthStats: {fileID: 11400000, guid: 017ef57b4b945eb43b75843029309f7b, type: 2}
   playerInputHandler: {fileID: 9026561230903522847}
   _dustEffect: {fileID: 3595209259126037804, guid: 1427b17d39e2dbb46b3fddc564d80e26, type: 3}
+--- !u!114 &6953550436646181852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577647971722247428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01128c949007564689161737c3d6ecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 5a114f71ab8c31f41a7a7663d9a75760, type: 2}
 --- !u!114 &155711155405460318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,19 +91,7 @@ MonoBehaviour:
   bloodSplatterEffect: {fileID: 5011214815296500448, guid: 28dbe39bff1e79f49ae7e5a937b6af9b, type: 3}
   OnTakeDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9063506845356030663}
-        m_TargetAssemblyTypeName: PlayerController, Player-Assembly
-        m_MethodName: AddKnockBack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -128,8 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ffbe60065997d459a729d962af60f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  staminaStats: {fileID: 11400000, guid: 5a114f71ab8c31f41a7a7663d9a75760, type: 2}
   hitCheck: {fileID: 3165295298576376625}
-  hitCheckRadius: 1.112
+  hitCheckRadius: 1.505
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -137,21 +141,6 @@ MonoBehaviour:
   attackRate: 1.8
   comboChargetime: 2.5
   comboClickTimeSpan: 0.8
-  OnFinishingAttackLanded:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8219662281801668452}
-        m_TargetAssemblyTypeName: Cinemachine.CinemachineImpulseSource, Cinemachine
-        m_MethodName: GenerateImpulse
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &8219662281801668452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +295,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 52d33164-7ee9-495e-b075-22a01c3bb735
     m_ActionName: Game/Attack[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9026561230903522847}
+        m_TargetAssemblyTypeName: PlayerInputHandler, InputSystem-Assembly
+        m_MethodName: OnSecondaryAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1b6b7689-0dfc-4679-ac42-6389ead3aa52
+    m_ActionName: Game/SecondaryAttack[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -493,9 +498,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.6
+  m_FalloffIntensity: 0.4
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.7
+  m_Intensity: 0.75
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -504,10 +509,10 @@ MonoBehaviour:
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
-  m_NormalMapDistance: 3
+  m_NormalMapDistance: 10
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensityEnabled: 1
   m_ShadowIntensity: 0.75
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75

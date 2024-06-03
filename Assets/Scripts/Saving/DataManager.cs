@@ -28,7 +28,7 @@ public static class DataManager
             Debug.LogWarning("Save file not found, returning new progress.");
             return new SaveData
             {
-                lastPlayedLevel = (1, "Level_1"),
+                lastPlayedLevel = null,
                 bossesDefeated = new List<int>(),
                 fastestLevelTimes = new Dictionary<int, float>()
             };
@@ -46,7 +46,7 @@ public static class DataManager
             Debug.LogError($"Failed to load progress: {e.Message}");
             return new SaveData
             {
-                lastPlayedLevel = (1, "Level_1"),
+                lastPlayedLevel = null,
                 bossesDefeated = new List<int>(),
                 fastestLevelTimes = new Dictionary<int, float>()
             };

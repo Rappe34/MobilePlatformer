@@ -2,7 +2,8 @@
     "name": "Environment-Assembly",
     "rootNamespace": "",
     "references": [
-        "GUID:a37bdddcc9180a5448227e0e49fc3f22"
+        "GUID:a37bdddcc9180a5448227e0e49fc3f22",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

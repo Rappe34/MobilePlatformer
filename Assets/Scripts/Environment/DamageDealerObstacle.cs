@@ -7,14 +7,14 @@ public class DamageDealerObstacle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Health health = collision.GetComponent<Health>();
+        IHealth health = collision.GetComponent<IHealth>();
 
         if (health == null) return;
 
         if (damageType == DamageType.InstantDeath)
-            health.TakeDamage(health.currentHealth);
+            health.TakeDamage(health.currentHealth, Vector2.zero);
         else
-            health.TakeDamage(damage, Vector2.up * 1.5f);
+            health.TakeDamage(damage, Vector2.up);
     }
 
     public enum DamageType

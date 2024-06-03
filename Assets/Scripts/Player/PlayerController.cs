@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerController : MonoBehaviour, IPlayerController
 {
-    [SerializeField] private ScriptablePlayerStats _stats;
+    [SerializeField] private PlayerStatsSO _stats;
+    [SerializeField] private HealthStatsSO _healthStats;
     [SerializeField] private PlayerInputHandler playerInputHandler;
     private Rigidbody2D _rb;
     private CapsuleCollider2D _col;
@@ -14,6 +16,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private bool _cachedQueryStartInColliders;
 
     private PlayerCombat _playerCombat;
+    private SpriteRenderer _sr;
 
     [SerializeField] private GameObject _dustEffect;
 
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
 
         _playerCombat = GetComponent<PlayerCombat>();
+        _sr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -90,8 +94,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         Physics2D.queriesStartInColliders = false;
 
         // Ground and Ceiling
-        bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, LayerMask.GetMask("Ground", "Platform"));
-        bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, LayerMask.GetMask("Ground", "Platform"));
+        bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, _stats.GroundLayers);
+        bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, _stats.GroundLayers);
 
         // Hit a Ceiling
         if (ceilingHit) _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);
@@ -205,6 +209,33 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void HandleCombat()
     {
         if (_input.AttackDown && _grounded) _playerCombat.TryAttack();
+    }
+
+    public void HitStun()
+    {
+        StartCoroutine(HitStun_());
+    }
+
+    private IEnumerator HitStun_()
+    {
+        _anim.speed = 0f;
+
+        Color startingColor = _sr.color;
+        float timer = 0f;
+
+        while (timer < _healthStats.HitFlashTime)
+        {
+            float lerpFactor = Mathf.PingPong(timer * 2 / _healthStats.HitFlashTime, 1);
+            _sr.color = Color.Lerp(startingColor, _healthStats.HitFlashColor, lerpFactor);
+
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        _sr.color = startingColor;
+
+        _anim.speed = 1f;
     }
 
     #endregion

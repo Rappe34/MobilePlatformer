@@ -9,8 +9,6 @@ public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer Instance { get; private set; }
 
-    [SerializeField] private AudioMixer mixer;
-
     private AudioSource source;
 
     private void Awake()
@@ -18,7 +16,6 @@ public class MusicPlayer : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -26,22 +23,17 @@ public class MusicPlayer : MonoBehaviour
         }
 
         source = GetComponent<AudioSource>();
-    }
-
-    public void PlayTrack(AudioClip audio)
-    {
-        source.clip = audio;
-        StartPlaying();
-    }
-
-    public void StopPlaying()
-    {
-        VolumeFade(1f, 0f, onComplete: source.Stop);
+        source.volume = 0f;
     }
 
     public void StartPlaying()
     {
         VolumeFade(1f, 1f, onStart: source.Play);
+    }
+
+    public void StopPlaying()
+    {
+        VolumeFade(1f, 0f, onComplete: source.Stop);
     }
 
     public void VolumeFade(float duration, float targetVolume, Action onStart = null, Action onComplete = null)

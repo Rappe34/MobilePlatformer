@@ -9,9 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameOverMenu gameOverMenu;
     [SerializeField] private PauseMenu pauseMenu;
-    [SerializeField] private GameLoadingPanel gameLoadingPanel;
     [SerializeField] private LevelTimer levelTimer;
-    [SerializeField] private MusicPlayer musicPlayer;
 
     public bool gameOver { get; private set; } = false;
     public GameOverType gameOverType { get; private set; }
@@ -29,19 +27,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadLevel(LevelDataSO levelData)
+    public void StartLevel(LevelDataSO levelData)
     {
-        StartCoroutine(LoadLevel_(levelData));
-    }
-
-    private IEnumerator LoadLevel_(LevelDataSO levelData)
-    {
-        yield return StartCoroutine(SceneLoader.Instance.LoadScene(levelData.levelSceneName));
-
-        // Activate the scene once loading is complete
-        SceneLoader.Instance.ActivateScene();
+        levelTimer.ResetTimer();
         levelTimer.StartTimer();
-        musicPlayer.PlayTrack(levelData.levelSong);
+        MusicPlayer.Instance.StartPlaying();
     }
 
     public void WinGame()
@@ -63,6 +53,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         levelTimer.StopTimer();
+        MusicPlayer.Instance.StopPlaying();
 
         switch (gameOverType)
         {
@@ -81,7 +72,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Paused Game - {Time.time}");
         pauseMenu.ShowMenu();
         levelTimer.StopTimer();
-        musicPlayer.VolumeFade(1f, 0.25f);
+        MusicPlayer.Instance.VolumeFade(1f, 0.25f);
         Time.timeScale = 0f;
     }
 
@@ -90,7 +81,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Resumed Game - {Time.time}");
         pauseMenu.HideMenu();
         levelTimer.StartTimer();
-        musicPlayer.VolumeFade(1f, 1f);
+        MusicPlayer.Instance.VolumeFade(1f, 1f);
         Time.timeScale = 1f;
     }
 

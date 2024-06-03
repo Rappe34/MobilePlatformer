@@ -18,7 +18,6 @@ public class LevelTimer : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -40,7 +39,7 @@ public class LevelTimer : MonoBehaviour
 
     public string GetTimeString()
     {
-        return string.Format("{0:D2}:{1:D2}:{2:D2}", elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+        return string.Format("{0:D2}:{1:D2}", elapsedTime.Minutes, elapsedTime.Seconds);
     }
 
     public void StartTimer()

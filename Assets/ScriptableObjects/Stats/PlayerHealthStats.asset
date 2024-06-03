@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903f1c69d4bee74478b6b5453ed194c9, type: 3}
   m_Name: PlayerHealthStats
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 6
+  HitStunTime: 0.5
+  HitFlashTime: 1.2
+  HitFlashColor: {r: 1, g: 0, b: 0, a: 1}

@@ -80,7 +80,8 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider2D col in hitColliders)
         {
-            col.GetComponent<EnemyHealth>().TakeDamage(baseAttackDamage, col.transform.position - transform.position);
+            EnemyHealth health = col.GetComponent<EnemyHealth>();
+            if (health != null) health.TakeDamage(baseAttackDamage, col.transform.position - transform.position);
         }
     }
 

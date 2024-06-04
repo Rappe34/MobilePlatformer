@@ -28,7 +28,12 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public IEnumerator LoadScene(string sceneName)
+    public IEnumerator LoadScene(LevelDataSO data)
+    {
+        yield return null;
+    }
+
+    public IEnumerator LoadScene_(string sceneName)
     {
         loadingScreen.SetPanelActive(true);
 

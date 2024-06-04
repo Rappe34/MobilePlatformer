@@ -38,17 +38,22 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         gameOverType = GameOverType.Win;
-        StartCoroutine(GameOver());
+        Invoke("GameOver", 2f);
     }
 
     public void LoseGame()
     {
         gameOver = true;
         gameOverType = GameOverType.Lose;
-        StartCoroutine(GameOver());
+        Invoke("GameOver", 0f);
     }
 
-    private IEnumerator GameOver()
+    private void GameOver()
+    {
+        StartCoroutine(GameOver_());
+    }
+
+    private IEnumerator GameOver_()
     {
         yield return new WaitForSeconds(2f);
 
@@ -69,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Debug.Log($"Paused Game - {Time.time}");
+        Debug.Log($"Paused Game");
         pauseMenu.ShowMenu();
         levelTimer.StopTimer();
         MusicPlayer.Instance.VolumeFade(1f, 0.25f);
@@ -78,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        Debug.Log($"Resumed Game - {Time.time}");
+        Debug.Log($"Resumed Game");
         pauseMenu.HideMenu();
         levelTimer.StartTimer();
         MusicPlayer.Instance.VolumeFade(1f, 1f);

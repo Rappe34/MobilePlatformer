@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private ScriptableEnemyStats stats;
+    [SerializeField] private HealthStatsSO healthStats;
 
     [Header("GROUND AND OBSTACLE CHECKS")]
     [SerializeField] private LayerMask groundLayers;
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
 
     private Transform player;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private Animator anim;
     private Vector2 frameVelocity;
 
@@ -33,6 +35,7 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
 
@@ -132,12 +135,20 @@ public class Enemy : MonoBehaviour
     private IEnumerator FreezeWait()
     {
         freezed = true;
-        anim.speed = 0f;
+        anim.StopPlayback();
 
-        yield return new WaitForSeconds(stats.HitStunTime);
+        float timer = 0f;
+        Color startColor = sr.color;
+
+        while (timer < stats.HitStunTime)
+        {
+            sr.color = Color.Lerp(sr.color, healthStats.HitFlashColor, timer / stats.HitStunTime);
+
+            yield return null;
+        }
 
         freezed = false;
-        anim.speed = 1f;
+        anim.StartPlayback();
     }
 
     public void TakeKnockback(Vector2 force)

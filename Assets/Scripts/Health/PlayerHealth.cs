@@ -60,6 +60,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     private void Die()
     {
         OnDeath?.Invoke();
+        Destroy(gameObject);
     }
 
     private void SplatterEffect()

@@ -8,7 +8,6 @@ public class EnemyHealth : MonoBehaviour, IHealth
     [SerializeField] private GameObject bloodSplatterEffect;
 
     public UnityEvent<Vector2> OnTakeDamage;
-    public UnityEvent OnDeath;
 
     public bool isAlive { get; private set; } = true;
     public int currentHealth { get; private set; }
@@ -54,7 +53,6 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     private void Die()
     {
-        OnDeath?.Invoke();
         Destroy(gameObject);
     }
 

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelLoadManager : MonoBehaviour
+public class LevelLoader : MonoBehaviour
 {
-    public static LevelLoadManager Instance;
+    public static LevelLoader Instance;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class LevelLoadManager : MonoBehaviour
 
     private IEnumerator LoadLevel_(LevelDataSO levelData)
     {
-        yield return StartCoroutine(SceneLoader.Instance.LoadScene(levelData.levelSceneName));
+        yield return StartCoroutine(SceneLoader.Instance.LoadScene(levelData));
 
         GameManager.Instance.StartLevel(levelData);
     }

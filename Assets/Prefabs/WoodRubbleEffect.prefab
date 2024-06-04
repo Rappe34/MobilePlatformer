@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5601397894243479247}
   - component: {fileID: 8471066636960075442}
   m_Layer: 0
-  m_Name: RubbleEffect
+  m_Name: WoodRubbleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1545,12 +1545,10 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 1340536010, guid: 769e4442be851484898d22820c6ac043, type: 3}
-    - sprite: {fileID: -908511632, guid: 769e4442be851484898d22820c6ac043, type: 3}
-    - sprite: {fileID: 448022560, guid: 769e4442be851484898d22820c6ac043, type: 3}
-    - sprite: {fileID: 797867955, guid: 769e4442be851484898d22820c6ac043, type: 3}
-    - sprite: {fileID: 376374207, guid: 769e4442be851484898d22820c6ac043, type: 3}
-    - sprite: {fileID: -200311971, guid: 769e4442be851484898d22820c6ac043, type: 3}
+    - sprite: {fileID: -43245930, guid: 769e4442be851484898d22820c6ac043, type: 3}
+    - sprite: {fileID: -1175793300, guid: 769e4442be851484898d22820c6ac043, type: 3}
+    - sprite: {fileID: -1080359543, guid: 769e4442be851484898d22820c6ac043, type: 3}
+    - sprite: {fileID: -80469671, guid: 769e4442be851484898d22820c6ac043, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

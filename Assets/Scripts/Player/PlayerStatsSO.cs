@@ -55,4 +55,8 @@ public class PlayerStatsSO : ScriptableObject
 
     [Tooltip("The amount of time we buffer a jump. This allows jump input before actually hitting the ground")]
     public float JumpBuffer = .2f;
+
+    [Header("COMBAT")]
+    [Tooltip("How long the enemy stays stunned for when hit")]
+    public float HitStunTime = 0.3f;
 }

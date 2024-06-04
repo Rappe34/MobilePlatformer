@@ -25,6 +25,11 @@ public class LevelTimer : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        running = true;
+    }
+
     private void Update()
     {
         if (running) UpdateTimer();

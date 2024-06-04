@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameLoadingScreen : MonoBehaviour
+public class LoadingScreen : MonoBehaviour
 {
+    public static LoadingScreen Instance { get; private set; }
+
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] Slider slider;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetPanelActive(bool active)

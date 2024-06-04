@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8946314290306277677}
   - component: {fileID: 8934285154521899997}
   - component: {fileID: 8219662281801668452}
-  - component: {fileID: 734064870552032655}
   - component: {fileID: 9026561230903522847}
   - component: {fileID: 1318576463514804718}
   - component: {fileID: 3709129220970098857}
@@ -91,10 +90,34 @@ MonoBehaviour:
   bloodSplatterEffect: {fileID: 5011214815296500448, guid: 28dbe39bff1e79f49ae7e5a937b6af9b, type: 3}
   OnTakeDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9063506845356030663}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, GameManagement-Assembly
+        m_MethodName: LoseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8934285154521899997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +137,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   baseAttackDamage: 1
-  attackRate: 1.8
+  attackRate: 2
   comboChargetime: 2.5
   comboClickTimeSpan: 0.8
 --- !u!114 &8219662281801668452
@@ -170,22 +193,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
---- !u!114 &734064870552032655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577647971722247428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9336ba64a72cd31499948445a5e14a88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  inventoryData: {fileID: 0}
-  parametersToModify: []
-  itemCurrentState: []
 --- !u!114 &9026561230903522847
 MonoBehaviour:
   m_ObjectHideFlags: 0

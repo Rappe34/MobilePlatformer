@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SecondaryAttack",
+                    "name": "ComboAttack",
                     "type": "Button",
                     "id": "1b6b7689-0dfc-4679-ac42-6389ead3aa52",
                     "expectedControlType": "Button",
@@ -156,22 +156,22 @@
                 {
                     "name": "",
                     "id": "2dcdf3b5-f7c7-4594-bf24-0b1394ebfdb5",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "MultiTap",
                     "processors": "",
                     "groups": "",
-                    "action": "SecondaryAttack",
+                    "action": "ComboAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "c9cd4e0e-691b-4e81-95e1-1cbfde97c14f",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
+                    "path": "<Keyboard>/c",
+                    "interactions": "MultiTap",
                     "processors": "",
                     "groups": "",
-                    "action": "SecondaryAttack",
+                    "action": "ComboAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

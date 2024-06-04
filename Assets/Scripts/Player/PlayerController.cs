@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #endregion
 
+    private bool _freezed = false;
     private float _time;
     private bool _facingRight = true;
 
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void Update()
     {
         _time += Time.deltaTime;
-        GetInput();
+        if (!_freezed) GetInput();
 
         if ((_input.Move.x < 0 && _facingRight) || (_input.Move.x > 0 && !_facingRight))
             Flip();
@@ -201,7 +202,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         _frameVelocity += force;
     }
-
+     
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
     #region Combat
@@ -209,6 +210,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void HandleCombat()
     {
         if (_input.AttackDown && _grounded) _playerCombat.TryAttack();
+        if (_input.ComboAttackDown && _grounded) _playerCombat.TryComboAttack();
     }
 
     public void HitStun()
@@ -218,24 +220,21 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private IEnumerator HitStun_()
     {
-        _anim.speed = 0f;
+        _freezed = true;
+        _anim.SetTrigger("TakeDamage");
 
-        Color startingColor = _sr.color;
         float timer = 0f;
+        Color startColor = _sr.color;
 
-        while (timer < _healthStats.HitFlashTime)
+        while (timer < _stats.HitStunTime)
         {
-            float lerpFactor = Mathf.PingPong(timer * 2 / _healthStats.HitFlashTime, 1);
-            _sr.color = Color.Lerp(startingColor, _healthStats.HitFlashColor, lerpFactor);
-
-            timer += Time.deltaTime;
+            _sr.color = Color.Lerp(_sr.color, _healthStats.HitFlashColor, timer / (_stats.HitStunTime / 2));
 
             yield return null;
         }
 
-        _sr.color = startingColor;
-
-        _anim.speed = 1f;
+        _sr.color = startColor;
+        _freezed = false;
     }
 
     #endregion

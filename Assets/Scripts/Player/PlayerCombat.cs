@@ -17,11 +17,6 @@ public class PlayerCombat : MonoBehaviour
 
     private PlayerStamina stamina;
     private Animator anim;
-    private bool attackIsCombo = false;
-    private bool attackPossible = true;
-    private bool comboPossible = true;
-    private float timeSinceAttack = 0f;
-    private float timeSinceComboAttack = 0f;
 
     private void Awake()
     {
@@ -29,49 +24,34 @@ public class PlayerCombat : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        timeSinceAttack += Time.deltaTime;
-        timeSinceComboAttack += Time.deltaTime;
-
-        if (timeSinceAttack > 5f) inCombat = false;
-        anim.SetBool("InCombat", inCombat);
-
-        attackPossible = timeSinceAttack > 1f / attackRate;
-        comboPossible = timeSinceComboAttack > comboChargetime;
-    }
-
     private void Attack()
     {
-        if (comboPossible) anim.SetTrigger("Attack1");
-        else anim.SetTrigger("Attack2");
+        print("Commence attack");
+        anim.SetTrigger("Attack1");
 
         inCombat = true;
         attacking = true;
-        attackIsCombo = false;
-        timeSinceAttack = 0f;
         stamina.UseStamina(1);
     }
 
     private void ComboAttack()
     {
-        anim.SetBool("ComboAttack", true);
+        print("Commence combo");
+        anim.SetTrigger("ComboAttack");
+
         inCombat = true;
         attacking = true;
-        attackIsCombo = true;
-        timeSinceAttack = 0f;
-        timeSinceComboAttack = 0f;
         stamina.UseStamina(3);
     }
 
     public void TryAttack()
     {
-        if (timeSinceAttack < comboClickTimeSpan)
-        {
-            if (comboPossible && stamina.currentStamina < staminaStats.ComboAttackStaminaCost) ComboAttack();
-        }
+        Attack();
+    }
 
-        if (attackPossible && stamina.currentStamina >= staminaStats.AttackStaminaCost) Attack();
+    public void TryComboAttack()
+    {
+        ComboAttack();
     }
 
     public void HitCheck()
@@ -87,14 +67,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void AttackEnd()
     {
-        if (!attackIsCombo) attacking = false;
-    }
-
-    public void ComboAttackEnd()
-    {
         attacking = false;
-        attackIsCombo = false;
-        anim.SetBool("ComboAttack", false);
     }
 
     private void OnDrawGizmosSelected()

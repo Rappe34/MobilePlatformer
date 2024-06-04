@@ -27,13 +27,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartLevel(LevelDataSO levelData)
-    {
-        levelTimer.ResetTimer();
-        levelTimer.StartTimer();
-        MusicPlayer.Instance.StartPlaying();
-    }
-
     public void WinGame()
     {
         gameOver = true;
@@ -58,7 +51,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         levelTimer.StopTimer();
-        MusicPlayer.Instance.StopPlaying();
+        MusicPlayer.Instance.VolumeFade(1f, 0.25f);
 
         switch (gameOverType)
         {
@@ -74,20 +67,25 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Debug.Log($"Paused Game");
+        Debug.Log("Paused Game");
         pauseMenu.ShowMenu();
-        levelTimer.StopTimer();
+        LevelTimer.Instance.StopTimer();
         MusicPlayer.Instance.VolumeFade(1f, 0.25f);
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        Debug.Log($"Resumed Game");
+        Debug.Log("Resumed Game");
         pauseMenu.HideMenu();
-        levelTimer.StartTimer();
+        LevelTimer.Instance.StartTimer();
         MusicPlayer.Instance.VolumeFade(1f, 1f);
         Time.timeScale = 1f;
+    }
+
+    public void RestartLevel()
+    {
+        Debug.Log("Restart Level");
     }
 
     public void ExitGame()
@@ -105,6 +103,6 @@ public class GameManager : MonoBehaviour
 
 public enum GameOverType
 {
-    Lose = 0,
-    Win = 1
+    Lose,
+    Win
 }

@@ -129,29 +129,29 @@ public class Enemy : MonoBehaviour
 
     public void HitStun()
     {
-        StartCoroutine(FreezeWait());
+        StartCoroutine(HitStun_());
     }
 
-    private IEnumerator FreezeWait()
+    private IEnumerator HitStun_()
     {
         freezed = true;
-        anim.StopPlayback();
+        anim.SetTrigger("TakeDamage");
 
         float timer = 0f;
         Color startColor = sr.color;
 
         while (timer < stats.HitStunTime)
         {
-            sr.color = Color.Lerp(sr.color, healthStats.HitFlashColor, timer / stats.HitStunTime);
+            sr.color = Color.Lerp(sr.color, healthStats.HitFlashColor, timer / (stats.HitStunTime / 2));
 
             yield return null;
         }
 
+        sr.color = startColor;
         freezed = false;
-        anim.StartPlayback();
     }
 
-    public void TakeKnockback(Vector2 force)
+    public void AddKnockback(Vector2 force)
     {
         frameVelocity = force;
     }

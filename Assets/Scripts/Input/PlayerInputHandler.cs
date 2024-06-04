@@ -10,7 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     private bool _jumpTriggered;
     private bool _jumpHeld;
     private bool _attackTriggered;
-    private bool _secondaryAttackTriggered;
+    private bool _comboAttackTriggered;
 
     private void Update()
     {
@@ -22,12 +22,12 @@ public class PlayerInputHandler : MonoBehaviour
             JumpDown = _jumpTriggered,
             JumpHeld = _jumpHeld,
             AttackDown = _attackTriggered,
-            SecondaryAttackDown = _secondaryAttackTriggered
+            ComboAttackDown = _comboAttackTriggered
         };
 
         _jumpTriggered = false;
         _attackTriggered = false;
-        _secondaryAttackTriggered = false;
+        _comboAttackTriggered = false;
     }
 
     public void EnableInput()
@@ -49,14 +49,11 @@ public class PlayerInputHandler : MonoBehaviour
             JumpDown = false,
             JumpHeld = false,
             AttackDown = false,
-            SecondaryAttackDown = false
+            ComboAttackDown = false
         };
     }
 
-    public FrameInput GetInput()
-    {
-        return _frameInput;
-    }
+    public FrameInput GetInput() => _frameInput;
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -74,9 +71,9 @@ public class PlayerInputHandler : MonoBehaviour
         _attackTriggered = context.action.triggered;
     }
 
-    public void OnSecondaryAttack(InputAction.CallbackContext context)
+    public void OnComboAttack(InputAction.CallbackContext context)
     {
-        _secondaryAttackTriggered = context.action.triggered;
+        _comboAttackTriggered = context.action.triggered;
     }
 }
 
@@ -86,5 +83,5 @@ public struct FrameInput
     public bool JumpDown;
     public bool JumpHeld;
     public bool AttackDown;
-    public bool SecondaryAttackDown;
+    public bool ComboAttackDown;
 }

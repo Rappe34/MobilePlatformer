@@ -2,18 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static SceneLoader Instance {  get; private set; }
+    public SceneLoader Instance { get; private set; }
 
-    [SerializeField] private GameLoadingScreen loadingScreen;
-    [SerializeField] private Slider loadSlider;
-
-    public AsyncOperation loadingOperation { get; private set; }
-    public float progress { get; private set; } = 0f;
-    public bool canActivate { get; private set; } = false;
+    private AsyncOperation loadingOperation;
 
     private void Awake()
     {
@@ -28,33 +22,30 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public IEnumerator LoadScene(LevelDataSO data)
+    public void LoadScene(LevelDataSO data)
     {
-        yield return null;
+        StartCoroutine(LoadScene_(data));
     }
 
-    public IEnumerator LoadScene_(string sceneName)
+    public IEnumerator LoadScene_(LevelDataSO data)
     {
-        loadingScreen.SetPanelActive(true);
-
-        loadingOperation = SceneManager.LoadSceneAsync(sceneName);
-        loadingOperation.allowSceneActivation = false;
+        loadingOperation = SceneManager.LoadSceneAsync(data.levelSceneName);
+        LoadingScreen.Instance.SetPanelActive(true);
 
         while (!loadingOperation.isDone)
         {
             if (loadingOperation.progress >= 0.9f)
             {
-                loadingScreen.SetSliderValue(1f);
-                loadingOperation.allowSceneActivation = true;
+                LoadingScreen.Instance.SetSliderValue(1f);
             }
             else
             {
-                loadingScreen.SetSliderValue(loadingOperation.progress);
+                LoadingScreen.Instance.SetSliderValue(loadingOperation.progress);
             }
 
             yield return null;
         }
 
-        loadingScreen.SetPanelActive(false);
+        LoadingScreen.Instance.SetPanelActive(false);
     }
 }

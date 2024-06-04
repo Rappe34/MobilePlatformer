@@ -23,17 +23,11 @@ public class MusicPlayer : MonoBehaviour
         }
 
         source = GetComponent<AudioSource>();
-        source.volume = 0f;
     }
 
-    public void StartPlaying()
+    private void Start()
     {
         VolumeFade(1f, 1f, onStart: source.Play);
-    }
-
-    public void StopPlaying()
-    {
-        VolumeFade(1f, 0f, onComplete: source.Stop);
     }
 
     public void VolumeFade(float duration, float targetVolume, Action onStart = null, Action onComplete = null)

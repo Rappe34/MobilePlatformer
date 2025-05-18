@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,11 +9,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject confirmToMenuPanel;
     [SerializeField] private GameObject confirmExitPanel;
     [SerializeField] private GameObject blurVolume;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
 
     private void Start()
     {

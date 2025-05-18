@@ -31,15 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "ComboAttack",
-                    "type": "Button",
-                    "id": "1b6b7689-0dfc-4679-ac42-6389ead3aa52",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -150,28 +141,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2dcdf3b5-f7c7-4594-bf24-0b1394ebfdb5",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ComboAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c9cd4e0e-691b-4e81-95e1-1cbfde97c14f",
-                    "path": "<Keyboard>/c",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ComboAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

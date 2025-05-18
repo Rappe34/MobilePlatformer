@@ -4,39 +4,33 @@ using UnityEngine;
 
 public class EnemyStay : StateMachineBehaviour
 {
-    [SerializeField] private float waitTime = 1.2f;
-
-    private GameObject player;
     private Enemy enemy;
 
     private float timeElapsed;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        enemy = animator.GetComponent<Enemy>();
+        if (enemy == null) enemy = animator.GetComponent<Enemy>();
         timeElapsed = 0f;
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeElapsed += Time.deltaTime;
+        if (enemy.player == null) return;
 
         enemy.MovementX(0f);
 
-        if (timeElapsed >= waitTime)
+        timeElapsed += Time.deltaTime;
+
+        if (timeElapsed >= Random.Range(0.7f, 1.5f))
         {
-            animator.SetTrigger("Roam");
             enemy.Flip();
+            animator.SetTrigger(enemy.roamTrigger);
         }
 
-        if (player == null) return;
-
-        float direction = Mathf.Sign(player.transform.position.x - enemy.transform.position.x);
-
-        if (enemy.seesPlayer && ((direction > 0 && enemy.facingRight) || (direction < 0 && !enemy.facingRight)))
+        if (enemy.seesPlayer)
         {
-            animator.SetTrigger("Lurk");
+            animator.SetTrigger(enemy.lurkTrigger);
         }
     }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e271bb4e5bac7e449cb7e123fa8fb7c, type: 3}
   m_Name: SFXVolume_Setting
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 20066c0de5f23ed43b045026eac87a15, type: 2}
   key: sfxVolume
   defaultValue: 1

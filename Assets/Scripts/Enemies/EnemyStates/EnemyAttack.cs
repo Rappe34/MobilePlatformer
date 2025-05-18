@@ -2,61 +2,65 @@ using UnityEngine;
 
 public class EnemyAttack : StateMachineBehaviour
 {
-    [SerializeField] private float speed = 3.6f;
     [SerializeField] private float attackRange;
     [SerializeField] private float timeBetweenAttacks;
+    [SerializeField] private float timeBetweenComboAttacks;
 
-    private GameObject player;
     private Rigidbody2D rb;
     private Enemy enemy;
 
     private float timeSinceAttack;
+    private float timeSinceComboAttack;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        enemy = animator.GetComponent<Enemy>();
-        rb = animator.GetComponent<Rigidbody2D>();
+        if (enemy == null) enemy = animator.GetComponent<Enemy>();
+        if (rb == null) rb = animator.GetComponent<Rigidbody2D>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timeSinceAttack += Time.deltaTime;
+        timeSinceComboAttack += Time.deltaTime;
 
-        if (player == null) animator.SetTrigger("Roam");
+        if (enemy.player == null) { animator.SetTrigger(enemy.roamTrigger); return; }
 
-        float direction = player.transform.position.x - rb.position.x;
-        float distance = Vector2.Distance(rb.position, player.transform.position);
+        float direction = enemy.player.position.x - rb.position.x;
+        float distance = Vector2.Distance(rb.position, enemy.player.position);
 
         if (enemy.seesPlayer)
         {
             enemy.LookAtPlayer();
 
-            if (enemy.obstacle == ObstacleType.Drop || enemy.obstacle == ObstacleType.HighWall)
-                animator.SetTrigger("Wait");
-
-            if (enemy.obstacle == ObstacleType.LowWall)
-                animator.SetTrigger("Jump");
-
             if (distance <= attackRange)
             {
                 enemy.MovementX(0f);
 
-                if (timeSinceAttack >= timeBetweenAttacks)
+                if (timeSinceAttack > timeBetweenAttacks)
                 {
                     timeSinceAttack = 0f;
-                    animator.SetTrigger("Attack");
+                    animator.SetTrigger(enemy.attackTrigger);
+
+                    if (timeSinceComboAttack > timeBetweenComboAttacks)
+                    {
+                        timeSinceComboAttack = 0f;
+                        animator.SetTrigger(enemy.comboAttackTrigger);
+                    }
                 }
+            }
+            else if (enemy.obstacle == ObstacleType.Wall || enemy.obstacle == ObstacleType.BigDrop)
+            {
+                enemy.MovementX(0f);
             }
             else
             {
                 float moveDirection = Mathf.Sign(direction);
-                enemy.MovementX(moveDirection * speed);
+                enemy.MovementX(moveDirection);
             }
         }
         else
         {
-            animator.SetTrigger("Roam");
+            animator.SetTrigger(enemy.roamTrigger);
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 #if UNITY_EDITOR
 
 [RequireComponent(typeof(Tilemap))]
-public class SpotLightCreator : MonoBehaviour
+public class SpotlightCreator : MonoBehaviour
 {
     [SerializeField] private GameObject lightPrefab;
 
@@ -24,10 +24,11 @@ public class SpotLightCreator : MonoBehaviour
                 TileBase tileBase = tilemap.GetTile(new Vector3Int(x, y));
                 if (tileBase != null)
                 {
-                    if (tilemap.GetTile(new Vector3Int(x, y + 1)) != null) continue;
-
-                    Vector3 worldPos = tilemap.CellToWorld(new Vector3Int(x, y)) + new Vector3(0.5f, 0.5f);
-                    Instantiate(lightPrefab, worldPos, Quaternion.identity, transform);
+                    if (tileBase.name == "torch")
+                    {
+                        Vector3 worldPos = tilemap.CellToWorld(new Vector3Int(x, y)) + new Vector3(0.5f, 0.5f);
+                        Instantiate(lightPrefab, worldPos, Quaternion.identity, transform);
+                    }
                 }
             }
         }
@@ -43,7 +44,7 @@ public class SpotLightCreator : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(SpotLightCreator))]
+[CustomEditor(typeof(SpotlightCreator))]
 public class SpotLightGeneratorEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -51,15 +52,15 @@ public class SpotLightGeneratorEditor : Editor
         DrawDefaultInspector();
 
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Create"))
+        if (GUILayout.Button("Create Lights"))
         {
-            var script = (SpotLightCreator)target;
+            var script = (SpotlightCreator)target;
             script.Create();
         }
 
-        if (GUILayout.Button("Remove Shadows"))
+        if (GUILayout.Button("Destroy Lights"))
         {
-            var creator = (SpotLightCreator)target;
+            var creator = (SpotlightCreator)target;
             creator.DestroyOldLights();
         }
         EditorGUILayout.EndHorizontal();

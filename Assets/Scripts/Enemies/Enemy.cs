@@ -7,12 +7,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private ScriptableEnemyStats stats;
     [SerializeField] private HealthStatsSO healthStats;
 
-    [Header("GROUND AND OBSTACLE CHECKS")]
-    [SerializeField] private LayerMask groundLayers;
-    [SerializeField] private BoxCollider2D groundCheckCollider;
-    [SerializeField] private BoxCollider2D fallCheckCollider;
+    [SerializeField] private LayerMask wallCheckLayers;
+    [SerializeField] private LayerMask fallCheckLayers;
+    [SerializeField] private Transform wallCheckTransform;
+    [SerializeField] private Transform fallCheckTransform;
     [SerializeField] private float wallCheckRayLength;
-    [Header("PLAYER CHECK")]
+    [SerializeField] private float smallFallCheckRayLength;
+    [SerializeField] private float bigFallCheckRayLength;
+
     [SerializeField] private LayerMask sightLayers;
     [SerializeField] private Transform sightTransform;
     [SerializeField] private float sightRange;
@@ -22,39 +24,54 @@ public class Enemy : MonoBehaviour
     public bool facingRight { get; private set; } = true;
     public bool seesPlayer { get; private set; } = false;
     public ObstacleType obstacle { get; private set; } = ObstacleType.None;
+    public bool frozen { get; private set; } = false;
 
-    private Transform player;
+    public Transform player { get; private set; }
+
+    public int waitTrigger { get; private set; } = Animator.StringToHash("Wait");
+    public int roamTrigger { get; private set; } = Animator.StringToHash("Roam");
+    public int lurkTrigger { get; private set; } = Animator.StringToHash("Lurk");
+    public int attackTrigger { get; private set; } = Animator.StringToHash("Attack");
+    public int comboAttackTrigger { get; private set; } = Animator.StringToHash("ComboAttack");
+    public int takeDamageTrigger { get; private set; } = Animator.StringToHash("TakeDamage");
+
+
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private Animator anim;
     private Vector2 frameVelocity;
-
-    private bool freezed;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        grounded = GroundCheck();
         obstacle = ObstacleCheck();
-        if (player != null) seesPlayer = PlayerInSightCheck();
-
-        if (!freezed)
-        {
-            HandleGravity();
-            ApplyMovement();
-        }
     }
 
-    private bool GroundCheck()
+    private void FixedUpdate()
     {
-        return Physics2D.OverlapBox(transform.position, groundCheckCollider.bounds.size, 0f, groundLayers);
+        frameVelocity.y = rb.velocity.y;
+        if (!frozen) ApplyMovement();
+    }
+
+    private void OnEnable()
+    {
+        TimeTickSystem.OnTick_4 += TimeTickSystem_OnTick_4;
+    }
+
+    private void OnDisable()
+    {
+        TimeTickSystem.OnTick_4 -= TimeTickSystem_OnTick_4;
+    }
+
+    private void TimeTickSystem_OnTick_4(object sender, TimeTickSystem.OnTickEventArgs e)
+    {
+        print("Tick!");
+        if (player != null) seesPlayer = PlayerInSightCheck();
     }
 
     private bool PlayerInSightCheck()
@@ -68,7 +85,7 @@ public class Enemy : MonoBehaviour
         bool facingPlayer = (player.position.x >= transform.position.x && facingRight) || (player.position.x < transform.position.x && !facingRight);
         if (playerEnemyDistance > forceDetectionRange && !facingPlayer) return false;
 
-        RaycastHit2D hit = Physics2D.Raycast(sightTransform.position, player.position - transform.position, Mathf.Infinity, sightLayers);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0f, 1.4f, 0f), player.position - transform.position, Mathf.Infinity, sightLayers);
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
             return true;
@@ -78,10 +95,19 @@ public class Enemy : MonoBehaviour
 
     private ObstacleType ObstacleCheck()
     {
-        if (Physics2D.Raycast(sightTransform.position, Vector3.right, wallCheckRayLength, groundLayers) && grounded) return ObstacleType.HighWall;
-        if (!Physics2D.OverlapBox(fallCheckCollider.bounds.center, fallCheckCollider.bounds.size, 0f, groundLayers) && grounded) return ObstacleType.Drop;
-        if (Physics2D.Raycast(transform.position + new Vector3(0f, .5f), Vector3.right, wallCheckRayLength, groundLayers) && grounded) return ObstacleType.LowWall;
-        else return ObstacleType.None;
+        if (Physics2D.Raycast(wallCheckTransform.position, facingRight ? Vector2.right : Vector2.left, wallCheckRayLength, wallCheckLayers))
+        {
+            return ObstacleType.Wall;
+        }
+        if (!Physics2D.Raycast(fallCheckTransform.position, Vector2.down, bigFallCheckRayLength, fallCheckLayers))
+        {
+            return ObstacleType.BigDrop;
+        }
+        if (!Physics2D.Raycast(fallCheckTransform.position, Vector2.down, smallFallCheckRayLength, fallCheckLayers))
+        {
+            return ObstacleType.SmallDrop;
+        }
+        return ObstacleType.None;
     }
 
     public void LookAtPlayer()
@@ -105,55 +131,34 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            frameVelocity.x = Mathf.MoveTowards(rb.velocity.x, targetX, stats.Acceleration * Time.fixedDeltaTime);
-        }
-    }
-
-    public void Jump()
-    {
-        print("jump");
-        if (grounded) frameVelocity.y = stats.JumpPower;
-    }
-
-    private void HandleGravity()
-    {
-        if (grounded && frameVelocity.y <= 0f)
-        {
-            frameVelocity.y = stats.GroundingForce;
-        }
-        else
-        {
-            frameVelocity.y = Mathf.MoveTowards(frameVelocity.y, -stats.MaxFallSpeed, stats.FallAcceleration * Time.fixedDeltaTime);
+            frameVelocity.x = Mathf.MoveTowards(rb.velocity.x, targetX * stats.MaxSpeed, stats.Acceleration * Time.fixedDeltaTime);
         }
     }
 
     public void HitStun()
     {
+        frozen = true;
+        rb.velocity = Vector2.zero;
         StartCoroutine(HitStun_());
     }
 
     private IEnumerator HitStun_()
     {
-        freezed = true;
-        anim.SetTrigger("TakeDamage");
-
         float timer = 0f;
-        Color startColor = sr.color;
+        float halfStunTime = healthStats.HitStunTime / 2;
 
-        while (timer < stats.HitStunTime)
+        while (timer < healthStats.HitStunTime)
         {
-            sr.color = Color.Lerp(sr.color, healthStats.HitFlashColor, timer / (stats.HitStunTime / 2));
+            if (timer < healthStats.HitStunTime / 2) sr.color = Color.Lerp(sr.color, healthStats.HitFlashColor, timer / halfStunTime);
+            else sr.color = Color.Lerp(healthStats.HitFlashColor, Color.white, (timer - halfStunTime) / halfStunTime);
 
+            timer += Time.deltaTime;
             yield return null;
         }
 
-        sr.color = startColor;
-        freezed = false;
-    }
+        sr.color = Color.white;
 
-    public void AddKnockback(Vector2 force)
-    {
-        frameVelocity = force;
+        frozen = false;
     }
 
     private void ApplyMovement() => rb.velocity = frameVelocity;
@@ -169,8 +174,9 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawRay(sightTransform.position, (facingRight ? Vector2.right : Vector2.left) * wallCheckRayLength);
-        Gizmos.DrawRay(transform.position + new Vector3(0f, .5f), (facingRight ? Vector2.right: Vector2.left) * wallCheckRayLength);
+        Gizmos.DrawRay(wallCheckTransform.position, (facingRight ? Vector2.right : Vector2.left) * wallCheckRayLength);
+        Gizmos.DrawRay(fallCheckTransform.position, Vector2.down * bigFallCheckRayLength);
+        Gizmos.DrawRay(fallCheckTransform.position + new Vector3(-0.05f, -smallFallCheckRayLength, 0f), Vector3.right * 0.1f);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(sightTransform.position, forceDetectionRange);
@@ -185,7 +191,7 @@ public class Enemy : MonoBehaviour
 public enum ObstacleType
 {
     None,
-    LowWall,
-    HighWall,
-    Drop
+    Wall,
+    SmallDrop,
+    BigDrop
 }

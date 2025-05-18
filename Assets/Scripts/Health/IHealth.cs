@@ -7,6 +7,6 @@ public interface IHealth
     public bool isAlive { get; }
     public int currentHealth { get; }
 
-    public void TakeDamage(int amount, Vector2 knockback);
+    public void TakeDamage(int amount);
     public void AddHealth(int amount);
 }

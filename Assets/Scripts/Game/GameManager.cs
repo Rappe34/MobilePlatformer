@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,83 +7,107 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameOverMenu gameOverMenu;
     [SerializeField] private PauseMenu pauseMenu;
+    [SerializeField] private CamShutter camShutter;
     [SerializeField] private LevelTimer levelTimer;
 
     public bool gameOver { get; private set; } = false;
-    public GameOverType gameOverType { get; private set; }
+
+    private PlayerHealth playerHealth;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+    }
+
+    private void Start()
+    {
+        if (LevelTimer.Instance != null)
+            LevelTimer.Instance.StartTimer();
+
+        camShutter.ShutterOpen();
     }
 
     public void WinGame()
     {
-        gameOver = true;
-        gameOverType = GameOverType.Win;
-        Invoke("GameOver", 2f);
+        GameOver(GameOverType.Win);
     }
 
     public void LoseGame()
     {
-        gameOver = true;
-        gameOverType = GameOverType.Lose;
-        Invoke("GameOver", 0f);
+        GameOver(GameOverType.Lose);
     }
 
-    private void GameOver()
+    private void GameOver(GameOverType gameOverType)
     {
-        StartCoroutine(GameOver_());
+        if (gameOver) return;
+        gameOver = true;
+
+        LevelTimer.Instance.StopTimer();
+        MusicPlayer.Instance.PauseFade();
+        camShutter.ShutterClose();
+
+        if (gameOverType == GameOverType.Win)
+            playerHealth.SetInvincible(true);
+
+        StartCoroutine(GameOver_(gameOverType));
     }
 
-    private IEnumerator GameOver_()
+    private IEnumerator GameOver_(GameOverType gameOverType)
     {
         yield return new WaitForSeconds(2f);
-
-        levelTimer.StopTimer();
-        MusicPlayer.Instance.VolumeFade(1f, 0.25f);
 
         switch (gameOverType)
         {
             case GameOverType.Win:
-                gameOverMenu.ShowWinScreen();
+                float thisTime = LevelTimer.Instance.ElapsedTime;
+                float bestTime = PlayerPrefs.GetFloat("bestTime");
+                if (thisTime < bestTime || bestTime < 0f)
+                {
+                    bestTime = thisTime;
+                    PlayerPrefs.SetFloat("bestTime", thisTime);
+                }
+                gameOverMenu.ShowWinScreen(LevelTimer.Instance.GetTimeString(), LevelTimer.Instance.FormatTimeToString(bestTime), LevelManager.Instance.enemiesKilled.ToString());
                 break;
 
             case GameOverType.Lose:
-                gameOverMenu.ShowLoseScreen();
+                gameOverMenu.ShowLoseScreen(LevelTimer.Instance.GetTimeString());
                 break;
         }
     }
 
     public void PauseGame()
     {
-        Debug.Log("Paused Game");
         pauseMenu.ShowMenu();
         LevelTimer.Instance.StopTimer();
-        MusicPlayer.Instance.VolumeFade(1f, 0.25f);
+        MusicPlayer.Instance.PauseFade();
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        Debug.Log("Resumed Game");
         pauseMenu.HideMenu();
         LevelTimer.Instance.StartTimer();
-        MusicPlayer.Instance.VolumeFade(1f, 1f);
+        MusicPlayer.Instance.ResumeFade();
         Time.timeScale = 1f;
     }
 
     public void RestartLevel()
     {
-        Debug.Log("Restart Level");
+        LoadingScreen.Instance.LoadScene(LoadingScreen.Instance.ActiveScene);
+    }
+
+    public void ToMainMenu()
+    {
+        LoadingScreen.Instance.LoadScene("Menu");
     }
 
     public void ExitGame()
@@ -93,10 +115,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-
-        // Save data before exiting
-        // DataManager.SaveProgressData(!!!);
-
+        PlayerPrefs.Save();
         Application.Quit();
     }
 }

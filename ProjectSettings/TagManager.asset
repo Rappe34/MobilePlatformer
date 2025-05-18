@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - InteractibleEnvironment
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UISlideButtons
   - Water
   - UI
   - Player

@@ -16,6 +16,7 @@ MonoBehaviour:
   JumpStaminaCost: 1
   AttackStaminaCost: 1
   ComboAttackStaminaCost: 3
-  StaminaRegenRate: 1.5
+  StaminaRegenRate: 3.6
+  StaminaMovingRegenRate: 1.8
   StaminaRegenDelay: 1.5
   StaminaRegenDelayZero: 2.5

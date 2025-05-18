@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This class stores all of the values used in PLAYER LOGIC RELATED TO THE PLAYER HEALTH SYSTEM (HP amount, hit stun, etc.)
+
 [CreateAssetMenu(menuName = "ScriptableObject/ScriptableHealthStats")]
 public class HealthStatsSO : ScriptableObject
 {

@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour
 {
     public static LoadingScreen Instance { get; private set; }
 
-    [SerializeField] private GameObject loadingPanel;
-    [SerializeField] Slider slider;
+    public string ActiveScene { get; private set; }
+
+    [SerializeField] private Slider slider;
 
     private void Awake()
     {
@@ -23,12 +25,30 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
-    public void SetPanelActive(bool active)
+    private void Start()
     {
-        loadingPanel.SetActive(active);
+        ActiveScene = SceneManager.GetActiveScene().name;
     }
 
-    public void SetSliderValue(float value)
+    public void LoadScene(string name)
+    {
+        AsyncOperation loading = SceneManager.LoadSceneAsync(name);
+
+        gameObject.SetActive(true);
+
+        while (loading.progress < 0.9f)
+        {
+            SetSliderValue(loading.progress);
+        }
+
+        if (loading.isDone) SetSliderValue(1f);
+
+        ActiveScene = name;
+
+        gameObject.SetActive(false);
+    }
+
+    private void SetSliderValue(float value)
     {
         slider.value = value;
     }

@@ -7,8 +7,10 @@ public class LosePanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timeText;
 
-    public void ShowPanel()
+    public void ShowPanel(string timeString)
     {
         gameObject.SetActive(true);
+
+        timeText.text = timeString;
     }
 }

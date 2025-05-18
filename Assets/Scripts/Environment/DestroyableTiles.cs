@@ -10,7 +10,10 @@ public class DestroyableTiles : MonoBehaviour
     [SerializeField] private float destructionDelay;
 
     private Tilemap tilemap;
-    Vector3 op;
+    private Vector3 op;
+
+    private bool isDestroyable = true;
+
     private void Awake()
     {
         tilemap = GetComponent<Tilemap>();
@@ -18,6 +21,8 @@ public class DestroyableTiles : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!isDestroyable) return;
+
         if (collision.gameObject.CompareTag("Player"))
         {
             Vector3 collidePos = collision.GetContact(0).point;
@@ -60,6 +65,11 @@ public class DestroyableTiles : MonoBehaviour
         tiles.RemoveAll(pos => !tilemap.HasTile(pos));
 
         return tiles;
+    }
+
+    public void SetDestroyable(bool destroyable)
+    {
+        isDestroyable = destroyable;
     }
 
     private void OnDrawGizmos()

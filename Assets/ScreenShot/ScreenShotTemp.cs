@@ -47,11 +47,12 @@ public class ScreenShotTemp : MonoBehaviour
             System.IO.File.WriteAllBytes(fileName, bytes);
             print("Screenshot taken");
         }
+        print("l");
     }
 
     private string SnapshotName()
     {
-        return string.Format("{0}/Snapshot/snap_{1}x{2}_{3}.png",
+        return string.Format("{0}/Screenshot/snap_{1}x{2}_{3}.png",
             Application.dataPath,
             resWid,
             resHei,

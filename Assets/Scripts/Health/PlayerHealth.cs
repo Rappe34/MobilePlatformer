@@ -1,23 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour, IHealth
 {
     [SerializeField] private HealthStatsSO stats;
-    [SerializeField] private float invincibilityTime = .5f;
     [SerializeField] private GameObject bloodSplatterEffect;
 
-    public UnityEvent<Vector2> OnTakeDamage;
+    public UnityEvent OnTakeDamage;
     public UnityEvent OnDeath;
 
     public bool isAlive { get; private set; } = true;
     public int currentHealth { get; private set; }
 
+    private SpriteRenderer sr;
+
     private bool isInvincible = false;
     private float timeSinceHit = 0f;
+
+    private void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -27,7 +32,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     private void Update()
     {
         timeSinceHit += Time.deltaTime;
-        isInvincible = timeSinceHit <= invincibilityTime;
+        isInvincible = timeSinceHit <= stats.HitStunTime;
     }
 
     public void SetInvincible(bool invincible)
@@ -35,20 +40,40 @@ public class PlayerHealth : MonoBehaviour, IHealth
         isInvincible = invincible;
     }
 
-    public void TakeDamage(int amount, Vector2 knockback)
+    public void TakeDamage(int amount)
     {
         if (isInvincible) return;
 
         SplatterEffect();
 
-        currentHealth -= amount;
-        timeSinceHit = 0f;
+        if (amount == 0) currentHealth = 0;
+        else currentHealth -= amount;
 
         if (currentHealth <= 0)
             Die();
 
-        OnTakeDamage?.Invoke(knockback);
+        timeSinceHit = 0f;
+
+        OnTakeDamage?.Invoke();
         InGameUI.Instance.UpdateHealthBar(currentHealth);
+    }
+
+    private IEnumerator HitFlash()
+    {
+        float timer = 0f;
+        Color startColor = sr.color;
+        float halfStunTime = stats.HitStunTime / 2;
+
+        while (timer < stats.HitStunTime)
+        {
+            if (timer < stats.HitStunTime / 2) sr.color = Color.Lerp(sr.color, stats.HitFlashColor, timer / halfStunTime);
+            else sr.color = Color.Lerp(stats.HitFlashColor, startColor, (timer - halfStunTime) / halfStunTime);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        sr.color = startColor;
     }
 
     public void AddHealth(int amount)

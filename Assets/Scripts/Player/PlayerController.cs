@@ -28,9 +28,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #endregion
 
-    private bool _freezed = false;
     private float _time;
+    private bool _frozen = false;
     private bool _facingRight = true;
+
+    public Vector2 PlayerVelocity => _rb.velocity;
 
     private void Awake()
     {
@@ -47,7 +49,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void Update()
     {
         _time += Time.deltaTime;
-        if (!_freezed) GetInput();
+        GetInput();
+
+        if (_frozen) return;
+
+        HandleCombat();
+
+        if (_playerCombat.attacking) return;
 
         if ((_input.Move.x < 0 && _facingRight) || (_input.Move.x > 0 && !_facingRight))
             Flip();
@@ -74,13 +82,13 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         CheckCollisions();
 
+        if (_frozen) return;
+
         HandleJump();
         HandleDirection();
         HandleGravity();
 
         ApplyMovement();
-
-        HandleCombat();
 
         UpdateAnimatorVars();
     }
@@ -88,7 +96,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Collisions
 
     private float _frameLeftGrounded = float.MinValue;
-    public bool _grounded { get; private set; }
+    private bool _grounded;
+    public bool PlayerGrounded => _grounded;
 
     private void CheckCollisions()
     {
@@ -202,7 +211,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         _frameVelocity += force;
     }
-     
+
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
     #region Combat
@@ -210,7 +219,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
     private void HandleCombat()
     {
         if (_input.AttackDown && _grounded) _playerCombat.TryAttack();
-        if (_input.ComboAttackDown && _grounded) _playerCombat.TryComboAttack();
+    }
+
+    public void SetFrozen(bool frozen)
+    {
+        _frozen = frozen;
     }
 
     public void HitStun()
@@ -220,21 +233,30 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private IEnumerator HitStun_()
     {
-        _freezed = true;
-        _anim.SetTrigger("TakeDamage");
+        _frozen = true;
+        _anim.speed = 0f;
+        _rb.velocity = Vector2.zero;
 
+        Color startingColor = _sr.color;
         float timer = 0f;
-        Color startColor = _sr.color;
 
-        while (timer < _stats.HitStunTime)
+        while (timer < _healthStats.HitFlashTime)
         {
-            _sr.color = Color.Lerp(_sr.color, _healthStats.HitFlashColor, timer / (_stats.HitStunTime / 2));
+            if (timer > _healthStats.HitStunTime)
+            {
+                _frozen = false;
+                _anim.speed = 1f;
+            }
+
+            float lerpFactor = Mathf.PingPong(timer * 2 / _healthStats.HitFlashTime, 1);
+            _sr.color = Color.Lerp(startingColor, _healthStats.HitFlashColor, lerpFactor);
+
+            timer += Time.deltaTime;
 
             yield return null;
         }
 
-        _sr.color = startColor;
-        _freezed = false;
+        _sr.color = startingColor;
     }
 
     #endregion

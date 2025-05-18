@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d08d72fe6980548850ebdcd5954dd7, type: 3}
   m_Name: EnemyStats
   m_EditorClassIdentifier: 
-  MaxSpeed: 8
+  MaxSpeed: 3.8
   Acceleration: 80
   GroundDeceleration: 60
   AirDeceleration: 20

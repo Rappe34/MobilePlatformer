@@ -86,18 +86,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 017ef57b4b945eb43b75843029309f7b, type: 2}
-  invincibilityTime: 0.5
   bloodSplatterEffect: {fileID: 5011214815296500448, guid: 28dbe39bff1e79f49ae7e5a937b6af9b, type: 3}
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9063506845356030663}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+        m_TargetAssemblyTypeName: PlayerController, Player-Assembly
+        m_MethodName: HitStun
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8219662281801668452}
+        m_TargetAssemblyTypeName: Cinemachine.CinemachineImpulseSource, Cinemachine
+        m_MethodName: GenerateImpulse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SFXPlayer, AudioManagement-Assembly
+        m_MethodName: PlayClip
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 18d44c8b1d020c64788ed1faddd3e2ac, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -132,14 +155,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaStats: {fileID: 11400000, guid: 5a114f71ab8c31f41a7a7663d9a75760, type: 2}
   hitCheck: {fileID: 3165295298576376625}
-  hitCheckRadius: 1.505
+  hitCheckRadius: 1.38
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
   baseAttackDamage: 1
-  attackRate: 2
-  comboChargetime: 2.5
-  comboClickTimeSpan: 0.8
 --- !u!114 &8219662281801668452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +253,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9026561230903522847}
-        m_TargetAssemblyTypeName: PlayerInputHandler, Input
+        m_TargetAssemblyTypeName: PlayerInputHandler, InputSystem-Assembly
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -278,22 +298,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 52d33164-7ee9-495e-b075-22a01c3bb735
     m_ActionName: Game/Attack[/Keyboard/c]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9026561230903522847}
-        m_TargetAssemblyTypeName: PlayerInputHandler, InputSystem-Assembly
-        m_MethodName: OnSecondaryAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 1b6b7689-0dfc-4679-ac42-6389ead3aa52
-    m_ActionName: Game/SecondaryAttack[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -481,9 +485,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.58
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.75
+  m_Intensity: 0.85
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -505,7 +509,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 1.5
-  m_PointLightOuterRadius: 7.5
+  m_PointLightOuterRadius: 7.8
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

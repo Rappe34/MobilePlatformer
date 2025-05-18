@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class LevelTimer : MonoBehaviour
@@ -11,6 +12,7 @@ public class LevelTimer : MonoBehaviour
     public TimeSpan elapsedTime { get; private set; } = TimeSpan.Zero;
 
     private float _elapsedTime = 0f;
+    public float ElapsedTime => _elapsedTime;
     private bool running = false;
 
     private void Awake()
@@ -23,11 +25,6 @@ public class LevelTimer : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        running = true;
     }
 
     private void Update()
@@ -44,7 +41,15 @@ public class LevelTimer : MonoBehaviour
 
     public string GetTimeString()
     {
-        return string.Format("{0:D2}:{1:D2}", elapsedTime.Minutes, elapsedTime.Seconds);
+        return FormatTimeToString(_elapsedTime);
+    }
+
+    public string FormatTimeToString(float timeFloat)
+    {
+        if (timeFloat < 0f) return "N/A";
+
+        TimeSpan timeSpan = TimeSpan.FromSeconds(timeFloat);
+        return string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
     }
 
     public void StartTimer()
@@ -61,4 +66,45 @@ public class LevelTimer : MonoBehaviour
     {
         _elapsedTime = 0f;
     }
+
+#if UNITY_EDITOR
+
+    public void ResetBestTime()
+    {
+        PlayerPrefs.SetFloat("bestTime", -1f);
+    }
+
+    public string GetBestTime()
+    {
+        return FormatTimeToString(PlayerPrefs.GetFloat("bestTime"));
+    }
+
+#endif
+
 }
+
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(LevelTimer))]
+public class LevelTimerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Reset Best Time"))
+        {
+            var script = (LevelTimer)target;
+            script.ResetBestTime();
+        }
+        if (GUILayout.Button("Get Best Time"))
+        {
+            var script = (LevelTimer)target;
+            Debug.Log(script.GetBestTime());
+        }
+        EditorGUILayout.EndHorizontal();
+    }
+}
+
+#endif

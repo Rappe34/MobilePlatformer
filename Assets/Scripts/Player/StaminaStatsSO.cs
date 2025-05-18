@@ -15,11 +15,14 @@ public class StaminaStatsSO : ScriptableObject
     [Tooltip("The amount of stamina attacks use")]
     public int AttackStaminaCost = 1;
 
-    [Tooltip("The amount of stamia combo attacks use")]
-    public int ComboAttackStaminaCost = 3;
+    [Tooltip("The amount of stamina combo attacks use")]
+    public int ComboAttackStaminaCost = 2;
 
-    [Tooltip("How much stamina is regenerated in a second")]
+    [Tooltip("How much stamina is regenerated in a second when the player is standing still on the ground")]
     public float StaminaRegenRate = 1.5f;
+
+    [Tooltip("How much stamina is regenerated in a second when the player is moving")]
+    public float StaminaMovingRegenRate = 1.5f;
 
     [Tooltip("The time before stamina starts to recharge")]
     public float StaminaRegenDelay = 1.5f;

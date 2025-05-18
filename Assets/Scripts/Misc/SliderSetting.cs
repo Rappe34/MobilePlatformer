@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class SliderSetting : MonoBehaviour
 {
@@ -13,10 +11,13 @@ public class SliderSetting : MonoBehaviour
     private void Awake()
     {
         float savedValue = settingData.GetValue();
+        slider.value = savedValue;
         SetText(Mathf.RoundToInt(savedValue * 100f).ToString());
 
         slider.onValueChanged.AddListener((v) => {
+            print(v);
             SetText(Mathf.RoundToInt(v * 100f).ToString());
+            settingData.SetValue(v);
         });
     }
 

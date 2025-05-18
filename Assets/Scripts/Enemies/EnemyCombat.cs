@@ -13,8 +13,7 @@ public class EnemyCombat : MonoBehaviour
 
         foreach (Collider2D col in hitColliders)
         {
-            col.GetComponent<PlayerHealth>().TakeDamage(baseAttackDamage, col.transform.position - transform.position);
-            print("col");
+            col.GetComponent<PlayerHealth>().TakeDamage(baseAttackDamage);
         }
     }
 

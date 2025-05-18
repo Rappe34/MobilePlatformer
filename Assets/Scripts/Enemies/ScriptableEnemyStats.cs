@@ -5,7 +5,7 @@ public class ScriptableEnemyStats : ScriptableObject
 {
     [Header("MOVEMENT")]
     [Tooltip("The top horizontal movement speed")]
-    public float MaxSpeed = 14;
+    public float MaxSpeed = 3.8f;
 
     [Tooltip("The enemy's capacity to gain horizontal speed")]
     public float Acceleration = 120;

@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// This class stores all of the values used in STANDARD PLAYER LOGIC (movement, player input, hit stun)
+
 [CreateAssetMenu(menuName = "ScriptableObject/Scriptable Player Stats")]
 public class PlayerStatsSO : ScriptableObject
 {
@@ -21,6 +23,9 @@ public class PlayerStatsSO : ScriptableObject
     [Header("MOVEMENT")]
     [Tooltip("The top horizontal movement speed")]
     public float MaxSpeed = 14;
+
+    [Tooltip("The top horizontal movement speed when out of stamina etc.")]
+    public float ReducedSpeed = 14;
 
     [Tooltip("The player's capacity to gain horizontal speed")]
     public float Acceleration = 120;
@@ -55,8 +60,4 @@ public class PlayerStatsSO : ScriptableObject
 
     [Tooltip("The amount of time we buffer a jump. This allows jump input before actually hitting the ground")]
     public float JumpBuffer = .2f;
-
-    [Header("COMBAT")]
-    [Tooltip("How long the enemy stays stunned for when hit")]
-    public float HitStunTime = 0.3f;
 }

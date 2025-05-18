@@ -7,7 +7,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
     [SerializeField] private float invincibilityTime = .5f;
     [SerializeField] private GameObject bloodSplatterEffect;
 
-    public UnityEvent<Vector2> OnTakeDamage;
+    public UnityEvent OnTakeDamage;
+    public UnityEvent OnDeath;
 
     public bool isAlive { get; private set; } = true;
     public int currentHealth { get; private set; }
@@ -31,19 +32,21 @@ public class EnemyHealth : MonoBehaviour, IHealth
         isInvincible = invincible;
     }
 
-    public void TakeDamage(int amount, Vector2 knockbackDirection)
+    public void TakeDamage(int amount)
     {
         if (isInvincible) return;
 
         SplatterEffect();
 
-        currentHealth -= amount;
-        timeSinceHit = 0f;
+        if (amount == 0) currentHealth = 0;
+        else currentHealth -= amount;
 
         if (currentHealth <= 0)
             Die();
 
-        OnTakeDamage?.Invoke(knockbackDirection);
+        timeSinceHit = 0f;
+
+        OnTakeDamage?.Invoke();
     }
 
     public void AddHealth(int amount)
@@ -53,6 +56,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     private void Die()
     {
+        OnDeath?.Invoke();
         Destroy(gameObject);
     }
 

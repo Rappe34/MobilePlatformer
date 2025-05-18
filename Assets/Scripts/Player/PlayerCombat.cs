@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -8,12 +7,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] [Range(0.5f, 2f)] private float hitCheckRadius;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int baseAttackDamage = 1;
-    [SerializeField] private float attackRate = 1.6f;
-    [SerializeField] private float comboChargetime = 5f;
-    [SerializeField] private float comboClickTimeSpan = 0.8f;
 
-    public bool inCombat { get; private set; } = false;
     public bool attacking { get; private set; } = false;
+    public bool comboAttacking { get; private set; } = false;
 
     private PlayerStamina stamina;
     private Animator anim;
@@ -24,34 +20,24 @@ public class PlayerCombat : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void Attack()
+    private void TriggerAttack()
     {
-        print("Commence attack");
-        anim.SetTrigger("Attack1");
-
-        inCombat = true;
         attacking = true;
-        stamina.UseStamina(1);
-    }
-
-    private void ComboAttack()
-    {
-        print("Commence combo");
-        anim.SetTrigger("ComboAttack");
-
-        inCombat = true;
-        attacking = true;
-        stamina.UseStamina(3);
     }
 
     public void TryAttack()
     {
-        Attack();
-    }
-
-    public void TryComboAttack()
-    {
-        ComboAttack();
+        if (stamina.currentStamina >= staminaStats.ComboAttackStaminaCost && attacking && !comboAttacking)
+        {
+            comboAttacking = true;
+            anim.SetTrigger("ComboAttack");
+            TriggerAttack();
+        }
+        else if (stamina.currentStamina >= staminaStats.AttackStaminaCost && !attacking)
+        {
+            anim.SetTrigger("Attack");
+            TriggerAttack();
+        }
     }
 
     public void HitCheck()
@@ -61,12 +47,22 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D col in hitColliders)
         {
             EnemyHealth health = col.GetComponent<EnemyHealth>();
-            if (health != null) health.TakeDamage(baseAttackDamage, col.transform.position - transform.position);
+            if (health != null) health.TakeDamage(baseAttackDamage);
         }
+
+        if (comboAttacking) stamina.UseStamina(2);
+        else stamina.UseStamina(1);
     }
 
     public void AttackEnd()
     {
+        if (comboAttacking) return;
+        attacking = false;
+    }
+
+    public void ComboEnd()
+    {
+        comboAttacking = false;
         attacking = false;
     }
 

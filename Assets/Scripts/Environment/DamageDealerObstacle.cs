@@ -13,9 +13,9 @@ public class DamageDealerObstacle : MonoBehaviour
         if (health == null) return;
 
         if (damageType == DamageType.InstantDeath)
-            health.TakeDamage(health.currentHealth, Vector2.zero);
+            health.TakeDamage(0);
         else
-            health.TakeDamage(damage, Vector2.up);
+            health.TakeDamage(damage);
     }
 
     public enum DamageType
